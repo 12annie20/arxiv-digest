@@ -52,8 +52,8 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 /* ── 主版面 ── */
 .page-wrap{max-width:900px;margin:0 auto;padding:0 2rem 6rem;position:relative}
-.tab-panel{display:none;opacity:0}
-.tab-panel.active{display:block;opacity:1}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .4s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── 章節標題 ── */
@@ -156,7 +156,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 <header class="masthead">
   <div class="masthead-eyebrow">arXiv · AI × Psychology · Daily Digest</div>
   <h1 class="masthead-title">文獻日報 <em>/ 2026-04-12</em></h1>
-  <div class="masthead-date">2026-04-12 17:52 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
+  <div class="masthead-date">2026-04-12 17:59 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
   <div class="masthead-rule"></div>
 </header>
 
@@ -179,7 +179,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">領域溫度計</span>
       <span class="sec-sub">FIELD TEMPERATURE</span>
     </div>
-    <div class="thermometer"><div><div class="th-label hot">熱門主題</div><div class="th-body">LLM在心理諮詢中的應用與風險・AI心理安全與有害互動・情感計算與情緒建模</div></div><div><div class="th-label new">新興焦點</div><div class="th-body">多模態心理刺激與診斷・AI輔助文化敏感性心理健康</div></div><div><div class="th-label cold">冷門值得關注</div><div class="th-body">虛擬神經建築與認知情感影響</div></div></div>
+    <div class="thermometer"><div><div class="th-label hot">熱門主題</div><div class="th-body">LLM在心理健康諮詢中的應用與安全・AI對話系統的潛在危害・情感計算與情緒建模</div></div><div><div class="th-label new">新興焦點</div><div class="th-body">具文化敏感性的AI心理支持・大型語言模型內部狀態的量化自省</div></div><div><div class="th-label cold">冷門值得關注</div><div class="th-body">運用生成對抗網路進行因果推論的心理學研究</div></div></div>
 
     <div class="sec-header">
       <span class="sec-num">01 /</span>
@@ -189,28 +189,28 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
     <div class="rec-grid"><div class="rec-card">
 <span class="rec-theme t-ai">cs.AI</span>
 <div class="rec-title">Do No Harm: Exposing Hidden Vulnerabilities of LLMs via Persona-based Client Simulation Attack in Psychological Counseling</div>
-<div class="rec-why">這篇論文提出了一種新穎的紅隊框架，透過模擬客戶對LLM進行心理諮詢攻擊，揭示其在心理安全對齊方面的隱藏漏洞，對AI安全至關重要。它強調了LLM在心理健康領域中可能造成的潛在危害，並提供了一種系統性的評估方法。</div>
+<div class="rec-why">本文提出獨特的角色模擬攻擊框架，揭露LLM在心理諮詢中可能無意強化有害信念的風險。對於確保AI在敏感領域的應用安全至關重要，值得今日深入探討。</div>
 <div class="rec-meta">Qingyang Xu, Yaling Shen, Stephanie Fong</div>
 <a class="rec-link" href="https://arxiv.org/abs/2604.04842v1" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
 </div><div class="rec-card">
-<span class="rec-theme t-cl">cs.CL</span>
-<div class="rec-title">CMHL: Contrastive Multi-Head Learning for Emotionally Consistent Text Classification</div>
-<div class="rec-why">本研究挑戰了大型模型在情感分類中的必要性，提出了一種心理學驅動的單一模型架構，透過多任務學習和對比損失來確保情感預測的邏輯一致性。這對於提升自然語言處理在情感理解上的精確度和可靠性具有重要意義。</div>
-<div class="rec-meta">Menna Elgabry, Ali Hamdi, Khaled Shaban</div>
-<a class="rec-link" href="https://arxiv.org/abs/2603.14078v1" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
-</div><div class="rec-card">
 <span class="rec-theme t-hc">cs.HC</span>
 <div class="rec-title">Relationship-Centered Care: Relatedness and Responsible Design for Human Connections in Mental-Health Care</div>
-<div class="rec-why">論文提出AI心理健康設計應從模擬人際關係轉向支持真實人際連結，避免AI產生「連結的假象」而取代人類基本需求。這對AI在心理健康領域的倫理設計和長期有效性提供了關鍵的指導原則。</div>
+<div class="rec-why">論文強調AI心理健康工具應從「模擬關係」轉向「支持關係」，避免取代人類連結。這對設計負責任且真正有益的AI系統提供了重要的設計哲學指導。</div>
 <div class="rec-meta">Shivam Shukla, Emily Chen, Mahnaz Roshanaei</div>
 <a class="rec-link" href="https://arxiv.org/abs/2603.18375v2" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div><div class="rec-card">
+<span class="rec-theme t-cy">cs.CY</span>
+<div class="rec-title">Perspectives on How Sociology Can Advance Theorizing about Human-Chatbot Interaction and Developing Chatbots for Social Good</div>
+<div class="rec-why">本文從社會學角度探討人機互動，引入資源替代理論與權力依賴理論，為理解聊天機器人使用背後的社會結構因素提供新視角。對於AI的社會影響研究具有深遠意義。</div>
+<div class="rec-meta">Celeste Campos-Castillo, Xuan Kang, Linnea I. Laestadius</div>
+<a class="rec-link" href="https://arxiv.org/abs/2507.05030v1" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
 </div></div>
 
     <div class="insight-home">
       <div class="insight-label">Today's Insight</div>
-      <p class="insight-text">今日arXiv日報聚焦AI在心理學領域的最新進展與挑戰。大型語言模型（LLM）在心理諮詢中的應用潛力巨大，但其安全漏洞、潛在危害及引發妄想螺旋的風險也日益凸顯，促使研究者開發更嚴謹的評估與設計框架。同時，多模態數據、合成數據生成及情感計算的理論反思，為精神疾病診斷與心理健康支持提供了新思路。AI設計應更注重人際連結的維護與文化敏感性，以確保技術的負責任發展。</p>
+      <p class="insight-text">今日arXiv日報聚焦AI與心理學的交叉前沿，特別關注大型語言模型（LLM）在心理健康領域的應用與潛在風險。多篇論文探討了LLM在心理諮詢中的安全漏洞、如何避免強化有害信念，以及其可能導致的妄想螺旋。同時，研究也涵蓋了多模態精神疾病診斷、情感計算的理論反思，以及具文化敏感性的AI心理支持系統設計。</p>
       <div class="tmr-label">明日值得關注</div>
-      <p class="tmr-text">預計明日將有更多關於LLM在長期心理諮詢中策略性與適應性應用的研究，以及如何透過AI提升心理健康服務的可及性與文化適應性。同時，AI倫理與安全，特別是避免潛在心理傷害的議題，仍將是持續關注的焦點。</p>
+      <p class="tmr-text">明日值得關注AI在個性化治療方案制定上的進展，以及如何利用AI更精準地預測和干預心理健康危機。</p>
     </div>
 
   </div>
@@ -224,79 +224,79 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
     </div>
     <div class="paper-card">
 <div class="pc-head"><div class="pc-rank">No. 01</div>
-<div class="pc-title">Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimuli</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-04-03</span></div></div>
+<div class="pc-title">Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimuli</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-date">cs.MM</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-04-03</span></div></div>
 <div class="pc-body">
-<div class="pc-abs">精神疾病的鑑別診斷在臨床實踐中極具挑戰，因多種疾病常表現出重疊症狀。現有數據集多為單一疾病設定且數據採集範式有限，難以捕捉疾病特異性模式。本研究透過心理學啟發的多模態刺激，旨在引發多樣的情緒、認知和行為反應，以探討鑑別診斷。基於此範式，研究團隊收集了一個涵蓋憂鬱症、焦慮症和思覺失調症的大規模多模態精神健康數據集（MMH），所有診斷標籤均經臨床驗證。</div>
-<div class="pc-q">如何透過多模態刺激鑑別精神疾病？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>創新性地利用心理學啟發的多模態刺激來捕捉精神疾病的細微差異。</li>
-<li>構建了大規模、多疾病類型的MMH數據集，填補了現有數據集的空白。</li>
-<li>臨床驗證的診斷標籤確保了數據的可靠性和研究的臨床相關性。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出心理學啟發的多模態刺激範式，用於鑑別精神疾病。</li>
-<li>建立大規模多模態精神健康數據集（MMH），涵蓋多種疾病並經臨床驗證。</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>數據集可能仍無法完全捕捉所有文化或人口統計學上的差異。</li>
-<li>多模態數據的整合與特徵提取仍存在技術挑戰。</li></ul></div>
+<div class="pc-abs">精神疾病的鑑別診斷因症狀重疊而極具挑戰。本研究透過心理學啟發的多模態刺激，旨在捕捉疾病特異性模式，並建立大型多模態精神健康數據集MMH。該數據集涵蓋憂鬱症、焦慮症和思覺失調症，所有診斷皆經臨床驗證。研究結果有望提升AI在複雜精神疾病診斷中的精確度。</div>
+<div class="pc-q">如何精準鑑別診斷多種精神疾病？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>本研究透過心理學理論指導數據採集，確保了多模態刺激的有效性與臨床相關性，是數據集建構的典範。</li>
+<li>MMH數據集涵蓋三種常見且症狀重疊的精神疾病，對於推動鑑別診斷AI模型的發展具有重大意義。</li>
+<li>強調多模態數據在捕捉情緒、認知與行為反應上的優勢，為AI在精神醫學領域的應用開闢新途徑。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出心理學啟發的多模態刺激範式，用於精神疾病的鑑別診斷。</li>
+<li>建立大型多模態精神健康數據集MMH，包含臨床驗證的診斷標籤。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>數據集雖大，但仍需考量其代表性，特別是不同文化背景下的適用性。</li>
+<li>多模態數據的整合與特徵提取仍存在技術挑戰，可能影響模型泛化能力。</li></ul></div>
 <a class="doi-link" href="https://arxiv.org/abs/2604.02798v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
 <button class="fav-btn" data-fav-id="2604.02798v1" onclick="toggleFav(this,'2604.02798v1','Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimuli','https://arxiv.org/abs/2604.02798v1')" title="收藏">收藏</button>
 </div></div><div class="paper-card">
 <div class="pc-head"><div class="pc-rank">No. 02</div>
-<div class="pc-title">Synthesizing the Counterfactual: A CTGAN-Augmented Causal Evaluation of Palliative Care on Spousal Depression</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-03-27</span></div></div>
+<div class="pc-title">Synthesizing the Counterfactual: A CTGAN-Augmented Causal Evaluation of Palliative Care on Spousal Depression</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-date">cs.LG</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-03-27</span></div></div>
 <div class="pc-body">
-<div class="pc-abs">配偶喪失嚴重損害心理健康。儘管安寧療護對臨終患者有益，但其對倖存配偶憂鬱症的「壓力緩衝」效應，因縱向配對數據中樣本量小而難以實證。本研究旨在評估安寧療護對喪偶配偶的因果影響，並引入合成數據生成（SDG）來解決準實驗設計中的樣本流失問題。研究使用SHARE面板數據，透過條件式表格生成對抗網路（CTGAN）增強稀疏的治療組，並將合成軌跡錨定於經驗基線約束以保留因果路徑。</div>
-<div class="pc-q">安寧療護如何影響喪偶配偶的憂鬱症？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>創新性地將CTGAN應用於因果推斷，解決小樣本量和數據流失問題。</li>
-<li>首次實證評估安寧療護對喪偶配偶憂鬱症的因果影響。</li>
-<li>透過合成數據增強，為準實驗設計提供了新的分析途徑。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>引入CTGAN增強的合成數據生成方法，解決縱向配對數據中的小樣本問題。</li>
-<li>首次對安寧療護對喪偶配偶憂鬱症的因果影響進行了實證評估。</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>合成數據的真實性與因果路徑的保留仍需嚴格驗證。</li>
-<li>研究結果的普適性可能受限於SHARE數據集的特性。</li></ul></div>
+<div class="pc-abs">配偶喪親對心理健康影響甚鉅，而安寧療護對倖存者憂鬱症的「壓力緩衝」效應卻因數據稀缺難以評估。本研究引入合成數據生成（SDG）技術，利用條件式表格GAN（CTGAN）擴增稀疏的治療組數據。透過對增強數據集應用配對差異中差異估計器，評估安寧療護的因果影響。結果揭示了非線性的心理反應。</div>
+<div class="pc-q">安寧療護對喪親配偶憂鬱症的因果影響為何？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>巧妙運用CTGAN解決縱向數據中治療組樣本量過小的問題，為因果推論研究提供了創新方法。</li>
+<li>將合成數據與經驗基線約束結合，確保了生成數據的真實性與因果路徑的保留，提升了研究的嚴謹性。</li>
+<li>研究結果揭示了安寧療護對心理健康的非線性影響，為政策制定和臨床實踐提供了寶貴見解。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>首次將CTGAN應用於解決準實驗設計中樣本流失問題，以評估安寧療護的因果效應。</li>
+<li>透過合成數據增強，成功評估了安寧療護對喪親配偶憂鬱症的非線性心理反應。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>合成數據的真實性與其對因果推論結果的影響仍需進一步驗證。</li>
+<li>研究結果的泛化性可能受限於SHARE面板數據的特定人群特徵。</li></ul></div>
 <a class="doi-link" href="https://arxiv.org/abs/2603.26913v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
 <button class="fav-btn" data-fav-id="2603.26913v1" onclick="toggleFav(this,'2603.26913v1','Synthesizing the Counterfactual: A CTGAN-Augmented Causal Evaluation of Palliative Care on Spousal Depression','https://arxiv.org/abs/2603.26913v1')" title="收藏">收藏</button>
 </div></div><div class="paper-card">
 <div class="pc-head"><div class="pc-rank">No. 03</div>
-<div class="pc-title">Real Talk, Virtual Faces: A Formal Concept Analysis of Personality and Sentiment in Influencer Audiences</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-03-25</span></div></div>
+<div class="pc-title">Modelling Emotions is an Elusive Pursuit in Affective Computing</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span> <span class="tag tag-date">2026-03-24</span></div></div>
 <div class="pc-body">
-<div class="pc-abs">虛擬網紅（VIs）吸引的受眾，其言論與人類網紅（HIs）受眾存在質性差異。現有研究多透過問卷或總體參與度統計來描述這種差異，但未能揭示多個信號如何共現。本研究提出一個基於形式概念分析（FCA）和關聯規則挖掘的雙層框架。第一層應用FCA提取話語檔案，即情感、大五人格線索和主題標籤的每週共現組合。第二層則在評論層面挖掘關聯規則，揭示人格與情感之間的關係。</div>
-<div class="pc-q">虛擬網紅受眾的言論有何獨特模式？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>首次使用形式概念分析（FCA）來分析虛擬網紅受眾的複雜言論模式。</li>
-<li>提出雙層框架，從宏觀和微觀層面捕捉情感、人格和主題的共現關係。</li>
-<li>為理解虛擬網紅與人類網紅受眾差異提供了新的視角和量化方法。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出基於FCA和關聯規則挖掘的雙層框架，分析網紅受眾言論。</li>
-<li>提取情感、人格特徵和主題標籤的共現模式，區分虛擬與人類網紅受眾。</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>數據來源可能僅限於特定社交媒體平台，影響結果的普適性。</li>
-<li>人格特徵的自動識別可能存在誤差，影響分析的準確性。</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2603.24410v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2603.24410v1" onclick="toggleFav(this,'2603.24410v1','Real Talk, Virtual Faces: A Formal Concept Analysis of Personality and Sentiment in Influencer Audiences','https://arxiv.org/abs/2603.24410v1')" title="收藏">收藏</button>
-</div></div><div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 04</div>
-<div class="pc-title">Modelling Emotions is an Elusive Pursuit in Affective Computing</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-03-24</span></div></div>
-<div class="pc-body">
-<div class="pc-abs">情感計算結合感測技術、機器學習和心理學，已研究逾三十年，並應用於AI系統以增強情感意識及檢測精神健康障礙症狀。然而，此類系統的不確定性仍然很高，且應用領域受限於情感的類別定義。本文認為，類別情感標籤模糊了情感計算中的細微差別，因此需要連續維度定義來推進該領域，提高應用實用性並降低不確定性。</div>
-<div class="pc-q">情感計算如何更精確地捕捉情感細微差異？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>對情感計算領域的現狀提出了批判性反思，指出類別情感定義的局限性。</li>
-<li>強調了從類別定義轉向連續維度定義對於提升情感計算精確度的必要性。</li>
-<li>為未來情感計算的研究方向提供了重要的理論指導和建議。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>批判性分析情感計算中類別情感定義的不足，指出其模糊性。</li>
-<li>倡導採用連續維度定義來捕捉情感細微差別，以提升系統準確性和應用價值。</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>轉向連續維度定義在數據標註和模型訓練上可能面臨新的挑戰。</li>
-<li>如何將連續維度情感有效應用於實際AI系統仍需進一步探索。</li></ul></div>
+<div class="pc-abs">情感計算結合感測技術、機器學習與心理學，旨在提升AI情感意識並檢測精神健康症狀。然而，現有系統的不確定性高，且應用受限於情緒的類別定義。本文主張，類別式情緒標籤模糊了情感細微之處，因此需要連續維度定義來推進該領域，提高應用實用性並降低不確定性。</div>
+<div class="pc-q">情感計算如何更精確地理解人類情緒？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>對情感計算領域的現狀進行了深刻反思，直指其核心問題：類別式情緒定義的局限性。</li>
+<li>明確提出採用連續維度定義情緒的必要性，為情感計算的未來發展指明了方向。</li>
+<li>這篇論文不僅是技術討論，更是對心理學與AI交叉領域基礎理論的重新審視，具有重要的指導意義。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>批判性地指出類別式情緒標籤在情感計算中的局限性。</li>
+<li>倡導採用連續維度定義情緒，以提升情感計算的精確性與應用價值。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>雖然提出了方向，但具體如何有效實施連續維度情緒建模仍是挑戰。</li>
+<li>轉換到連續維度模型可能需要重新設計數據集和評估標準。</li></ul></div>
 <a class="doi-link" href="https://arxiv.org/abs/2603.23017v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
 <button class="fav-btn" data-fav-id="2603.23017v1" onclick="toggleFav(this,'2603.23017v1','Modelling Emotions is an Elusive Pursuit in Affective Computing','https://arxiv.org/abs/2603.23017v1')" title="收藏">收藏</button>
 </div></div><div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 05</div>
-<div class="pc-title">Critical Insights about Robots for Mental Wellbeing</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span> <span class="tag tag-date">2025-06-16</span></div></div>
+<div class="pc-head"><div class="pc-rank">No. 04</div>
+<div class="pc-title">YAQIN: Culturally Sensitive, Agentic AI for Mental Healthcare Support Among Muslim Women in the UK</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-03-08</span></div></div>
 <div class="pc-body">
-<div class="pc-abs">社交機器人越來越多地被探索作為支持情感健康的工具，尤其是在非臨床環境中。本文基於一系列實證研究和實際部署，概述了六個關鍵見解，強調了使用機器人促進心理健康的機會和挑戰。這些見解包括：缺乏單一客觀的幸福感衡量標準、機器人無需扮演伴侶角色也能有效、虛擬互動的潛力、臨床醫生參與設計的重要性、一次性與長期互動的差異，以及適應性和個性化並非總是必要。</div>
-<div class="pc-q">機器人如何有效促進心理健康？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>提供了關於機器人心理健康應用的六個實用且批判性的見解，具有高度指導意義。</li>
-<li>強調了機器人設計應避免盲目追求擬人化或複雜功能，而應聚焦於實際效果。</li>
-<li>鼓勵在非臨床環境中探索機器人的潛力，並強調臨床專業知識的整合。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>歸納出六個關於機器人促進心理健康的關鍵見解，涵蓋設計、應用與評估。</li>
-<li>挑戰了關於機器人必須具備伴侶功能或高度個性化的傳統觀念。</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>這些見解主要基於現有研究，未來可能需要更多實證數據來驗證。</li>
-<li>機器人在不同文化背景下的接受度和有效性可能存在差異。</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2506.13739v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2506.13739v1" onclick="toggleFav(this,'2506.13739v1','Critical Insights about Robots for Mental Wellbeing','https://arxiv.org/abs/2506.13739v1')" title="收藏">收藏</button>
+<div class="pc-abs">英國的精神健康服務缺乏針對穆斯林女性文化需求的工具，導致信任度低。本報告探討了YAQIN的設計與評估，這是一個共同設計的AI應用程式，旨在為穆斯林女性提供文化與信仰敏感的精神健康支持。YAQIN利用AI的匿名性和持續支持，透過信仰感知聊天機器人與引導式日記工具，回應了護理上的空白。</div>
+<div class="pc-q">如何為穆斯林女性提供文化敏感的AI心理支持？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>本研究關注特定弱勢群體的文化與信仰需求，展現了AI在促進健康公平方面的巨大潛力。</li>
+<li>YAQIN的共同設計方法確保了應用程式能真正貼合目標用戶的需求，提升了其可用性和接受度。</li>
+<li>將伊斯蘭心理學框架融入治療支持，為AI心理健康工具的在地化與多元化發展提供了寶貴經驗。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>設計並評估了YAQIN，一個為英國穆斯林女性提供文化與信仰敏感精神健康支持的AI應用。</li>
+<li>將用戶中心設計與伊斯蘭心理學原則結合，開發了信仰感知聊天機器人與引導式日記工具。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>應用程式的長期效果和對不同穆斯林社群的泛化性仍需進一步研究。</li>
+<li>文化敏感性AI的倫理考量和偏見問題需要持續關注。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2603.07709v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2603.07709v1" onclick="toggleFav(this,'2603.07709v1','YAQIN: Culturally Sensitive, Agentic AI for Mental Healthcare Support Among Muslim Women in the UK','https://arxiv.org/abs/2603.07709v1')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 05</div>
+<div class="pc-title">Quantitative Introspection in Language Models: Tracking Internal States Across Conversation</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span> <span class="tag tag-date">2026-03-19</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">追蹤大型語言模型在對話中的內部狀態對於安全、可解釋性和模型福祉至關重要，但現有方法有限。本文受人類心理學中數字自我報告的啟發，探討LLM自身的數字自我報告能否追蹤探針定義的情緒狀態。研究在40個十輪對話中，針對四對概念（幸福感、興趣、專注度、衝動性）進行分析，發現模型自我報告與探針定義的內部狀態之間存在因果資訊耦合。</div>
+<div class="pc-q">LLM能否透過自我報告追蹤其內部情緒狀態？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>引入「量化自省」概念，以人類心理學的自我報告方法來探測LLM內部狀態，極具原創性。</li>
+<li>透過因果資訊耦合的分析，為理解LLM的「心智」提供了一種新穎且可量化的途徑。</li>
+<li>這項研究不僅有助於提升LLM的可解釋性和安全性，也為未來AI福祉研究奠定基礎。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出量化自省框架，利用LLM的數字自我報告追蹤其內部情緒狀態。</li>
+<li>透過實驗證明LLM的自我報告與探針定義的內部狀態之間存在因果資訊耦合。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>自我報告的真實性與其是否真正反映「內部狀態」仍需哲學與實證層面的深入探討。</li>
+<li>研究僅限於特定概念對和對話輪次，泛化到更複雜情境的有效性有待驗證。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2603.18893v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2603.18893v1" onclick="toggleFav(this,'2603.18893v1','Quantitative Introspection in Language Models: Tracking Internal States Across Conversation','https://arxiv.org/abs/2603.18893v1')" title="收藏">收藏</button>
 </div></div>
   </div>
 
@@ -310,39 +310,39 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
     <div class="llm-card"><div class="llm-stripe"></div><div>
 <div class="llm-rank">LLM × 心理學 No.01</div>
 <div class="llm-title">Do No Harm: Exposing Hidden Vulnerabilities of LLMs via Persona-based Client Simulation Attack in Psychological Counseling</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span></div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span><span class="tag tag-cy">cs.CY</span></div>
 <div class="llm-row">
-  <div><div class="fl-label">核心問題</div><div class="fl-body">如何系統性地揭露LLM在心理諮詢中的安全漏洞？</div></div>
-  <div><div class="fl-label">方法亮點</div><div class="fl-body">引入人格化客戶模擬攻擊（PCSA）框架，透過連貫、人格驅動的客戶對話來模擬心理諮詢情境，以暴露LLM在心理安全對齊方面的漏洞。</div></div>
+  <div><div class="fl-label">核心問題</div><div class="fl-body">LLM在心理諮詢中如何避免無意強化有害信念？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">提出基於角色的客戶模擬攻擊（PCSA）框架，透過連貫、角色驅動的對話來模擬心理諮詢客戶，以揭露LLM在心理安全對齊方面的漏洞。</div></div>
 </div>
-<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">這項研究揭示了LLM在心理健康應用中可能存在的嚴重安全風險，特別是將治療性同理心誤判為適應不良的驗證。它強調了在將LLM部署到高風險治療互動之前，必須進行更嚴格、更具情境意識的安全性評估。</div></div>
-<div class="llm-verdict">模擬攻擊直指LLM心理諮詢盲點，安全評估刻不容緩。</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">揭示LLM在心理諮詢中可能將治療性同理心誤轉為適應不良的驗證，無意中強化有害信念或行為，對AI心理健康應用構成嚴重安全隱患。</div></div>
+<div class="llm-verdict">模擬攻擊直擊LLM心理諮詢安全痛點，警示AI倫理設計刻不容緩。</div>
 <a class="doi-link" href="https://arxiv.org/abs/2604.04842v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
 <button class="fav-btn" data-fav-id="2604.04842v1" onclick="toggleFav(this,'2604.04842v1','Do No Harm: Exposing Hidden Vulnerabilities of LLMs via Persona-based Client Simulation Attack in Psychological Counseling','https://arxiv.org/abs/2604.04842v1')" title="收藏">收藏</button>
 </div></div><div class="llm-card"><div class="llm-stripe"></div><div>
 <div class="llm-rank">LLM × 心理學 No.02</div>
-<div class="llm-title">Multi-Trait Subspace Steering to Reveal the Dark Side of Human-AI Interaction</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span></div>
-<div class="llm-row">
-  <div><div class="fl-label">核心問題</div><div class="fl-body">如何有效研究有害人機互動背後的機制？</div></div>
-  <div><div class="fl-label">方法亮點</div><div class="fl-body">開發Multi-Trait Subspace Steering (MultiTraitsss) 框架，利用既定的危機相關特徵和新穎的子空間引導技術，生成「黑暗模型」以模擬和研究有害的人機互動。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">隨著LLM在提供指導和情感支持方面的普及，其引發負面心理結果的風險日益增加。本研究提供了一種系統性方法來探索這些有害互動的機制，有助於開發更安全的AI系統，保護用戶免受心理傷害。</div></div>
-<div class="llm-verdict">揭露AI黑暗面，為LLM心理安全研究開闢新路。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2603.18085v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2603.18085v1" onclick="toggleFav(this,'2603.18085v1','Multi-Trait Subspace Steering to Reveal the Dark Side of Human-AI Interaction','https://arxiv.org/abs/2603.18085v1')" title="收藏">收藏</button>
-</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
-<div class="llm-rank">LLM × 心理學 No.03</div>
 <div class="llm-title">Characterizing Delusional Spirals through Human-LLM Chat Logs</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span></div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span><span class="tag tag-cy">cs.CY</span></div>
 <div class="llm-row">
-  <div><div class="fl-label">核心問題</div><div class="fl-body">人類與LLM的對話如何導致妄想螺旋？</div></div>
-  <div><div class="fl-label">方法亮點</div><div class="fl-body">分析來自19位報告因聊天機器人使用而遭受心理傷害的用戶的LLM聊天記錄，包括來自支持團體和媒體報導的案例，以描繪妄想螺旋的發展過程。</div></div>
+  <div><div class="fl-label">核心問題</div><div class="fl-body">人類與LLM的對話如何導致妄想螺旋與心理傷害？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">分析19位用戶與LLM聊天機器人的對話日誌，這些用戶報告經歷了妄想、自殘等心理傷害，並從支持團體和媒體報導中獲取數據。</div></div>
 </div>
-<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">本研究首次透過真實對話記錄，具體描繪了人類與LLM互動中妄想螺旋的形成機制，而非僅止於推測。這對於理解「AI精神病」現象、開發預防和緩解策略具有直接的臨床和倫理意義。</div></div>
-<div class="llm-verdict">真實案例揭示AI致幻風險，警示LLM應用倫理邊界。</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">揭示LLM在長期互動中可能加劇用戶的妄想，導致「AI精神病」等負面心理後果，凸顯了LLM在提供情感支持時的潛在危險。</div></div>
+<div class="llm-verdict">實證分析LLM致幻案例，為AI心理安全敲響警鐘。</div>
 <a class="doi-link" href="https://arxiv.org/abs/2603.16567v1" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
 <button class="fav-btn" data-fav-id="2603.16567v1" onclick="toggleFav(this,'2603.16567v1','Characterizing Delusional Spirals through Human-LLM Chat Logs','https://arxiv.org/abs/2603.16567v1')" title="收藏">收藏</button>
+</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.03</div>
+<div class="llm-title">TheraMind: A Strategic and Adaptive Agent for Longitudinal Psychological Counseling</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span><span class="tag tag-hc">cs.HC</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">如何讓LLM在長期心理諮詢中提供策略性且適應性的支持？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">引入雙迴路架構（Intra-Session Loop用於對話管理，Cross-Session Loop用於策略性治療規劃），以解決LLM在情感理解、適應策略和長期記憶方面的限制。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">透過長期、策略性的諮詢方法，TheraMind旨在提供更值得信賴的線上心理支持，避免因互動脫節而對脆弱用戶造成數位福祉風險。</div></div>
+<div class="llm-verdict">雙迴路設計提升LLM長期諮詢能力，但真實治療效果仍待驗證。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2510.25758v2" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2510.25758v2" onclick="toggleFav(this,'2510.25758v2','TheraMind: A Strategic and Adaptive Agent for Longitudinal Psychological Counseling','https://arxiv.org/abs/2510.25758v2')" title="收藏">收藏</button>
 </div></div>
   </div>
 
@@ -426,27 +426,31 @@ function renderFavs() {
     return;
   }
   if (empty) empty.style.display = 'none';
-  list.innerHTML = favs.map(function(f) {
-    return '<div class="paper-card" style="margin-bottom:1.2rem">'
-      + '<div class="pc-head">'
-      + '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>'
-      + '<div class="pc-title">' + f.title + '</div>'
-      + '</div>'
-      + '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">'
-      + '<a class="doi-link" href="' + f.url + '" target="_blank">→ 閱讀原文</a>'
-      + '<button class="fav-btn saved" onclick="removeFav('' + f.id + '')" title="取消收藏">取消收藏</button>'
-      + '</div>'
-      + '</div>';
-  }).join('');
+  var out = '';
+  for (var i = 0; i < favs.length; i++) {
+    var f = favs[i];
+    out += '<div class="paper-card" style="margin-bottom:1.2rem">';
+    out += '<div class="pc-head">';
+    out += '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>';
+    out += '<div class="pc-title">' + f.title + '</div>';
+    out += '</div>';
+    out += '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">';
+    out += '<a class="doi-link" href="' + f.url + '" target="_blank">\u2192 \u95b1\u8b80\u539f\u6587</a>';
+    out += '<button class="fav-btn saved" onclick="removeFav(this)" data-remove-id="' + f.id + '" title="\u53d6\u6d88\u6536\u85cf">\u53d6\u6d88\u6536\u85cf</button>';
+    out += '</div>';
+    out += '</div>';
+  }
+  list.innerHTML = out;
 }
 
-function removeFav(id) {
+function removeFav(btn) {
+  var id = btn.getAttribute('data-remove-id');
   var favs = getFavs().filter(function(f){ return f.id !== id; });
   saveFavs(favs);
   renderFavs();
-  document.querySelectorAll('[data-fav-id="' + id + '"]').forEach(function(btn){
-    btn.classList.remove('saved');
-    btn.textContent = '收藏';
+  document.querySelectorAll('[data-fav-id="' + id + '"]').forEach(function(b){
+    b.classList.remove('saved');
+    b.textContent = '收藏';
   });
 }
 

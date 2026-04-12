@@ -52,8 +52,8 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 /* ── 主版面 ── */
 .page-wrap{max-width:900px;margin:0 auto;padding:0 2rem 6rem;position:relative}
-.tab-panel{display:none;opacity:0}
-.tab-panel.active{display:block;opacity:1}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .4s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── 章節標題 ── */
@@ -297,27 +297,31 @@ function renderFavs() {
     return;
   }
   if (empty) empty.style.display = 'none';
-  list.innerHTML = favs.map(function(f) {
-    return '<div class="paper-card" style="margin-bottom:1.2rem">'
-      + '<div class="pc-head">'
-      + '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>'
-      + '<div class="pc-title">' + f.title + '</div>'
-      + '</div>'
-      + '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">'
-      + '<a class="doi-link" href="' + f.url + '" target="_blank">→ 閱讀原文</a>'
-      + '<button class="fav-btn saved" onclick="removeFav('' + f.id + '')" title="取消收藏">取消收藏</button>'
-      + '</div>'
-      + '</div>';
-  }).join('');
+  var out = '';
+  for (var i = 0; i < favs.length; i++) {
+    var f = favs[i];
+    out += '<div class="paper-card" style="margin-bottom:1.2rem">';
+    out += '<div class="pc-head">';
+    out += '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>';
+    out += '<div class="pc-title">' + f.title + '</div>';
+    out += '</div>';
+    out += '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">';
+    out += '<a class="doi-link" href="' + f.url + '" target="_blank">\u2192 \u95b1\u8b80\u539f\u6587</a>';
+    out += '<button class="fav-btn saved" onclick="removeFav(this)" data-remove-id="' + f.id + '" title="\u53d6\u6d88\u6536\u85cf">\u53d6\u6d88\u6536\u85cf</button>';
+    out += '</div>';
+    out += '</div>';
+  }
+  list.innerHTML = out;
 }
 
-function removeFav(id) {
+function removeFav(btn) {
+  var id = btn.getAttribute('data-remove-id');
   var favs = getFavs().filter(function(f){ return f.id !== id; });
   saveFavs(favs);
   renderFavs();
-  document.querySelectorAll('[data-fav-id="' + id + '"]').forEach(function(btn){
-    btn.classList.remove('saved');
-    btn.textContent = '收藏';
+  document.querySelectorAll('[data-fav-id="' + id + '"]').forEach(function(b){
+    b.classList.remove('saved');
+    b.textContent = '收藏';
   });
 }
 
