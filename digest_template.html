@@ -219,6 +219,20 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 </div>
 
+
+  <!-- ═══ 收藏夾 ═══ -->
+  <div id="tab-favs" class="tab-panel">
+    <div class="sec-header">
+      <span class="sec-num">★ /</span>
+      <span class="sec-title">我的收藏</span>
+      <span class="sec-sub">SAVED PAPERS</span>
+    </div>
+    <div id="favs-list"></div>
+    <div id="favs-empty" style="text-align:center;padding:4rem 0;color:var(--m-ink-muted);font-style:italic;font-size:.9rem">
+      還沒有收藏的論文，在深度解析或 LLM 頁面點「收藏」加入
+    </div>
+  </div>
+
 <!-- ═══ Lottie 動畫 ═══ -->
 <div class="lottie-wrapper" id="lottie-wrapper">
   <div id="lottie-container" style="width:140px;height:140px"></div>
@@ -233,9 +247,11 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 <script>
 // ── 頁籤切換 ──
 function switchTab(name, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
+  var panel = document.getElementById('tab-' + name);
+  if (!panel) return;
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  panel.classList.add('active');
   btn.classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
