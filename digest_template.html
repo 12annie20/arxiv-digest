@@ -155,7 +155,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 <header class="masthead">
   <div class="masthead-eyebrow">arXiv · AI × Psychology · Daily Digest</div>
-  <h1 class="masthead-title">文獻早報 <em>/ {{DATE}}</em></h1>
+  <h1 class="masthead-title">文獻日報 <em>/ {{DATE}}</em></h1>
   <div class="masthead-date">{{DATETIME}} 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
   <div class="masthead-rule"></div>
 </header>
@@ -226,7 +226,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 <footer<footer class="footer">
   <div class="footer-rule"></div>
-  <div>arXiv Daily Digest · {{DATE}}</div>
+  <div>arXiv 文獻日報 · {{DATE}}</div>
   <div style="margin-top:.4rem;opacity:.6">© 12annie20 · All rights reserved</div>
 </footer>
 
@@ -253,16 +253,27 @@ function saveFavs(favs) {
 }
 
 function toggleFav(btn, id, title, url) {
+  if (!id) { console.warn('toggleFav: 缺少 id'); return; }
   let favs = getFavs();
   const idx = favs.findIndex(f => f.id === id);
+  // 如果 title 是空的，嘗試從 DOM 找
+  if (!title || title.trim() === '') {
+    const card = btn.closest('.paper-card') || btn.closest('.llm-card');
+    if (card) {
+      const titleEl = card.querySelector('.pc-title') || card.querySelector('.llm-title');
+      if (titleEl) title = titleEl.innerText.trim();
+    }
+  }
   if (idx === -1) {
-    favs.push({ id, title, url, savedAt: new Date().toLocaleDateString('zh-TW') });
+    favs.push({ id, title: title || id, url, savedAt: new Date().toLocaleDateString('zh-TW') });
     btn.classList.add('saved');
-    btn.title = '取消收藏';
+    btn.setAttribute('title', '取消收藏');
+    btn.textContent = '已收藏';
   } else {
     favs.splice(idx, 1);
     btn.classList.remove('saved');
-    btn.title = '收藏';
+    btn.setAttribute('title', '收藏');
+    btn.textContent = '收藏';
   }
   saveFavs(favs);
   renderFavs();

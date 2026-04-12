@@ -201,17 +201,12 @@ def call_gemini(papers, today):
 THEME_CLASS = {'cs.AI':'t-ai','cs.HC':'t-hc','cs.CL':'t-cl','cs.CY':'t-cy'}
 
 def fav_btn_html(p, card_class='paper-card', title_class='pc-title'):
-    """產生收藏按鈕 HTML，確保 arxiv_id 和 url 都是真實值"""
+    """產生收藏按鈕 HTML"""
     aid = p.get('arxiv_id', '')
     url = p.get('arxiv_url', '#')
-    return (
-        f'<button class="fav-btn" '
-        f'data-fav-id="{aid}" '
-        f'onclick="toggleFav(this,\'{aid}\','
-        f'this.closest(\'.{card_class}\').querySelector(\'.{title_class}\').innerText,'
-        f'\'{url}\')" '
-        f'title="收藏">收藏</button>'
-    )
+    title = p.get('title', '').replace("'", ' ').replace('"', ' ')
+    onclick = f"toggleFav(this,'{aid}','{title}','{url}')"
+    return f'<button class="fav-btn" data-fav-id="{aid}" onclick="{onclick}" title="收藏">收藏</button>'
 
 def tag_html(t):
     m = {"cs.AI":("cs.AI","tag-ai"),"cs.HC":("cs.HC","tag-hc"),
