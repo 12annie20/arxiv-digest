@@ -12,7 +12,8 @@ import urllib.request, urllib.parse
 import xml.etree.ElementTree as ET
 
 # ── 設定區 ────────────────────────────────────────────────────────────
-API_KEY       = "AIzaSyBHjh1rYSP6Uf5j30bKYKW7cqfOzvsn_oA"
+import os
+API_KEY = os.environ.get("GEMINI_API_KEY", "")
 OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
@@ -249,6 +250,7 @@ def render_papers(papers):
 <div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list">{ci}</ul></div>
 <div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list">{li}</ul></div>
 {link_html(p)}
+<button class="fav-btn" data-fav-id="{p['arxiv_id']}" onclick="toggleFav(this,'{p['arxiv_id']}',this.closest('.paper-card').querySelector('.pc-title').innerText,'{p.get('arxiv_url','#')}')" title="收藏">收藏</button>
 </div></div>'''
     return html
 
@@ -267,6 +269,7 @@ def render_llm(papers):
 <div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">{p["implication"]}</div></div>
 <div class="llm-verdict">{p["verdict"]}</div>
 {link_html(p)}
+<button class="fav-btn" data-fav-id="{p['arxiv_id']}" onclick="toggleFav(this,'{p['arxiv_id']}',this.closest('.paper-card').querySelector('.pc-title').innerText,'{p.get('arxiv_url','#')}')" title="收藏">收藏</button>
 </div></div>'''
     return html
 
@@ -314,8 +317,23 @@ def main():
     path = save_html(html, today)
     print(f"✅ 已儲存：{path}")
     notify("☀️ 今日 arXiv 日報已就緒", f"{today} · {len(data.get('papers',[]))} 篇精選")
+    # 開啟本機瀏覽器
     webbrowser.open("file:///" + path.replace("\\","/"))
-    print("🌐 已開啟瀏覽器\n🎉 享用你的文獻早餐 ☕\n")
+    print("🌐 已開啟瀏覽器")
+
+    # 自動推上 GitHub Pages
+    try:
+        import subprocess as sp
+        folder = OUTPUT_FOLDER
+        sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
+        sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
+        sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
+        print(f"🚀 已推上 GitHub Pages")
+        print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/digest_{today}.html")
+    except Exception as e:
+        print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
+
+    print("\n🎉 享用你的文獻早餐 ☕\n")
 
 if __name__ == "__main__":
     main()

@@ -129,8 +129,16 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 .lottie-wrapper.visible{opacity:1}
 
 /* ── 頁尾 ── */
-.footer{text-align:center;padding:2rem 0 3rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--m-ink-muted)}
+.footer{text-align:center;padding:2rem 0 3rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--m-ink-muted);width:100%}
 .footer-rule{width:36px;height:1px;background:var(--m-rule);margin:0 auto .9rem}
+
+/* ── 收藏功能 ── */
+.fav-btn{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid var(--m-rule);border-radius:1px;padding:.3em .8em;cursor:pointer;color:var(--m-ink-muted);transition:all .2s;margin-top:.8rem;display:inline-flex;align-items:center;gap:.4rem}
+.fav-btn:hover{border-color:var(--m-clay);color:var(--m-clay)}
+.fav-btn.saved{border-color:var(--m-clay);color:var(--m-clay);background:var(--m-clay-pale)}
+.fav-btn.saved::before{content:'★ '}
+.fav-btn:not(.saved)::before{content:'☆ '}
+#tab-favs .paper-card{border-left:2px solid var(--m-clay)}
 
 @media(max-width:680px){
   .page-wrap{padding:0 1.1rem 4rem}
@@ -157,6 +165,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
     <button class="nav-btn active" onclick="switchTab('home',this)">☀ 今日推薦</button>
     <button class="nav-btn" onclick="switchTab('papers',this)">📚 TOP 5 深度解析</button>
     <button class="nav-btn" onclick="switchTab('llm',this)">🤖 LLM × 心理學</button>
+    <button class="nav-btn" onclick="switchTab('favs',this)">★ 收藏夾</button>
   </div>
 </nav>
 
@@ -217,7 +226,8 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 <footer<footer class="footer">
   <div class="footer-rule"></div>
-  arXiv Daily Digest · {{DATE}}
+  <div>arXiv Daily Digest · {{DATE}}</div>
+  <div style="margin-top:.4rem;opacity:.6">© 12annie20 · All rights reserved</div>
 </footer>
 
 <script>
@@ -228,6 +238,76 @@ function switchTab(name, btn) {
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── 收藏功能 ──
+const FAV_KEY = 'arxiv_digest_favs';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function saveFavs(favs) {
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+}
+
+function toggleFav(btn, id, title, url) {
+  let favs = getFavs();
+  const idx = favs.findIndex(f => f.id === id);
+  if (idx === -1) {
+    favs.push({ id, title, url, savedAt: new Date().toLocaleDateString('zh-TW') });
+    btn.classList.add('saved');
+    btn.title = '取消收藏';
+  } else {
+    favs.splice(idx, 1);
+    btn.classList.remove('saved');
+    btn.title = '收藏';
+  }
+  saveFavs(favs);
+  renderFavs();
+}
+
+function renderFavs() {
+  const favs = getFavs();
+  const list = document.getElementById('favs-list');
+  const empty = document.getElementById('favs-empty');
+  if (!list) return;
+  if (favs.length === 0) {
+    list.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  list.innerHTML = favs.map(f => `
+    <div class="paper-card" style="margin-bottom:1.2rem">
+      <div class="pc-head">
+        <div class="pc-rank" style="color:var(--m-clay)">收藏於 ${f.savedAt}</div>
+        <div class="pc-title">${f.title}</div>
+      </div>
+      <div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">
+        <a class="doi-link" href="${f.url}" target="_blank">→ 閱讀原文</a>
+        <button class="fav-btn saved" onclick="removeFav('${f.id}', this)" title="取消收藏">已收藏</button>
+      </div>
+    </div>`).join('');
+}
+
+function removeFav(id, btn) {
+  let favs = getFavs();
+  favs = favs.filter(f => f.id !== id);
+  saveFavs(favs);
+  renderFavs();
+  // 同步更新論文頁的收藏按鈕狀態
+  document.querySelectorAll(`[data-fav-id="${id}"]`).forEach(b => b.classList.remove('saved'));
+}
+
+function initFavBtns() {
+  const favs = getFavs();
+  const savedIds = new Set(favs.map(f => f.id));
+  document.querySelectorAll('[data-fav-id]').forEach(btn => {
+    if (savedIds.has(btn.dataset.favId)) btn.classList.add('saved');
+  });
+  renderFavs();
 }
 
 // ── Lottie：JSON 直接內嵌，不需要外部檔案 ──
@@ -244,6 +324,7 @@ lottie.loadAnimation({
   animationData: chosenData
 });
 setTimeout(() => document.getElementById('lottie-wrapper').classList.add('visible'), 800);
+initFavBtns();
 </script>
 </body>
 </html>
