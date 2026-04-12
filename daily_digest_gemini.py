@@ -14,7 +14,8 @@ import xml.etree.ElementTree as ET
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
 API_KEY = os.environ.get("GEMINI_API_KEY", "")
-OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
+IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
+OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
 
@@ -301,6 +302,9 @@ def save_html(html, today):
     return path
 
 def notify(title, msg):
+    if IS_GITHUB:
+        print(f"📢 {title}: {msg}")
+        return
     ps = f'''Add-Type -AssemblyName System.Windows.Forms
 $n = New-Object System.Windows.Forms.NotifyIcon
 $n.Icon = [System.Drawing.SystemIcons]::Information
@@ -325,21 +329,21 @@ def main():
     path = save_html(html, today)
     print(f"✅ 已儲存：{path}")
     notify("☀️ 今日 arXiv 日報已就緒", f"{today} · {len(data.get('papers',[]))} 篇精選")
-    # 開啟本機瀏覽器
-    webbrowser.open("file:///" + path.replace("\\","/"))
-    print("🌐 已開啟瀏覽器")
-
-    # 自動推上 GitHub Pages
-    try:
-        import subprocess as sp
-        folder = OUTPUT_FOLDER
-        sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
-        sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
-        sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
-        print(f"🚀 已推上 GitHub Pages")
-        print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/digest_{today}.html")
-    except Exception as e:
-        print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
+    if IS_GITHUB:
+        print("🌍 GitHub Actions 完成！網址：https://12annie20.github.io/arxiv-digest/")
+    else:
+        webbrowser.open("file:///" + path.replace("\\","/"))
+        print("🌐 已開啟瀏覽器")
+        try:
+            import subprocess as sp
+            folder = OUTPUT_FOLDER
+            sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
+            sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
+            sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
+            print(f"🚀 已推上 GitHub Pages")
+            print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/digest_{today}.html")
+        except Exception as e:
+            print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
 
     print("\n🎉 享用你的文獻早餐 ☕\n")
 
