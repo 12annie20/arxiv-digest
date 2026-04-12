@@ -200,6 +200,19 @@ def call_gemini(papers, today):
 # ══════════════════════════════════════════════════════════════════════
 THEME_CLASS = {'cs.AI':'t-ai','cs.HC':'t-hc','cs.CL':'t-cl','cs.CY':'t-cy'}
 
+def fav_btn_html(p, card_class='paper-card', title_class='pc-title'):
+    """產生收藏按鈕 HTML，確保 arxiv_id 和 url 都是真實值"""
+    aid = p.get('arxiv_id', '')
+    url = p.get('arxiv_url', '#')
+    return (
+        f'<button class="fav-btn" '
+        f'data-fav-id="{aid}" '
+        f'onclick="toggleFav(this,\'{aid}\','
+        f'this.closest(\'.{card_class}\').querySelector(\'.{title_class}\').innerText,'
+        f'\'{url}\')" '
+        f'title="收藏">收藏</button>'
+    )
+
 def tag_html(t):
     m = {"cs.AI":("cs.AI","tag-ai"),"cs.HC":("cs.HC","tag-hc"),
          "cs.CL":("cs.CL","tag-cl"),"cs.CY":("cs.CY","tag-cy")}
@@ -250,7 +263,7 @@ def render_papers(papers):
 <div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list">{ci}</ul></div>
 <div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list">{li}</ul></div>
 {link_html(p)}
-<button class="fav-btn" data-fav-id="{p['arxiv_id']}" onclick="toggleFav(this,'{p['arxiv_id']}',this.closest('.paper-card').querySelector('.pc-title').innerText,'{p.get('arxiv_url','#')}')" title="收藏">收藏</button>
+{fav_btn_html(p)}
 </div></div>'''
     return html
 
@@ -269,7 +282,7 @@ def render_llm(papers):
 <div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">{p["implication"]}</div></div>
 <div class="llm-verdict">{p["verdict"]}</div>
 {link_html(p)}
-<button class="fav-btn" data-fav-id="{p['arxiv_id']}" onclick="toggleFav(this,'{p['arxiv_id']}',this.closest('.paper-card').querySelector('.pc-title').innerText,'{p.get('arxiv_url','#')}')" title="收藏">收藏</button>
+{fav_btn_html(p, card_class='llm-card', title_class='llm-title')}
 </div></div>'''
     return html
 
