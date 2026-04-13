@@ -14,7 +14,8 @@ import xml.etree.ElementTree as ET
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
 API_KEY = os.environ.get("GEMINI_API_KEY", "")
-OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
+IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
+OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
 
