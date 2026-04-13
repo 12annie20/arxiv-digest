@@ -14,8 +14,7 @@ import xml.etree.ElementTree as ET
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
 API_KEY = os.environ.get("GEMINI_API_KEY", "")
-IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
-OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
+OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
 
@@ -25,124 +24,113 @@ def get_datetime(): return datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 # ══════════════════════════════════════════════════════════════════════
 # STEP 1：arXiv API 抓真實論文
 # ══════════════════════════════════════════════════════════════════════
-ARXIV_QUERIES = [
-    'cat:cs.AI+AND+(psychology+OR+mental+health)',
-    'cat:cs.AI+AND+(emotion+OR+counseling+OR+therapy)',
-    'cat:cs.HC+AND+(psychology+OR+wellbeing+OR+emotion)',
-    'cat:cs.CL+AND+(mental+health+OR+emotion+OR+affective)',
-    'cat:cs.CY+AND+(psychology+OR+wellbeing)',
-    'all:LLM+AND+(therapy+OR+counseling+OR+mental+health)',
-    'all:AI+AND+(psychology+OR+emotion+OR+wellbeing)',
+# arXiv RSS Feed 分類（不會被 GitHub Actions 封鎖）
+ARXIV_RSS_FEEDS = [
+    'https://arxiv.org/rss/cs.AI',
+    'https://arxiv.org/rss/cs.HC',
+    'https://arxiv.org/rss/cs.CL',
+    'https://arxiv.org/rss/cs.CY',
 ]
+
+# 心理學相關關鍵字過濾
+PSYCH_KEYWORDS = [
+    'psychology', 'mental health', 'counseling', 'emotion', 'therapy',
+    'wellbeing', 'well-being', 'affective', 'cognitive', 'behavioral',
+    'psychiatric', 'depression', 'anxiety', 'therapeutic', 'clinical',
+    'human behavior', 'social', 'empathy', 'stress', 'trauma',
+]
+
 NS = 'http://www.w3.org/2005/Atom'
 
-def fetch_arxiv(query, max_results=12):
-    base = 'http://export.arxiv.org/api/query?'
-    params = urllib.parse.urlencode({
-        'search_query': query, 'start': 0,
-        'max_results': max_results,
-        'sortBy': 'submittedDate', 'sortOrder': 'descending',
-    })
+def fetch_arxiv_rss(feed_url):
+    """用 arXiv RSS Feed 抓論文，對 GitHub Actions 友善"""
     try:
-        req = urllib.request.Request(base + params, headers={'User-Agent': 'ArxivDigest/4.0'})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            root = ET.fromstring(resp.read())
+        req = urllib.request.Request(
+            feed_url,
+            headers={'User-Agent': 'ArxivDigest/4.0 (academic research tool; contact: research@example.com)'}
+        )
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            xml_data = resp.read()
+        root = ET.fromstring(xml_data)
     except Exception as e:
-        print(f"  ⚠ 查詢失敗: {e}")
+        print(f"  ⚠ RSS 抓取失敗: {e}")
         return []
+
     papers = []
-    for entry in root.findall(f'{{{NS}}}entry'):
+    # RSS 格式
+    items = root.findall('.//item')
+    if not items:
+        # Atom 格式
+        items = root.findall(f'{{{NS}}}entry')
+
+    for item in items:
         try:
-            raw_id   = entry.find(f'{{{NS}}}id').text.strip()
-            arxiv_id = raw_id.split('/abs/')[-1]
-            title    = ' '.join(entry.find(f'{{{NS}}}title').text.split())
-            abstract = ' '.join(entry.find(f'{{{NS}}}summary').text.split())[:800]
-            published= entry.find(f'{{{NS}}}published').text[:10]
-            authors  = [a.find(f'{{{NS}}}name').text for a in entry.findall(f'{{{NS}}}author')][:3]
-            doi_el   = entry.find('{http://arxiv.org/schemas/atom}doi')
+            # 取標題
+            title_el = item.find('title') or item.find(f'{{{NS}}}title')
+            title = title_el.text.strip() if title_el is not None else ''
+            if not title:
+                continue
+
+            # 過濾：必須含心理學關鍵字
+            title_lower = title.lower()
+            desc_el = item.find('description') or item.find(f'{{{NS}}}summary')
+            desc = (desc_el.text or '') if desc_el is not None else ''
+            combined = (title_lower + ' ' + desc.lower())
+            if not any(kw in combined for kw in PSYCH_KEYWORDS):
+                continue
+
+            # 取 arXiv ID
+            link_el = item.find('link') or item.find(f'{{{NS}}}id')
+            link = link_el.text.strip() if link_el is not None else ''
+            arxiv_id = link.split('/abs/')[-1].split('v')[0] if '/abs/' in link else link
+
+            # 取作者
+            authors = []
+            for a in item.findall('author') or item.findall(f'{{{NS}}}author'):
+                name = a.find('name') or a
+                if name is not None and name.text:
+                    authors.append(name.text.strip())
+            if not authors:
+                # 嘗試 dc:creator
+                creator = item.find('{http://purl.org/dc/elements/1.1/}creator')
+                if creator is not None and creator.text:
+                    authors = [a.strip() for a in creator.text.split(',')][:3]
+
+            # 取日期
+            date_el = item.find('pubDate') or item.find(f'{{{NS}}}published')
+            date_str = date_el.text[:10] if date_el is not None and date_el.text else ''
+
+            # 清理 abstract
+            abstract = re.sub(r'<[^>]+>', '', desc)[:800].strip()
+            if len(abstract) < 50:
+                abstract = title
+
             papers.append({
-                'arxiv_id': arxiv_id, 'title': title, 'authors': authors,
-                'abstract': abstract, 'published': published,
-                'arxiv_url': f'https://arxiv.org/abs/{arxiv_id}',
-                'doi': doi_el.text.strip() if doi_el is not None else None,
+                'arxiv_id': arxiv_id,
+                'title': title,
+                'authors': authors[:3],
+                'abstract': abstract,
+                'published': date_str,
+                'arxiv_url': f'https://arxiv.org/abs/{arxiv_id}' if arxiv_id else link,
+                'doi': None,
             })
         except Exception:
             continue
     return papers
 
-def fetch_semantic_scholar():
-    """用 Semantic Scholar API 抓論文，適合 GitHub Actions 環境"""
-    queries = [
-        'AI psychology mental health',
-        'LLM counseling therapy emotion',
-        'machine learning wellbeing affective',
-        'natural language processing mental health',
-        'human computer interaction psychology',
-    ]
-    seen, all_papers = set(), []
-    base = 'https://api.semanticscholar.org/graph/v1/paper/search'
-    fields = 'paperId,title,authors,abstract,year,externalIds,publicationDate'
-
-    for q in queries:
-        try:
-            params = urllib.parse.urlencode({
-                'query': q,
-                'limit': 10,
-                'fields': fields,
-                'sort': 'publicationDate:desc',
-            })
-            req = urllib.request.Request(
-                f'{base}?{params}',
-                headers={'User-Agent': 'ArxivDigest/4.0 (research tool)'}
-            )
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                data = json.loads(resp.read())
-
-            for p in data.get('data', []):
-                pid = p.get('paperId', '')
-                if not pid or pid in seen:
-                    continue
-                seen.add(pid)
-                # 取得 arXiv ID（如果有）
-                ext_ids = p.get('externalIds', {})
-                arxiv_id = ext_ids.get('ArXiv', pid)
-                arxiv_url = f"https://arxiv.org/abs/{arxiv_id}" if ext_ids.get('ArXiv') else f"https://www.semanticscholar.org/paper/{pid}"
-                doi = ext_ids.get('DOI')
-                authors = [a.get('name','') for a in p.get('authors', [])][:3]
-                abstract = (p.get('abstract') or '')[:800]
-                if not abstract:
-                    continue
-                all_papers.append({
-                    'arxiv_id': arxiv_id,
-                    'title': p.get('title', ''),
-                    'authors': authors,
-                    'abstract': abstract,
-                    'published': p.get('publicationDate', str(p.get('year', '')))[:10],
-                    'arxiv_url': arxiv_url,
-                    'doi': doi,
-                })
-            time.sleep(1)
-        except Exception as e:
-            print(f"  ⚠ Semantic Scholar 查詢失敗: {e}")
-            continue
-
-    return all_papers[:30]
-
 def gather_papers():
-    if IS_GITHUB:
-        print("🔍 從 Semantic Scholar API 抓取論文（GitHub Actions 模式）...")
-        papers = fetch_semantic_scholar()
-    else:
-        print("🔍 從 arXiv API 抓取真實論文...")
-        seen, papers = set(), []
-        for q in ARXIV_QUERIES:
-            for p in fetch_arxiv(q, max_results=12):
-                if p['arxiv_id'] not in seen:
-                    seen.add(p['arxiv_id'])
-                    papers.append(p)
-            time.sleep(1)
-    print(f"  ✅ 共抓到 {len(papers)} 篇候選論文")
-    return papers[:30]
+    """抓論文：本機和 GitHub Actions 都用 arXiv RSS Feed"""
+    print("🔍 從 arXiv RSS Feed 抓取論文...")
+    seen, all_papers = set(), []
+    for feed_url in ARXIV_RSS_FEEDS:
+        papers = fetch_arxiv_rss(feed_url)
+        for p in papers:
+            if p['arxiv_id'] and p['arxiv_id'] not in seen:
+                seen.add(p['arxiv_id'])
+                all_papers.append(p)
+        time.sleep(2)  # 禮貌性延遲，避免觸發限速
+    print(f"  ✅ 共抓到 {len(all_papers)} 篇符合條件的論文")
+    return all_papers[:30]
 
 # ══════════════════════════════════════════════════════════════════════
 # STEP 2：Gemini 分析
