@@ -28,6 +28,8 @@ jobs:
             echo "第 $i 次失敗，等待 60 秒後重試..."
             sleep 60
           done
+          echo "=== 目前目錄檔案列表 ==="
+          ls -la
 
       - name: Commit and push
         run: |
