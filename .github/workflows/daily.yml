@@ -2,8 +2,8 @@ name: Daily arXiv Digest
 
 on:
   schedule:
-    - cron: '0 23 * * *'  # 台灣時間早上 7:00（UTC+8，所以 UTC 是 23:00）
-  workflow_dispatch:       # 允許手動觸發
+    - cron: '0 23 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,7 +22,12 @@ jobs:
       - name: Run digest script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python daily_digest_gemini.py
+        run: |
+          for i in 1 2 3 4 5; do
+            python daily_digest_gemini.py && break
+            echo "第 $i 次失敗，等待 60 秒後重試..."
+            sleep 60
+          done
 
       - name: Commit and push
         run: |
