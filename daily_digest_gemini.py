@@ -14,8 +14,7 @@ import xml.etree.ElementTree as ET
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
 API_KEY = os.environ.get("GEMINI_API_KEY", "")
-IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
-OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
+OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
 
@@ -70,17 +69,79 @@ def fetch_arxiv(query, max_results=12):
             continue
     return papers
 
-def gather_papers():
-    print("🔍 從 arXiv API 抓取真實論文...")
+def fetch_semantic_scholar():
+    """用 Semantic Scholar API 抓論文，適合 GitHub Actions 環境"""
+    queries = [
+        'AI psychology mental health',
+        'LLM counseling therapy emotion',
+        'machine learning wellbeing affective',
+        'natural language processing mental health',
+        'human computer interaction psychology',
+    ]
     seen, all_papers = set(), []
-    for q in ARXIV_QUERIES:
-        for p in fetch_arxiv(q, max_results=12):
-            if p['arxiv_id'] not in seen:
-                seen.add(p['arxiv_id'])
-                all_papers.append(p)
-        time.sleep(1)
-    print(f"  ✅ 共抓到 {len(all_papers)} 篇候選論文")
+    base = 'https://api.semanticscholar.org/graph/v1/paper/search'
+    fields = 'paperId,title,authors,abstract,year,externalIds,publicationDate'
+
+    for q in queries:
+        try:
+            params = urllib.parse.urlencode({
+                'query': q,
+                'limit': 10,
+                'fields': fields,
+                'sort': 'publicationDate:desc',
+            })
+            req = urllib.request.Request(
+                f'{base}?{params}',
+                headers={'User-Agent': 'ArxivDigest/4.0 (research tool)'}
+            )
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read())
+
+            for p in data.get('data', []):
+                pid = p.get('paperId', '')
+                if not pid or pid in seen:
+                    continue
+                seen.add(pid)
+                # 取得 arXiv ID（如果有）
+                ext_ids = p.get('externalIds', {})
+                arxiv_id = ext_ids.get('ArXiv', pid)
+                arxiv_url = f"https://arxiv.org/abs/{arxiv_id}" if ext_ids.get('ArXiv') else f"https://www.semanticscholar.org/paper/{pid}"
+                doi = ext_ids.get('DOI')
+                authors = [a.get('name','') for a in p.get('authors', [])][:3]
+                abstract = (p.get('abstract') or '')[:800]
+                if not abstract:
+                    continue
+                all_papers.append({
+                    'arxiv_id': arxiv_id,
+                    'title': p.get('title', ''),
+                    'authors': authors,
+                    'abstract': abstract,
+                    'published': p.get('publicationDate', str(p.get('year', '')))[:10],
+                    'arxiv_url': arxiv_url,
+                    'doi': doi,
+                })
+            time.sleep(1)
+        except Exception as e:
+            print(f"  ⚠ Semantic Scholar 查詢失敗: {e}")
+            continue
+
     return all_papers[:30]
+
+def gather_papers():
+    if IS_GITHUB:
+        print("🔍 從 Semantic Scholar API 抓取論文（GitHub Actions 模式）...")
+        papers = fetch_semantic_scholar()
+    else:
+        print("🔍 從 arXiv API 抓取真實論文...")
+        seen, papers = set(), []
+        for q in ARXIV_QUERIES:
+            for p in fetch_arxiv(q, max_results=12):
+                if p['arxiv_id'] not in seen:
+                    seen.add(p['arxiv_id'])
+                    papers.append(p)
+            time.sleep(1)
+    print(f"  ✅ 共抓到 {len(papers)} 篇候選論文")
+    return papers[:30]
 
 # ══════════════════════════════════════════════════════════════════════
 # STEP 2：Gemini 分析
@@ -302,9 +363,6 @@ def save_html(html, today):
     return path
 
 def notify(title, msg):
-    if IS_GITHUB:
-        print(f"📢 {title}: {msg}")
-        return
     ps = f'''Add-Type -AssemblyName System.Windows.Forms
 $n = New-Object System.Windows.Forms.NotifyIcon
 $n.Icon = [System.Drawing.SystemIcons]::Information
@@ -329,21 +387,21 @@ def main():
     path = save_html(html, today)
     print(f"✅ 已儲存：{path}")
     notify("☀️ 今日 arXiv 日報已就緒", f"{today} · {len(data.get('papers',[]))} 篇精選")
-    if IS_GITHUB:
-        print("🌍 GitHub Actions 完成！網址：https://12annie20.github.io/arxiv-digest/")
-    else:
-        webbrowser.open("file:///" + path.replace("\\","/"))
-        print("🌐 已開啟瀏覽器")
-        try:
-            import subprocess as sp
-            folder = OUTPUT_FOLDER
-            sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
-            sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
-            sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
-            print(f"🚀 已推上 GitHub Pages")
-            print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/digest_{today}.html")
-        except Exception as e:
-            print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
+    # 開啟本機瀏覽器
+    webbrowser.open("file:///" + path.replace("\\","/"))
+    print("🌐 已開啟瀏覽器")
+
+    # 自動推上 GitHub Pages
+    try:
+        import subprocess as sp
+        folder = OUTPUT_FOLDER
+        sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
+        sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
+        sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
+        print(f"🚀 已推上 GitHub Pages")
+        print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/digest_{today}.html")
+    except Exception as e:
+        print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
 
     print("\n🎉 享用你的文獻早餐 ☕\n")
 
