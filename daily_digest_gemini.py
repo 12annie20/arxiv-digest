@@ -11,6 +11,10 @@ import datetime, json, os, pathlib, re, subprocess, webbrowser, time
 import urllib.request, urllib.parse
 import xml.etree.ElementTree as ET
 
+# ── 自訂錯誤類別 ──
+class QuotaExceededError(Exception): pass
+class ServerBusyError(Exception): pass
+
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
 API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -249,19 +253,23 @@ def call_gemini(papers, today):
                 contents=prompt,
                 config=types.GenerateContentConfig(temperature=0.2, max_output_tokens=65536)
             )
-            break  # 成功就跳出迴圈
+            break
         except Exception as e:
             err = str(e)
-            if '503' in err or 'UNAVAILABLE' in err or 'high demand' in err:
+            if '429' in err or 'RESOURCE_EXHAUSTED' in err or 'quota' in err.lower():
+                # 額度用完，重試沒用，直接產生 429 錯誤頁面
+                print("  ❌ 今日 API 額度已用完，產生提示頁面...")
+                raise QuotaExceededError("429")
+            elif '503' in err or 'UNAVAILABLE' in err or 'high demand' in err:
                 if attempt < max_retries:
-                    wait = 30 * attempt  # 第1次等30秒，第2次60秒，依此類推
-                    print(f"  ⚠ Gemini 忙碌中，{wait} 秒後自動重試（第 {attempt}/{max_retries} 次）...")
+                    wait = 30 * attempt
+                    print(f"  ⚠ Gemini 伺服器忙碌，{wait} 秒後自動重試（第 {attempt}/{max_retries} 次）...")
                     time.sleep(wait)
                 else:
-                    print("  ❌ 重試 5 次仍失敗，請稍後手動執行")
-                    raise
+                    print("  ❌ 重試 5 次仍失敗，產生繁忙提示頁面...")
+                    raise ServerBusyError("503")
             else:
-                raise  # 其他錯誤直接拋出
+                raise
     raw = re.sub(r"^```json\s*", "", response.text.strip())
     raw = re.sub(r"\s*```$", "", raw)
 
@@ -373,6 +381,26 @@ def render_llm(papers):
 </div></div>'''
     return html
 
+def build_error_html(today, error_code):
+    """產生錯誤提示頁面"""
+    template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    if error_code == "429":
+        msg = "429"
+    else:
+        msg = "503"
+    # 用簡單的 HTML 替換所有 placeholder
+    error_page = template
+    for placeholder in ['{{THERMOMETER}}','{{PICKS}}','{{PAPERS}}','{{LLM_PAPERS}}','{{SUMMARY}}','{{TOMORROW}}']:
+        error_page = error_page.replace(placeholder, '')
+    error_page = error_page.replace('{{DATE}}', today)
+    error_page = error_page.replace('{{DATETIME}}', get_datetime())
+    # 在 page-wrap 裡插入錯誤訊息
+    error_page = error_page.replace(
+        '<div id="tab-home" class="tab-panel active">',
+        f'<div id="tab-home" class="tab-panel active"><div style="text-align:center;padding:8rem 0;font-family:var(--mono);font-size:4rem;color:var(--m-rule);letter-spacing:.1em">{msg}</div>'
+    )
+    return error_page
+
 def build_html(data, today):
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
     return (template
@@ -410,7 +438,22 @@ def main():
     if not papers:
         print("❌ 無法取得論文，請確認網路連線")
         return
-    data = call_gemini(papers, today)
+    try:
+        data = call_gemini(papers, today)
+    except QuotaExceededError:
+        html = build_error_html(today, "429")
+        path = save_html(html, today)
+        print(f"📄 已產生 429 提示頁面：{path}")
+        if not IS_GITHUB:
+            webbrowser.open("file:///" + path.replace("\\","/"))
+        return
+    except ServerBusyError:
+        html = build_error_html(today, "503")
+        path = save_html(html, today)
+        print(f"📄 已產生 503 提示頁面：{path}")
+        if not IS_GITHUB:
+            webbrowser.open("file:///" + path.replace("\\","/"))
+        return
     print("✅ 分析完成")
     print("🎨 渲染頁面...")
     html = build_html(data, today)
