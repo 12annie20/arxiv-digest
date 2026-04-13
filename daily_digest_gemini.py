@@ -119,63 +119,59 @@ def fetch_arxiv_rss(feed_url):
     return papers
 
 def gather_papers():
-    """抓論文：本機和 GitHub Actions 都用 arXiv RSS Feed"""
+    """抓論文：用 arXiv RSS Feed"""
     print("🔍 從 arXiv RSS Feed 抓取論文...")
-    seen, all_papers = set(), []
-    for feed_url in ARXIV_RSS_FEEDS:
-        papers = fetch_arxiv_rss(feed_url)
-        print(f"  [{feed_url.split('/')[-1]}] 過濾後: {len(papers)} 篇")
-        for p in papers:
-            if p['arxiv_id'] and p['arxiv_id'] not in seen:
-                seen.add(p['arxiv_id'])
-                all_papers.append(p)
-        time.sleep(2)
-    # 如果過濾後太少，放寬條件直接用全部論文
-    if len(all_papers) < 5:
-        print("  ⚠ 符合關鍵字的論文不足，改用全部今日論文...")
-        seen2, all_papers2 = set(), []
-        for feed_url in ARXIV_RSS_FEEDS:
-            try:
-                req = urllib.request.Request(
-                    feed_url,
-                    headers={'User-Agent': 'ArxivDigest/4.0 (academic research tool)'}
-                )
-                with urllib.request.urlopen(req, timeout=20) as resp:
-                    xml_data = resp.read()
-                root = ET.fromstring(xml_data)
-                items = root.findall('.//item') or root.findall(f'{{{NS}}}entry')
-                print(f"  [{feed_url.split('/')[-1]}] RSS 總論文數: {len(items)}")
-                for item in items[:8]:  # 每個分類取前8篇
-                    try:
-                        title_el = item.find('title') or item.find(f'{{{NS}}}title')
-                        title = (title_el.text or '').strip()
-                        link_el = item.find('link') or item.find(f'{{{NS}}}id')
-                        link = (link_el.text or '').strip()
-                        arxiv_id = link.split('/abs/')[-1].split('v')[0] if '/abs/' in link else ''
-                        desc_el = item.find('description') or item.find(f'{{{NS}}}summary')
-                        desc = (desc_el.text or '') if desc_el is not None else ''
-                        abstract = re.sub(r'<[^>]+>', '', desc)[:800].strip()
-                        date_el = item.find('pubDate') or item.find(f'{{{NS}}}published')
-                        date_str = (date_el.text or '')[:10] if date_el is not None else ''
-                        creator = item.find('{http://purl.org/dc/elements/1.1/}creator')
-                        authors = [a.strip() for a in creator.text.split(',')] if creator is not None and creator.text else []
-                        if title and arxiv_id and arxiv_id not in seen2:
-                            seen2.add(arxiv_id)
-                            all_papers2.append({
-                                'arxiv_id': arxiv_id, 'title': title,
-                                'authors': authors[:3], 'abstract': abstract or title,
-                                'published': date_str,
-                                'arxiv_url': f'https://arxiv.org/abs/{arxiv_id}',
-                                'doi': None,
-                            })
-                    except Exception:
+    import urllib.request, xml.etree.ElementTree as ET, time, re
+
+    feeds = [
+        'https://arxiv.org/rss/cs.AI',
+        'https://arxiv.org/rss/cs.HC',
+        'https://arxiv.org/rss/cs.CL',
+        'https://arxiv.org/rss/cs.CY',
+    ]
+    DC = 'http://purl.org/dc/elements/1.1/'
+    seen, results = set(), []
+
+    for url in feeds:
+        cat = url.split('/')[-1]
+        try:
+            req = urllib.request.Request(url, headers={
+                'User-Agent': 'Mozilla/5.0 (compatible; ArxivDigest/4.0)'
+            })
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                raw = resp.read()
+            root = ET.fromstring(raw)
+            items = root.findall('.//item')
+            print(f"  [{cat}] 找到 {len(items)} 篇")
+            for item in items[:10]:
+                try:
+                    title = (item.findtext('title') or '').strip()
+                    link  = (item.findtext('link') or '').strip()
+                    desc  = (item.findtext('description') or '').strip()
+                    creator = (item.findtext(f'{{{DC}}}creator') or '').strip()
+                    arxiv_id = link.split('/abs/')[-1].replace('v1','').strip() if '/abs/' in link else ''
+                    if not title or not arxiv_id or arxiv_id in seen:
                         continue
-            except Exception as e:
-                print(f"  ⚠ 失敗: {e}")
-            time.sleep(2)
-        all_papers = all_papers2
-    print(f"  ✅ 共抓到 {len(all_papers)} 篇論文")
-    return all_papers[:30]
+                    seen.add(arxiv_id)
+                    abstract = re.sub(r'<[^>]+>', '', desc)[:600].strip() or title
+                    authors = [a.strip() for a in creator.split(',')][:3] if creator else []
+                    results.append({
+                        'arxiv_id':  arxiv_id,
+                        'title':     title,
+                        'authors':   authors,
+                        'abstract':  abstract,
+                        'published': '',
+                        'arxiv_url': f'https://arxiv.org/abs/{arxiv_id}',
+                        'doi':       None,
+                    })
+                except Exception:
+                    continue
+        except Exception as e:
+            print(f"  ⚠ [{cat}] 失敗: {e}")
+        time.sleep(2)
+
+    print(f"  ✅ 共抓到 {len(results)} 篇論文")
+    return results[:30]
 
 # ══════════════════════════════════════════════════════════════════════
 # STEP 2：Gemini 分析
