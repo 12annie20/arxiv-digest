@@ -2,7 +2,6 @@
 arXiv 每日文獻日報 v4
 首頁：溫度計 + 今日推薦3篇 + Insight
 深度頁：TOP5 + LLM×心理學
-貓咪：固定角落漂浮
 """
 
 from google import genai
@@ -15,7 +14,7 @@ import xml.etree.ElementTree as ET
 class QuotaExceededError(Exception): pass
 class ServerBusyError(Exception): pass
 
-# ── 設定區 ────────────────────────────────────────────────────────────
+# ── 設定區 ──────────────────────────────────────────────────────────
 import os
 API_KEYS = [k for k in [
     os.environ.get("GEMINI_API_KEY", ""),
@@ -24,113 +23,16 @@ API_KEYS = [k for k in [
 IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
 OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
-# ──────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────────────
 
 def get_today():    return datetime.date.today().strftime("%Y-%m-%d")
 def get_datetime(): return datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
-# ══════════════════════════════════════════════════════════════════════
-# STEP 1：arXiv API 抓真實論文
-# ══════════════════════════════════════════════════════════════════════
-# arXiv RSS Feed 分類（不會被 GitHub Actions 封鎖）
-ARXIV_RSS_FEEDS = [
-    'https://arxiv.org/rss/cs.AI',
-    'https://arxiv.org/rss/cs.HC',
-    'https://arxiv.org/rss/cs.CL',
-    'https://arxiv.org/rss/cs.CY',
-]
-
-# 心理學相關關鍵字過濾
-PSYCH_KEYWORDS = [
-    'psychology', 'mental health', 'counseling', 'emotion', 'therapy',
-    'wellbeing', 'well-being', 'affective', 'cognitive', 'behavioral',
-    'psychiatric', 'depression', 'anxiety', 'therapeutic', 'clinical',
-    'human behavior', 'social', 'empathy', 'stress', 'trauma',
-]
-
-NS = 'http://www.w3.org/2005/Atom'
-
-def fetch_arxiv_rss(feed_url):
-    """用 arXiv RSS Feed 抓論文，對 GitHub Actions 友善"""
-    try:
-        req = urllib.request.Request(
-            feed_url,
-            headers={'User-Agent': 'ArxivDigest/4.0 (academic research tool; contact: research@example.com)'}
-        )
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            xml_data = resp.read()
-        root = ET.fromstring(xml_data)
-    except Exception as e:
-        print(f"  ⚠ RSS 抓取失敗: {e}")
-        return []
-
-    papers = []
-    # RSS 格式
-    items = root.findall('.//item')
-    if not items:
-        # Atom 格式
-        items = root.findall(f'{{{NS}}}entry')
-
-    for item in items:
-        try:
-            # 取標題
-            title_el = item.find('title') or item.find(f'{{{NS}}}title')
-            title = title_el.text.strip() if title_el is not None else ''
-            if not title:
-                continue
-
-            # 過濾：必須含心理學關鍵字
-            title_lower = title.lower()
-            desc_el = item.find('description') or item.find(f'{{{NS}}}summary')
-            desc = (desc_el.text or '') if desc_el is not None else ''
-            combined = (title_lower + ' ' + desc.lower())
-            if not any(kw in combined for kw in PSYCH_KEYWORDS):
-                continue
-
-            # 取 arXiv ID
-            link_el = item.find('link') or item.find(f'{{{NS}}}id')
-            link = link_el.text.strip() if link_el is not None else ''
-            arxiv_id = link.split('/abs/')[-1].split('v')[0] if '/abs/' in link else link
-
-            # 取作者
-            authors = []
-            for a in item.findall('author') or item.findall(f'{{{NS}}}author'):
-                name = a.find('name') or a
-                if name is not None and name.text:
-                    authors.append(name.text.strip())
-            if not authors:
-                # 嘗試 dc:creator
-                creator = item.find('{http://purl.org/dc/elements/1.1/}creator')
-                if creator is not None and creator.text:
-                    authors = [a.strip() for a in creator.text.split(',')][:3]
-
-            # 取日期
-            date_el = item.find('pubDate') or item.find(f'{{{NS}}}published')
-            date_str = date_el.text[:10] if date_el is not None and date_el.text else ''
-
-            # 清理 abstract
-            abstract = re.sub(r'<[^>]+>', '', desc)[:800].strip()
-            if len(abstract) < 50:
-                abstract = title
-
-            papers.append({
-                'arxiv_id': arxiv_id,
-                'title': title,
-                'authors': authors[:3],
-                'abstract': abstract,
-                'published': date_str,
-                'arxiv_url': f'https://arxiv.org/abs/{arxiv_id}' if arxiv_id else link,
-                'doi': None,
-            })
-        except Exception:
-            continue
-    return papers
-
+# ══════════════════════════════════════════════════════════════════
+# STEP 1：arXiv RSS Feed 抓論文
+# ══════════════════════════════════════════════════════════════════
 def gather_papers():
-    """抓論文：用 arXiv RSS Feed"""
     print("🔍 從 arXiv RSS Feed 抓取論文...")
-    import urllib.request, xml.etree.ElementTree as ET, time, re
-
     feeds = [
         'https://arxiv.org/rss/cs.AI',
         'https://arxiv.org/rss/cs.HC',
@@ -181,9 +83,9 @@ def gather_papers():
     print(f"  ✅ 共抓到 {len(results)} 篇論文")
     return results[:30]
 
-# ══════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════
 # STEP 2：Gemini 分析
-# ══════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════
 def call_gemini(papers, today, api_key=None):
     client = genai.Client(api_key=api_key)
     papers_text = ""
@@ -261,8 +163,7 @@ def call_gemini(papers, today, api_key=None):
         except Exception as e:
             err = str(e)
             if '429' in err or 'RESOURCE_EXHAUSTED' in err or 'quota' in err.lower():
-                # 額度用完，重試沒用，直接產生 429 錯誤頁面
-                print("  ❌ 今日 API 額度已用完，產生提示頁面...")
+                print("  ❌ 此 Key 額度已用完")
                 raise QuotaExceededError("429")
             elif '503' in err or 'UNAVAILABLE' in err or 'high demand' in err:
                 if attempt < max_retries:
@@ -270,10 +171,11 @@ def call_gemini(papers, today, api_key=None):
                     print(f"  ⚠ Gemini 伺服器忙碌，{wait} 秒後自動重試（第 {attempt}/{max_retries} 次）...")
                     time.sleep(wait)
                 else:
-                    print("  ❌ 重試 5 次仍失敗，產生繁忙提示頁面...")
+                    print("  ❌ 重試 5 次仍失敗")
                     raise ServerBusyError("503")
             else:
                 raise
+
     raw = re.sub(r"^```json\s*", "", response.text.strip())
     raw = re.sub(r"\s*```$", "", raw)
 
@@ -290,7 +192,6 @@ def call_gemini(papers, today, api_key=None):
         else:
             raise ValueError("JSON 無法修復，請重試")
 
-    # 補回真實 URL
     id_map = {p['arxiv_id']: p for p in papers}
     for section in ['picks', 'papers', 'llm_papers']:
         for item in data.get(section, []):
@@ -299,13 +200,12 @@ def call_gemini(papers, today, api_key=None):
             item['doi'] = real.get('doi') if real else None
     return data
 
-# ══════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════
 # STEP 3：HTML 渲染
-# ══════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════
 THEME_CLASS = {'cs.AI':'t-ai','cs.HC':'t-hc','cs.CL':'t-cl','cs.CY':'t-cy'}
 
 def fav_btn_html(p, card_class='paper-card', title_class='pc-title'):
-    """產生收藏按鈕 HTML"""
     aid = p.get('arxiv_id', '')
     url = p.get('arxiv_url', '#')
     title = p.get('title', '').replace("'", ' ').replace('"', ' ')
@@ -386,22 +286,15 @@ def render_llm(papers):
     return html
 
 def build_error_html(today, error_code):
-    """產生錯誤提示頁面"""
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
-    if error_code == "429":
-        msg = "429"
-    else:
-        msg = "503"
-    # 用簡單的 HTML 替換所有 placeholder
     error_page = template
-    for placeholder in ['{{THERMOMETER}}','{{PICKS}}','{{PAPERS}}','{{LLM_PAPERS}}','{{SUMMARY}}','{{TOMORROW}}']:
-        error_page = error_page.replace(placeholder, '')
+    for ph in ['{{THERMOMETER}}','{{PICKS}}','{{PAPERS}}','{{LLM_PAPERS}}','{{SUMMARY}}','{{TOMORROW}}']:
+        error_page = error_page.replace(ph, '')
     error_page = error_page.replace('{{DATE}}', today)
     error_page = error_page.replace('{{DATETIME}}', get_datetime())
-    # 在 page-wrap 裡插入錯誤訊息
     error_page = error_page.replace(
         '<div id="tab-home" class="tab-panel active">',
-        f'<div id="tab-home" class="tab-panel active"><div style="text-align:center;padding:8rem 0;font-family:var(--mono);font-size:4rem;color:var(--m-rule);letter-spacing:.1em">{msg}</div>'
+        f'<div id="tab-home" class="tab-panel active"><div style="text-align:center;padding:8rem 0;font-family:var(--mono);font-size:4rem;color:var(--m-rule);letter-spacing:.1em">{error_code}</div>'
     )
     return error_page
 
@@ -420,11 +313,16 @@ def build_html(data, today):
 
 def save_html(html, today):
     os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+    # 存今天的日報
     path = os.path.join(OUTPUT_FOLDER, f"digest_{today}.html")
-    with open(path,"w",encoding="utf-8") as f: f.write(html)
+    with open(path, "w", encoding="utf-8") as f: f.write(html)
+    # 同時存成 index.html（固定網址）
+    index_path = os.path.join(OUTPUT_FOLDER, "index.html")
+    with open(index_path, "w", encoding="utf-8") as f: f.write(html)
     return path
 
 def notify(title, msg):
+    if IS_GITHUB: return
     ps = f'''Add-Type -AssemblyName System.Windows.Forms
 $n = New-Object System.Windows.Forms.NotifyIcon
 $n.Icon = [System.Drawing.SystemIcons]::Information
@@ -442,18 +340,20 @@ def main():
     if not papers:
         print("❌ 無法取得論文，請確認網路連線")
         return
+
+    # 嘗試每一把 API Key，額度用完自動切換
     data = None
     for i, key in enumerate(API_KEYS):
         try:
             print(f"  使用 API Key #{i+1}...")
             data = call_gemini(papers, today, api_key=key)
-            break  # 成功就跳出
+            break
         except QuotaExceededError:
             if i < len(API_KEYS) - 1:
                 print(f"  ⚠ Key #{i+1} 額度用完，切換到 Key #{i+2}...")
                 continue
             else:
-                print("  ❌ 所有 Key 額度都用完了，產生提示頁面...")
+                print("  ❌ 所有 Key 額度都用完了")
                 html = build_error_html(today, "429")
                 path = save_html(html, today)
                 if not IS_GITHUB:
@@ -465,27 +365,33 @@ def main():
             if not IS_GITHUB:
                 webbrowser.open("file:///" + path.replace("\\","/"))
             return
+
+    if data is None:
+        print("❌ 分析失敗")
+        return
+
     print("✅ 分析完成")
     print("🎨 渲染頁面...")
     html = build_html(data, today)
     path = save_html(html, today)
     print(f"✅ 已儲存：{path}")
     notify("☀️ 今日 arXiv 日報已就緒", f"{today} · {len(data.get('papers',[]))} 篇精選")
-    # 開啟本機瀏覽器
-    webbrowser.open("file:///" + path.replace("\\","/"))
-    print("🌐 已開啟瀏覽器")
 
-    # 自動推上 GitHub Pages
-    try:
-        import subprocess as sp
-        folder = OUTPUT_FOLDER
-        sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
-        sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
-        sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
-        print(f"🚀 已推上 GitHub Pages")
-        print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/digest_{today}.html")
-    except Exception as e:
-        print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
+    if IS_GITHUB:
+        print("🌍 GitHub Actions 完成！網址：https://12annie20.github.io/arxiv-digest/")
+    else:
+        webbrowser.open("file:///" + path.replace("\\","/"))
+        print("🌐 已開啟瀏覽器")
+        try:
+            import subprocess as sp
+            folder = OUTPUT_FOLDER
+            sp.run(["git", "-C", folder, "add", "."], check=True, capture_output=True)
+            sp.run(["git", "-C", folder, "commit", "-m", f"digest {today}"], check=True, capture_output=True)
+            sp.run(["git", "-C", folder, "push"], check=True, capture_output=True)
+            print(f"🚀 已推上 GitHub Pages")
+            print(f"🌍 網址：https://12annie20.github.io/arxiv-digest/")
+        except Exception as e:
+            print(f"  ⚠ GitHub 推送失敗（不影響本機閱覽）: {e}")
 
     print("\n🎉 享用你的文獻早餐 ☕\n")
 
