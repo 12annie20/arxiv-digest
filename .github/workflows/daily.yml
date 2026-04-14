@@ -22,6 +22,7 @@ jobs:
       - name: Run digest script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
         run: |
           for i in 1 2 3 4 5; do
             python daily_digest_gemini.py && break
