@@ -17,7 +17,10 @@ class ServerBusyError(Exception): pass
 
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
-API_KEY = os.environ.get("GEMINI_API_KEY", "")
+API_KEYS = [
+    os.environ.get("GEMINI_API_KEY", ""),   # 主要 Key
+    os.environ.get("GEMINI_API_KEY_2", ""), # 備用 Key
+]
 OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
