@@ -17,11 +17,12 @@ class ServerBusyError(Exception): pass
 
 # ── 設定區 ────────────────────────────────────────────────────────────
 import os
-API_KEYS = [
-    os.environ.get("GEMINI_API_KEY", ""),   # 主要 Key
-    os.environ.get("GEMINI_API_KEY_2", ""), # 備用 Key
-]
-OUTPUT_FOLDER = r"C:\Users\anlic\ArxivDigest"
+API_KEYS = [k for k in [
+    os.environ.get("GEMINI_API_KEY", ""),
+    os.environ.get("GEMINI_API_KEY_2", ""),
+] if k]
+IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
+OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
 # ──────────────────────────────────────────────────────────────────────
 
@@ -183,8 +184,8 @@ def gather_papers():
 # ══════════════════════════════════════════════════════════════════════
 # STEP 2：Gemini 分析
 # ══════════════════════════════════════════════════════════════════════
-def call_gemini(papers, today):
-    client = genai.Client(api_key=API_KEY)
+def call_gemini(papers, today, api_key=None):
+    client = genai.Client(api_key=api_key)
     papers_text = ""
     for i, p in enumerate(papers, 1):
         papers_text += f"\n[{i}] ID:{p['arxiv_id']} | 日期:{p['published']}\n標題:{p['title']}\n作者:{', '.join(p['authors'])}\n摘要:{p['abstract']}\n連結:{p['arxiv_url']}\n---"
@@ -441,22 +442,29 @@ def main():
     if not papers:
         print("❌ 無法取得論文，請確認網路連線")
         return
-    try:
-        data = call_gemini(papers, today)
-    except QuotaExceededError:
-        html = build_error_html(today, "429")
-        path = save_html(html, today)
-        print(f"📄 已產生 429 提示頁面：{path}")
-        if not IS_GITHUB:
-            webbrowser.open("file:///" + path.replace("\\","/"))
-        return
-    except ServerBusyError:
-        html = build_error_html(today, "503")
-        path = save_html(html, today)
-        print(f"📄 已產生 503 提示頁面：{path}")
-        if not IS_GITHUB:
-            webbrowser.open("file:///" + path.replace("\\","/"))
-        return
+    data = None
+    for i, key in enumerate(API_KEYS):
+        try:
+            print(f"  使用 API Key #{i+1}...")
+            data = call_gemini(papers, today, api_key=key)
+            break  # 成功就跳出
+        except QuotaExceededError:
+            if i < len(API_KEYS) - 1:
+                print(f"  ⚠ Key #{i+1} 額度用完，切換到 Key #{i+2}...")
+                continue
+            else:
+                print("  ❌ 所有 Key 額度都用完了，產生提示頁面...")
+                html = build_error_html(today, "429")
+                path = save_html(html, today)
+                if not IS_GITHUB:
+                    webbrowser.open("file:///" + path.replace("\\","/"))
+                return
+        except ServerBusyError:
+            html = build_error_html(today, "503")
+            path = save_html(html, today)
+            if not IS_GITHUB:
+                webbrowser.open("file:///" + path.replace("\\","/"))
+            return
     print("✅ 分析完成")
     print("🎨 渲染頁面...")
     html = build_html(data, today)
