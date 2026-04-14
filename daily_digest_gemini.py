@@ -4,6 +4,10 @@ arXiv 每日文獻日報 v4
 深度頁：TOP5 + LLM×心理學
 """
 
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
 from google import genai
 from google.genai import types
 import datetime, json, os, pathlib, re, subprocess, webbrowser, time

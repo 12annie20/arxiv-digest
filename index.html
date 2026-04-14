@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>arXiv 文獻日報｜2026-04-14</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+TC:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --m-sage:#8fa898;--m-sage-light:#c4d3c8;--m-sage-pale:#e8ede9;
+  --m-clay:#a8856e;--m-clay-light:#d4b8a6;--m-clay-pale:#f0e6de;
+  --m-slate:#7a8a96;--m-slate-light:#b8c4cc;--m-slate-pale:#e4e9ed;
+  --m-mauve:#9e8fa0;--m-mauve-light:#c8bfca;--m-mauve-pale:#ede9ee;
+  --m-ink:#3a3530;--m-ink-soft:#5c544e;--m-ink-muted:#8c847c;
+  --m-paper:#f7f4f0;--m-paper-warm:#f0ebe3;
+  --m-rule:rgba(58,53,48,0.11);
+  --serif:'Cormorant Garamond','Noto Serif TC',Georgia,serif;
+  --mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-weight:300;line-height:1.9;font-size:17px}
+
+/* ── 頁首 ── */
+.masthead{background:var(--m-ink);padding:2.8rem 0 2.2rem;text-align:center;position:relative;overflow:hidden}
+.masthead::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.035) 79px,rgba(255,255,255,0.035) 80px)}
+.masthead-eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.22em;color:var(--m-sage-light);text-transform:uppercase;margin-bottom:.8rem}
+.masthead-title{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3rem);font-weight:300;font-style:italic;color:var(--m-paper);letter-spacing:.02em;line-height:1.2}
+.masthead-title em{font-style:normal;color:var(--m-clay-light)}
+.masthead-date{margin-top:1.1rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;color:rgba(255,255,255,.36)}
+.masthead-rule{width:36px;height:1px;background:var(--m-clay);margin:1.3rem auto 0}
+
+/* ── 頁籤列：置中 ── */
+.nav-bar{background:var(--m-paper-warm);border-bottom:1px solid var(--m-rule);position:sticky;top:0;z-index:100;box-shadow:0 2px 14px rgba(58,53,48,.07)}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 2rem;display:flex;justify-content:center;gap:0}
+.nav-btn{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--m-ink-muted);padding:1rem 2rem;border:none;background:none;cursor:pointer;
+  white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s,border-color .2s,transform .15s,background .2s;
+  position:relative;
+}
+.nav-btn::after{
+  content:'';position:absolute;bottom:0;left:50%;right:50%;
+  height:2px;background:var(--m-clay);transition:left .2s,right .2s;
+}
+.nav-btn:hover{color:var(--m-ink);transform:translateY(-2px);background:rgba(168,133,110,.06)}
+.nav-btn:hover::after{left:10%;right:10%}
+.nav-btn.active{color:var(--m-clay)}
+.nav-btn.active::after{left:0;right:0}
+
+/* ── 主版面 ── */
+.page-wrap{max-width:900px;margin:0 auto;padding:0 2rem 6rem;position:relative}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── 章節標題 ── */
+.sec-header{display:flex;align-items:baseline;gap:.9rem;margin:3.2rem 0 2rem;padding-bottom:.75rem;border-bottom:1px solid var(--m-rule)}
+.sec-num{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;color:var(--m-clay);flex-shrink:0}
+.sec-title{font-size:1.08rem;font-weight:400;letter-spacing:.06em}
+.sec-sub{font-size:.76rem;color:var(--m-ink-muted);margin-left:auto;font-family:var(--mono);letter-spacing:.05em}
+
+/* ── 溫度計（首頁頂部）── */
+.thermometer{background:var(--m-ink);border-radius:3px;padding:1.4rem 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:2rem}
+.th-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.35rem}
+.th-label.hot{color:var(--m-clay-light)}.th-label.new{color:var(--m-sage-light)}.th-label.cold{color:var(--m-slate-light)}
+.th-body{font-size:.84rem;color:rgba(247,244,240,.72);line-height:1.65}
+
+/* ── 今日推薦 3 篇（首頁）── */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--m-rule);border:1px solid var(--m-rule);border-radius:3px;overflow:hidden;margin-bottom:2rem}
+.rec-card{background:var(--m-paper);padding:1.5rem 1.6rem;display:flex;flex-direction:column;gap:.7rem;transition:background .2s}
+.rec-card:hover{background:var(--m-paper-warm)}
+.rec-theme{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:.2em .7em;border-radius:1px;border:1px solid;display:inline-block;margin-bottom:.2rem;width:fit-content}
+.rec-theme.t-ai{color:var(--m-sage);border-color:var(--m-sage-light);background:var(--m-sage-pale)}
+.rec-theme.t-hc{color:var(--m-slate);border-color:var(--m-slate-light);background:var(--m-slate-pale)}
+.rec-theme.t-cl{color:var(--m-clay);border-color:var(--m-clay-light);background:var(--m-clay-pale)}
+.rec-theme.t-cy{color:var(--m-mauve);border-color:var(--m-mauve-light);background:var(--m-mauve-pale)}
+.rec-title{font-size:.95rem;font-style:italic;line-height:1.45;font-weight:400}
+.rec-why{font-size:.82rem;color:var(--m-ink-soft);line-height:1.75;flex:1}
+.rec-meta{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--m-ink-muted)}
+.rec-link{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--m-slate);text-decoration:none;border-bottom:1px solid var(--m-slate-light);padding-bottom:.1em;transition:color .2s,border-color .2s;margin-top:.3rem}
+.rec-link:hover{color:var(--m-clay);border-color:var(--m-clay)}
+
+/* ── Today's Insight ── */
+.insight-home{background:var(--m-paper-warm);border:1px solid var(--m-rule);border-radius:3px;padding:2.2rem 2.6rem;text-align:center}
+.insight-label{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--m-clay);margin-bottom:.9rem}
+.insight-text{font-size:.96rem;color:var(--m-ink-soft);line-height:1.92;max-width:600px;margin:0 auto}
+.tmr-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;color:var(--m-ink-muted);margin-top:1.3rem;text-transform:uppercase}
+.tmr-text{font-size:.88rem;font-style:italic;color:var(--m-slate);margin-top:.25rem}
+
+/* ── 論文卡片 ── */
+.paper-card{border:1px solid var(--m-rule);border-radius:3px;margin-bottom:1.8rem;overflow:hidden;transition:box-shadow .25s}
+.paper-card:hover{box-shadow:0 4px 22px rgba(58,53,48,.09)}
+.pc-head{padding:1.5rem 1.8rem 1rem;border-bottom:1px solid var(--m-rule);background:var(--m-paper-warm)}
+.pc-rank{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;color:var(--m-clay);text-transform:uppercase;margin-bottom:.3rem}
+.pc-title{font-size:1rem;font-weight:400;font-style:italic;line-height:1.45;margin-bottom:.65rem}
+.paper-meta{display:flex;gap:.65rem;flex-wrap:wrap;align-items:center}
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:.2em .7em;border-radius:1px;border:1px solid}
+.tag-ai{color:var(--m-sage);border-color:var(--m-sage-light);background:var(--m-sage-pale)}
+.tag-hc{color:var(--m-slate);border-color:var(--m-slate-light);background:var(--m-slate-pale)}
+.tag-cl{color:var(--m-clay);border-color:var(--m-clay-light);background:var(--m-clay-pale)}
+.tag-cy{color:var(--m-mauve);border-color:var(--m-mauve-light);background:var(--m-mauve-pale)}
+.tag-date{color:var(--m-ink-muted);border-color:var(--m-rule);background:transparent}
+.pc-body{padding:1.5rem 1.8rem;background:var(--m-paper)}
+.pc-abs{font-size:.88rem;color:var(--m-ink-soft);line-height:1.9;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--m-rule)}
+.pc-q{font-size:.84rem;font-style:italic;margin-bottom:1.2rem;padding-left:1rem;border-left:2px solid var(--m-clay);color:var(--m-ink)}
+.ins-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.4rem}
+.ins-label.rv{color:var(--m-sage)}.ins-label.ct{color:var(--m-slate)}.ins-label.lm{color:var(--m-clay)}
+.ins-list{list-style:none;font-size:.86rem;color:var(--m-ink-soft);line-height:1.78;margin-bottom:.9rem}
+.ins-list li{padding-left:.9rem;position:relative;margin-bottom:.25rem}
+.ins-list li::before{content:'—';position:absolute;left:0;color:var(--m-ink-muted);font-size:.7em;top:.12em}
+.doi-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--m-slate);text-decoration:none;border-bottom:1px solid var(--m-slate-light);padding-bottom:.1em;transition:color .2s,border-color .2s}
+.doi-link:hover{color:var(--m-clay);border-color:var(--m-clay)}
+
+/* ── LLM 卡片 ── */
+.llm-card{display:grid;grid-template-columns:3px 1fr;gap:0 1.5rem;margin-bottom:2.2rem;align-items:start}
+.llm-stripe{background:var(--m-mauve);border-radius:2px;align-self:stretch}
+.llm-rank{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;color:var(--m-mauve);text-transform:uppercase;margin-bottom:.28rem}
+.llm-title{font-size:.98rem;font-style:italic;line-height:1.42;margin-bottom:.8rem}
+.llm-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.8rem}
+.fl-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--m-ink-muted);margin-bottom:.18rem}
+.fl-body{font-size:.84rem;color:var(--m-ink-soft);line-height:1.7}
+.llm-verdict{background:var(--m-mauve-pale);border-left:2px solid var(--m-mauve);padding:.72rem 1rem;font-size:.84rem;font-style:italic;border-radius:0 2px 2px 0;margin-top:.5rem;color:var(--m-ink)}
+
+/* ── Lottie 動畫貓咪 ── */
+.lottie-wrapper{position:fixed;z-index:50;pointer-events:none;opacity:0;transition:opacity 1.2s ease;bottom:1.5rem;right:1.5rem}
+.lottie-wrapper.visible{opacity:1}
+
+/* ── 頁尾 ── */
+.footer{text-align:center;padding:2rem 0 3rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--m-ink-muted);width:100%}
+.footer-rule{width:36px;height:1px;background:var(--m-rule);margin:0 auto .9rem}
+
+/* ── 收藏功能 ── */
+.fav-btn{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid var(--m-rule);border-radius:1px;padding:.3em .8em;cursor:pointer;color:var(--m-ink-muted);transition:all .2s;margin-top:.8rem;display:inline-flex;align-items:center;gap:.4rem}
+.fav-btn:hover{border-color:var(--m-clay);color:var(--m-clay)}
+.fav-btn.saved{border-color:var(--m-clay);color:var(--m-clay);background:var(--m-clay-pale)}
+.fav-btn.saved::before{content:'★ '}
+.fav-btn:not(.saved)::before{content:'☆ '}
+#tab-favs .paper-card{border-left:2px solid var(--m-clay)}
+
+@media(max-width:680px){
+  .page-wrap{padding:0 1.1rem 4rem}
+  .rec-grid{grid-template-columns:1fr}
+  .llm-row,.thermometer{grid-template-columns:1fr}
+  .nav-btn{padding:.8rem 1rem;font-size:.62rem}
+  body{font-size:15px}
+  .nav-inner{justify-content:flex-start;overflow-x:auto}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-eyebrow">arXiv · AI × Psychology · Daily Digest</div>
+  <h1 class="masthead-title">文獻日報 <em>/ 2026-04-14</em></h1>
+  <div class="masthead-date">2026-04-14 16:07 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
+  <div class="masthead-rule"></div>
+</header>
+
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="switchTab('home',this)">☀ 今日推薦</button>
+    <button class="nav-btn" onclick="switchTab('papers',this)">📚 TOP 5 深度解析</button>
+    <button class="nav-btn" onclick="switchTab('llm',this)">🤖 LLM × 心理學</button>
+    <button class="nav-btn" onclick="switchTab('favs',this)">★ 收藏夾</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- ═══ 首頁：溫度計 → 3篇推薦 → Insight ═══ -->
+  <div id="tab-home" class="tab-panel active">
+
+    <div class="sec-header" style="margin-top:2.5rem">
+      <span class="sec-num">今日 /</span>
+      <span class="sec-title">領域溫度計</span>
+      <span class="sec-sub">FIELD TEMPERATURE</span>
+    </div>
+    <div class="thermometer"><div><div class="th-label hot">熱門主題</div><div class="th-body">AI心理健康與認知輔助・人機互動與使用者體驗・LLM創意生成</div></div><div><div class="th-label new">新興焦點</div><div class="th-body">AI代理人性化與反偵測・模擬有組織群體行為</div></div><div><div class="th-label cold">冷門值得關注</div><div class="th-body">AI系統日誌分析</div></div></div>
+
+    <div class="sec-header">
+      <span class="sec-num">01 /</span>
+      <span class="sec-title">今日推薦文獻</span>
+      <span class="sec-sub">TODAY'S PICKS</span>
+    </div>
+    <div class="rec-grid"><div class="rec-card">
+<span class="rec-theme t-hc">cs.HC</span>
+<div class="rec-title">Talking to a Human as an Attitudinal Barrier: A Mixed Methods Evaluation of Stigma, Access, and the Appeal of AI Mental Health Support</div>
+<div class="rec-why">探討AI心理健康支持如何緩解人類尋求治療時的恥辱感與障礙，對心理學與公共衛生有重要啟示。這篇論文深入分析了AI在解決心理健康服務可近性問題上的潛力。</div>
+<div class="rec-meta">Caitlin A. Stamatis, Emma C. Wolfe, Matteo Malgaroli</div>
+<a class="rec-link" href="https://arxiv.org/abs/2604.09575" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div><div class="rec-card">
+<span class="rec-theme t-cl">cs.CL</span>
+<div class="rec-title">HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation</div>
+<div class="rec-why">深入探討LLM如何透過模擬人類認知理論來生成幽默，為理解AI創意與人類思維提供新視角。這對AI情感智能的發展和人機互動的自然性具有重要意義。</div>
+<div class="rec-meta">Edward Ajayi, Prasenjit Mitra</div>
+<a class="rec-link" href="https://arxiv.org/abs/2604.09629" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div><div class="rec-card">
+<span class="rec-theme t-ai">cs.AI</span>
+<div class="rec-title">Improving understanding and trust in AI: How users benefit from interval-based counterfactual explanations</div>
+<div class="rec-why">評估不同反事實解釋類型如何影響使用者對AI的理解與信任，對負責任AI的設計至關重要。這篇研究為提升AI透明度和使用者接受度提供了實證依據。</div>
+<div class="rec-meta">Tabea E. R"ober, Paul Festor, Rob Goedhart</div>
+<a class="rec-link" href="https://arxiv.org/abs/2604.09573" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div></div>
+
+    <div class="insight-home">
+      <div class="insight-label">Today's Insight</div>
+      <p class="insight-text">今日arXiv論文揭示了AI與心理學交織的多元面向。從AI在心理健康支持、認知訓練中的應用，到如何評估AI生成內容的「人性化」與「敘事張力」，都強調了AI與人類情感、認知互動的複雜性。同時，研究也關注提升AI系統的可解釋性與使用者信任，以及模擬複雜群體行為，為AI的負責任發展與廣泛應用奠定基礎。這些進展不僅推動了AI技術本身，也深化了我們對人類心智與社會行為的理解。</p>
+      <div class="tmr-label">明日值得關注</div>
+      <p class="tmr-text">明日可持續關注AI在個人化教育、醫療輔助以及更深層次理解人類社會行為方面的進展，特別是AI如何透過模擬人類認知來實現更自然、更具同理心的互動，以及如何確保這些AI系統的公平性與安全性。</p>
+    </div>
+
+  </div>
+
+  <!-- ═══ TOP 5 ═══ -->
+  <div id="tab-papers" class="tab-panel">
+    <div class="sec-header">
+      <span class="sec-num">02 /</span>
+      <span class="sec-title">精選 TOP 5 研究深度解析</span>
+      <span class="sec-sub">DEEP REVIEW</span>
+    </div>
+    <div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 01</div>
+<div class="pc-title">Automatic Mind Wandering Detection in Educational Settings: A Systematic Review and Multimodal Benchmarking</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">本研究系統性回顧了在教育環境中自動檢測「走神」的方法，並提出多模態基準測試。走神在線上學習中普遍存在，約佔學習時間的30%，嚴重影響學習者的記憶、理解和整體學習成效。透過整合自動檢測演算法，可望在適應性學習環境中提供個人化干預，為更具響應性和個人化的教育系統鋪平道路。</div>
+<div class="pc-q">如何自動偵測學習者在教育情境中的走神狀態？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>走神是影響學習的關鍵認知現象，本研究強調其在線上教育中的重要性。</li>
+<li>提出多模態基準測試，為未來研究提供標準化評估框架，有助於領域發展。</li>
+<li>自動檢測技術有望實現個人化學習干預，提升教育系統的響應性與效率。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>首次對教育環境中的自動走神檢測進行系統性回顧，梳理現有方法與挑戰。</li>
+<li>提出並建立多模態基準測試，以促進該領域的發展和不同方法的比較。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>現有研究缺乏統一框架，難以比較不同方法的有效性與泛化能力。</li>
+<li>多模態數據收集與整合仍面臨技術挑戰，且數據隱私問題需謹慎處理。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09569" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09569" onclick="toggleFav(this,'2604.09569','Automatic Mind Wandering Detection in Educational Settings: A Systematic Review and Multimodal Benchmarking','https://arxiv.org/abs/2604.09569')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 02</div>
+<div class="pc-title">Turing Test on Screen: A Benchmark for Mobile GUI Agent Humanization</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">隨著自主GUI代理的興起，數位平台開始採取反制措施，但現有研究多專注於實用性和穩健性，卻忽略了代理的「人性化」能力。本研究提出「螢幕圖靈測試」，將人機互動建模為偵測器與代理之間最小化行為差異的MinMax優化問題。研究團隊收集了一個新的高擬真度行動裝置數據集，旨在推動代理在人類中心化生態系統中的生存能力。</div>
+<div class="pc-q">如何衡量並提升行動GUI代理的人性化程度以避免被偵測？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>將「人性化」視為GUI代理在人類生態系統中生存的關鍵維度，提出新穎視角。</li>
+<li>引入「螢幕圖靈測試」作為評估代理人性化的正式基準，具備理論與實踐意義。</li>
+<li>收集高擬真度數據集，為研究提供堅實基礎，有助於開發更具欺騙性的代理。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>首次提出並形式化「螢幕圖靈測試」以評估GUI代理的人性化與反偵測能力。</li>
+<li>建立新的高擬真度行動裝置數據集，用於訓練和評估人性化代理的行為模式。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>「人性化」的定義與衡量仍具主觀性，可能難以完全量化與標準化。</li>
+<li>代理行為的微小差異仍可能被人類偵測，挑戰性高，需持續迭代改進。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09574" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09574" onclick="toggleFav(this,'2604.09574','Turing Test on Screen: A Benchmark for Mobile GUI Agent Humanization','https://arxiv.org/abs/2604.09574')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 03</div>
+<div class="pc-title">OpeFlo: Automated UX Evaluation via Simulated Human Web Interaction with GUI Grounding</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">評估網頁可用性通常需要耗時的使用者研究和專家審查，這限制了產品開發的迭代速度，尤其對於小型團隊和敏捷工作流程而言。本研究提出OpenFlo，一個使用者體驗評估代理，能模擬人類在網站上的行為並產生標準化的可用性報告。與傳統依賴DOM解析的工具不同，OpenFlo透過GUI接地來執行動作和觀察，使其能與真實網頁進行端到端互動，並維持連貫的使用者歷程追蹤。</div>
+<div class="pc-q">如何透過模擬人類互動自動化評估網頁使用者體驗？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>提出創新的自動化UX評估代理，有望加速產品開發週期，降低評估成本。</li>
+<li>透過GUI接地實現與真實網頁的端到端互動，提升評估的真實性與準確性。</li>
+<li>能產生標準化可用性報告，提供客觀評估指標，便於開發者理解與改進。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>開發OpenFlo代理，實現基於模擬人類行為的自動化網頁UX評估。</li>
+<li>引入GUI接地技術，確保代理在真實網頁環境中的互動連貫性與可靠性。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>模擬人類行為的複雜性，可能無法完全捕捉所有細微的使用者體驗與情感反應。</li>
+<li>評估結果的通用性與情境適應性仍需進一步驗證，以確保其廣泛適用性。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09581" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09581" onclick="toggleFav(this,'2604.09581','OpeFlo: Automated UX Evaluation via Simulated Human Web Interaction with GUI Grounding','https://arxiv.org/abs/2604.09581')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 04</div>
+<div class="pc-title">Explainable Planning for Hybrid Systems</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">人工智慧技術的最新進展正推動自動化範式的轉變，自主系統正全面或部分取代人工系統。這些系統的核心是自動規劃。隨著強大規劃器的出現，自動規劃現已應用於許多複雜且安全關鍵的領域，包括智慧電網、自駕車、倉儲自動化、城市和空中交通管制、搜救行動、監控、機器人技術和醫療保健。本研究探討混合系統的可解釋規劃，旨在提升使用者對自動化決策過程的理解與信任。</div>
+<div class="pc-q">如何讓混合系統的自動規劃過程對人類而言可解釋？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>強調可解釋規劃在智慧電網、自駕車等安全關鍵自動化系統中的重要性。</li>
+<li>針對混合系統的複雜性，提出解釋其規劃過程的方法，以提升透明度。</li>
+<li>有助於提升使用者對AI系統的理解、信任與接受度，促進AI的負責任部署。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>為混合系統的自動規劃提供可解釋性框架，彌補現有研究的空白。</li>
+<li>探討在多個複雜應用領域中實現可解釋規劃的潛力與挑戰。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>混合系統的規劃複雜性高，生成全面且易懂的解釋仍具挑戰性。</li>
+<li>不同使用者對解釋的需求可能不同，難以一概而論，需考慮個人化解釋。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09578" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09578" onclick="toggleFav(this,'2604.09578','Explainable Planning for Hybrid Systems','https://arxiv.org/abs/2604.09578')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 05</div>
+<div class="pc-title">Simulating Organized Group Behavior: New Framework, Benchmark, and Analysis</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">模擬有組織群體（例如企業）的決策行為對於理解現實世界動態至關重要，並有益於市場預測等相關應用。本研究將此問題形式化為一個具體的研究平台，提供任務定義、基準測試、評估標準、結構化分析框架及相應演算法。論文還進行了詳細的時間與跨群體分析，以深入理解群體行為的複雜性與動態。</div>
+<div class="pc-q">如何有效模擬有組織群體的決策行為與其動態？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>首次將有組織群體行為模擬形式化為研究平台，具開創性與實用價值。</li>
+<li>提供全面的框架、基準與評估標準，促進該領域的發展與研究。</li>
+<li>詳細的時間與跨群體分析，揭示群體決策的複雜動態與影響因素。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出模擬有組織群體行為的新框架、基準測試與分析方法，填補研究空白。</li>
+<li>開發相應演算法，並進行深入的實證分析，驗證框架的有效性。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>群體行為的複雜性與不可預測性，模擬結果可能難以完全貼近現實世界。</li>
+<li>模型參數的校準與驗證仍需大量真實數據支持，數據獲取可能困難。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09874" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09874" onclick="toggleFav(this,'2604.09874','Simulating Organized Group Behavior: New Framework, Benchmark, and Analysis','https://arxiv.org/abs/2604.09874')" title="收藏">收藏</button>
+</div></div>
+  </div>
+
+  <!-- ═══ LLM × 心理學 ═══ -->
+  <div id="tab-llm" class="tab-panel">
+    <div class="sec-header">
+      <span class="sec-num">03 /</span>
+      <span class="sec-title">LLM × 心理學 精選 TOP 3</span>
+      <span class="sec-sub">LLM × PSYCHOLOGY</span>
+    </div>
+    <div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.01</div>
+<div class="llm-title">HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">LLM如何透過認知協同框架生成高品質幽默？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">採用「認知協同框架」與「思維混合」(Mixture-of-Thought) 方法，部署六種認知角色（如荒誕主義者、犬儒主義者）來合成幽默數據，以克服LLM預測下一個詞的訓練目標與幽默所需驚奇感之間的衝突。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">本研究將心理學的幽默理論應用於LLM，揭示AI如何模仿人類認知過程來創造複雜情感表達。這有助於理解人類幽默感的核心機制，並為開發更具情商、能進行更自然人機互動的AI提供方向。</div></div>
+<div class="llm-verdict">透過模擬人類認知角色，LLM也能學會講笑話，展現AI在情感智能上的潛力，讓AI不再只是冷冰冰的機器。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09629" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09629" onclick="toggleFav(this,'2604.09629','HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation','https://arxiv.org/abs/2604.09629')" title="收藏">收藏</button>
+</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.02</div>
+<div class="llm-title">LETGAMES: An LLM-Powered Gamified Approach to Cognitive Training for Patients with Cognitive Impairment</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span><span class="tag tag-cl">cs.CL</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">LLM如何為認知障礙患者設計個人化遊戲化認知訓練？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">提出LETGAMES框架，受《龍與地下城》啟發，生成開放世界互動敘事遊戲。LLM不僅能生成針對特定認知領域的遊戲場景和挑戰，還能運用對話策略提供個人化支持，以適應患者的獨特需求。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">將LLM應用於醫療領域，特別是認知訓練，展現AI在輔助治療和提升患者生活品質方面的巨大潛力。透過個人化遊戲設計，AI能更有效地激發患者參與，並針對其獨特需求提供支持，這對心理復健和認知科學具有重要意義。</div></div>
+<div class="llm-verdict">LLM化身遊戲設計師，為認知障礙患者打造專屬訓練，讓治療變得有趣又有效，開啟AI醫療輔助新篇章。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09566" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09566" onclick="toggleFav(this,'2604.09566','LETGAMES: An LLM-Powered Gamified Approach to Cognitive Training for Patients with Cognitive Impairment','https://arxiv.org/abs/2604.09566')" title="收藏">收藏</button>
+</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.03</div>
+<div class="llm-title">Spoiler Alert: Narrative Forecasting as a Metric for Tension in LLM Storytelling</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">如何客觀評估LLM生成故事的敘事張力？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">引入「100結局指標」，讓模型在故事的每個句子後預測接下來的100種結局，以此量化故事的敘事張力。此方法旨在克服現有評估標準未能捕捉人類故事引人入勝的關鍵維度——敘事張力的問題。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">本研究觸及人類對故事情感反應的核心，即「張力」的感知。透過量化AI故事的張力，我們能更深入理解人類敘事心理學，並指導AI生成更能觸動人心的內容。這對於文學創作、娛樂產業以及理解人類情感與敘事結構的關係都具有重要意義。</div></div>
+<div class="llm-verdict">透過預測結局來衡量故事張力，為LLM敘事品質評估帶來了更貼近人類感受的客觀標準，讓AI故事不再平淡無奇。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09854" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09854" onclick="toggleFav(this,'2604.09854','Spoiler Alert: Narrative Forecasting as a Metric for Tension in LLM Storytelling','https://arxiv.org/abs/2604.09854')" title="收藏">收藏</button>
+</div></div>
+  </div>
+
+</div>
+
+
+  <!-- ═══ 收藏夾 ═══ -->
+  <div id="tab-favs" class="tab-panel">
+    <div class="sec-header">
+      <span class="sec-num">★ /</span>
+      <span class="sec-title">我的收藏</span>
+      <span class="sec-sub">SAVED PAPERS</span>
+    </div>
+    <div id="favs-list"></div>
+    <div id="favs-empty" style="text-align:center;padding:4rem 0;color:var(--m-ink-muted);font-style:italic;font-size:.9rem">
+      還沒有收藏的論文，在深度解析或 LLM 頁面點「收藏」加入
+    </div>
+  </div>
+
+<!-- ═══ Lottie 動畫 ═══ -->
+<div class="lottie-wrapper" id="lottie-wrapper">
+  <div id="lottie-container" style="width:140px;height:140px"></div>
+</div>
+
+<footer<footer class="footer">
+  <div class="footer-rule"></div>
+  <div>arXiv 文獻日報 · 2026-04-14</div>
+  <div style="margin-top:.4rem;opacity:.6">© 12annie20 · All rights reserved</div>
+</footer>
+
+<script>
+// ── 頁籤切換 ──
+function switchTab(name, btn) {
+  var panel = document.getElementById('tab-' + name);
+  if (!panel) return;
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  panel.classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── 收藏功能 ──
+const FAV_KEY = 'arxiv_digest_favs';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+
+function saveFavs(favs) {
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+}
+
+function toggleFav(btn, id, title, url) {
+  let favs = getFavs();
+  const idx = favs.findIndex(function(f){ return f.id === id; });
+  if (idx === -1) {
+    favs.push({ id: id, title: title, url: url, savedAt: new Date().toLocaleDateString('zh-TW') });
+    btn.classList.add('saved');
+    btn.textContent = '已收藏';
+    btn.setAttribute('title', '點擊取消收藏');
+  } else {
+    favs.splice(idx, 1);
+    btn.classList.remove('saved');
+    btn.textContent = '收藏';
+    btn.setAttribute('title', '收藏');
+  }
+  saveFavs(favs);
+  renderFavs();
+}
+
+function renderFavs() {
+  var list = document.getElementById('favs-list');
+  var empty = document.getElementById('favs-empty');
+  if (!list) return;
+  var favs = getFavs();
+  if (favs.length === 0) {
+    list.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  var out = '';
+  for (var i = 0; i < favs.length; i++) {
+    var f = favs[i];
+    out += '<div class="paper-card" style="margin-bottom:1.2rem">';
+    out += '<div class="pc-head">';
+    out += '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>';
+    out += '<div class="pc-title">' + f.title + '</div>';
+    out += '</div>';
+    out += '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">';
+    out += '<a class="doi-link" href="' + f.url + '" target="_blank">\u2192 \u95b1\u8b80\u539f\u6587</a>';
+    out += '<button class="fav-btn saved" onclick="removeFav(this)" data-remove-id="' + f.id + '" title="\u53d6\u6d88\u6536\u85cf">\u53d6\u6d88\u6536\u85cf</button>';
+    out += '</div>';
+    out += '</div>';
+  }
+  list.innerHTML = out;
+}
+
+function removeFav(btn) {
+  var id = btn.getAttribute('data-remove-id');
+  var favs = getFavs().filter(function(f){ return f.id !== id; });
+  saveFavs(favs);
+  renderFavs();
+  document.querySelectorAll('[data-fav-id="' + id + '"]').forEach(function(b){
+    b.classList.remove('saved');
+    b.textContent = '收藏';
+  });
+}
+
+function initFavBtns() {
+  var favs = getFavs();
+  var savedIds = favs.map(function(f){ return f.id; });
+  document.querySelectorAll('[data-fav-id]').forEach(function(btn){
+    if (savedIds.indexOf(btn.getAttribute('data-fav-id')) !== -1) {
+      btn.classList.add('saved');
+      btn.textContent = '已收藏';
+    }
+  });
+  renderFavs();
+}
+
+// ── Lottie// ── Lottie：JSON 直接內嵌，不需要外部檔案 ──
+const LOTTIE_DATA = [
+  {"v":"5.4.2","fr":25,"ip":0,"op":32,"w":280,"h":200,"nm":"Loader_g\u00c3\u00a9n\u00c3\u00a9rique","ddd":1,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"Museau Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[137.44,69.219,0],"ix":2},"a":{"a":0,"k":[4.076,1.879,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[2.742,1.626],[-1.687,-1.068]],"o":[[-2.162,-1.283],[1.688,1.068]],"v":[[1.084,-0.346],[-2.139,0.561]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.008000000785,0.004000000393,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[4.076,1.879],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"Collier Blanc Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[134.367,162.9,0],"ix":2},"a":{"a":0,"k":[12,82,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-4.832,11.694],[0.244,1.662],[7.698,2.053],[-1.641,-10.997],[-1.149,-18.546],[0.81,-2.054],[0,0],[0,0],[0.164,4.924]],"o":[[0.641,-1.552],[-0.893,-6.097],[-9.848,-2.626],[1.641,10.997],[1.149,18.547],[-0.477,1.21],[0,0],[0,0],[-0.154,-4.616]],"v":[[10.421,-10.549],[11.113,-15.439],[-0.361,-37.775],[-9.717,-12.991],[-4.135,10.808],[-3.189,38.32],[-4.956,40.352],[8.84,40.401],[6.04,33.459]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.851000019148,0.870999983245,0.929000016755,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[11.608,40.651],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"Ventre Blanc Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[153.803,152.168,0],"ix":2},"a":{"a":0,"k":[4.269,9.999,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[1.608,3.654],[0,0],[0,0],[-0.154,-0.467],[-1.966,-3.166],[0.37,-0.017],[0.408,-1.795],[-1.9,-0.585]],"o":[[0,0],[-0.542,-1.325],[0,0],[0.104,-0.48],[0.799,2.414],[0.195,0.314],[-1.136,0.052],[-0.408,1.793],[0,0]],"v":[[-3.946,9.749],[-2.119,4.342],[-4.019,2.515],[-1.48,-9.227],[-0.553,-9.282],[3.824,0.746],[3.452,1.477],[0,3.685],[2.032,9.741]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.728999956916,0.757000014361,0.847000002394,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[4.269,9.999],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":4,"ty":4,"nm":"Patte Droite Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[125.27,157.847,0],"ix":2},"a":{"a":0,"k":[6.144,4.34,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,1.424],[3.255,0],[0,-2.53],[-1.067,-0.829]],"o":[[1.31,-0.84],[0,-2.53],[-3.255,0],[0,1.265],[0,0]],"v":[[3.748,4.027],[5.894,0.492],[0,-4.09],[-5.894,0.492],[-3.912,4.09]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.2,0.226999993418,0.305999995213,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[6.144,4.34],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":5,"ty":4,"nm":"Corps Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[140.308,112.467,0],"ix":2},"a":{"a":0,"k":[22.961,52.658,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[3.957,-0.631],[0,0],[0,12.491],[0,0],[-12.491,0],[0,-12.491],[0,0],[0,-4.516]],"o":[[0,0],[-12.491,0],[0,0],[0,-12.491],[12.491,0],[0,0],[0,10.794],[0,10]],"v":[[0.001,49.471],[0.001,49.471],[-22.711,26.76],[-22.711,-29.697],[0.001,-52.408],[22.711,-29.697],[22.711,34.865],[12.952,42.408]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.2,0.226999993418,0.305999995213,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[22.961,52.658],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":6,"ty":4,"nm":"Arri\u00c3\u00a8re Train Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[145.806,123.604,0],"ix":2},"a":{"a":0,"k":[34.668,38.551,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-0.937,2.437],[0.079,8.745],[18.854,-0.274],[0,-26.848],[-2.691,-6.976],[-1.943,0],[0,0]],"o":[[2.751,-7.144],[-0.243,-26.829],[-18.822,0.274],[0,8.52],[0.935,2.423],[0,0],[1.953,0]],"v":[[30.133,34.363],[34.339,10.247],[-0.396,-38.027],[-34.417,10.891],[-30.195,34.398],[-25.51,38.301],[25.434,38.301]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.156999999402,0.180000005984,0.238999998803,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 2","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"fl","c":{"a":0,"k":[0.2,0.226999993418,0.305999995213,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[34.667,38.551],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":5,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":7,"ty":4,"nm":"Oreillle Droite Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":1,"k":[{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0]},"n":["0p667_1_0p333_0"],"t":4,"s":[0],"e":[-16]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0]},"n":["0p667_1_0p333_0"],"t":7,"s":[-16],"e":[0]},{"t":11}],"ix":10},"p":{"a":0,"k":[132.432,63.714,0],"ix":2},"a":{"a":0,"k":[7.207,11.228,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[0,-3.053],[0,0]],"o":[[0,0],[-1.442,-2.69],[0,0],[0,0]],"v":[[6.957,-2.142],[1.453,-8.288],[-4.07,-6.9],[-6.957,10.978]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.128999986836,0.141000007181,0.195999998205,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[7.207,11.228],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":8,"ty":4,"nm":"Oreille Gauche Outlines","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":1,"k":[{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0]},"n":["0p667_1_0p333_0"],"t":4,"s":[0],"e":[16]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0]},"n":["0p667_1_0p333_0"],"t":7,"s":[16],"e":[0]},{"t":11}],"ix":10},"p":{"a":0,"k":[156.589,69.788,0],"ix":2},"a":{"a":0,"k":[7.856,17.275,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[1.417,22.687],[1.47,-2.676],[0,0],[0,0]],"o":[[-0.19,-3.047],[0,0],[0,0],[0,0]],"v":[[6.19,-12.905],[0.681,-14.349],[-7.607,-4.578],[5.423,17.025]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.128999986836,0.141000007181,0.195999998205,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[7.856,17.275],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":9,"ty":4,"nm":"Queue","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[164.778,130.315,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[86.141,81.208,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":1,"k":[{"i":{"x":0.667,"y":0.751},"o":{"x":0.333,"y":0},"n":"0p667_0p751_0p333_0","t":0,"s":[{"i":[[0,0],[-7.536,17.971],[-11.024,9.843],[10.236,-20.079]],"o":[[0,0],[5.118,-12.205],[9.762,-8.716],[-12.555,24.628]],"v":[[7.638,18.504],[27.323,11.811],[23.78,-35.039],[46.614,-14.961]],"c":false}],"e":[{"i":[[0,0],[-7.536,17.971],[-1.181,21.26],[-14.567,-4.331]],"o":[[0,0],[5.118,-12.205],[0.726,-13.067],[26.497,7.878]],"v":[[7.638,18.504],[28.504,14.961],[25.354,-27.165],[44.252,-43.307]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.282,"y":0.238},"n":"0p667_0p751_0p282_0p238","t":2.391,"s":[{"i":[[0,0],[-7.536,17.971],[-1.181,21.26],[-14.567,-4.331]],"o":[[0,0],[5.118,-12.205],[0.726,-13.067],[26.497,7.878]],"v":[[7.638,18.504],[28.504,14.961],[25.354,-27.165],[44.252,-43.307]],"c":false}],"e":[{"i":[[0,0],[-11.102,2.362],[3.386,16.221],[-11.102,3.78]],"o":[[0,0],[9.764,-5.118],[-6.457,-15.669],[8.283,-3.29]],"v":[[7.638,18.504],[27.008,23.622],[38.11,-0.079],[36.85,-43.543]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.23,"y":0.194},"n":"0p667_0p751_0p23_0p194","t":4,"s":[{"i":[[0,0],[-11.102,2.362],[3.386,16.221],[-11.102,3.78]],"o":[[0,0],[9.764,-5.118],[-6.457,-15.669],[8.283,-3.29]],"v":[[7.638,18.504],[27.008,23.622],[38.11,-0.079],[36.85,-43.543]],"c":false}],"e":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.23,"y":0.194},"n":"0p667_0p751_0p23_0p194","t":5.304,"s":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}],"e":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.23,"y":0.194},"n":"0p667_0p751_0p23_0p194","t":6.608,"s":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}],"e":[{"i":[[0,0],[-19.291,-2.756],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[14.856,2.122],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[31.654,26.772],[61.181,26.772],[69.055,-11.417]],"c":false}]},{"i":{"x":0.667,"y":0.748},"o":{"x":0.282,"y":0.238},"n":"0p667_0p748_0p282_0p238","t":7.913,"s":[{"i":[[0,0],[-19.291,-2.756],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[14.856,2.122],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[31.654,26.772],[61.181,26.772],[69.055,-11.417]],"c":false}],"e":[{"i":[[0,0],[-9.843,-13.386],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[8.676,11.8],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[28.898,35.827],[61.181,46.063],[76.535,15.354]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.299,"y":0.252},"n":"0p667_0p745_0p299_0p252","t":9,"s":[{"i":[[0,0],[-9.843,-13.386],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[8.676,11.8],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[28.898,35.827],[61.181,46.063],[76.535,15.354]],"c":false}],"e":[{"i":[[0,0],[-13.78,-11.024],[-16.535,-2.756],[3.543,16.142]],"o":[[0,0],[11.437,9.15],[12.909,2.152],[-5.927,-27]],"v":[[7.638,18.504],[31.654,31.102],[65.118,51.969],[88.346,37.795]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":10.479,"s":[{"i":[[0,0],[-13.78,-11.024],[-16.535,-2.756],[3.543,16.142]],"o":[[0,0],[11.437,9.15],[12.909,2.152],[-5.927,-27]],"v":[[7.638,18.504],[31.654,31.102],[65.118,51.969],[88.346,37.795]],"c":false}],"e":[{"i":[[0,0],[-15.354,-9.711],[-13.85,-6.658],[-0.394,15.354]],"o":[[0,0],[12.184,7.846],[10.837,5.24],[0.79,-25.902]],"v":[[7.638,18.504],[29.816,21.522],[60.262,65.486],[86.509,58.924]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.282,"y":0.238},"n":"0p667_0p745_0p282_0p238","t":11.782,"s":[{"i":[[0,0],[-15.354,-9.711],[-13.85,-6.658],[-0.394,15.354]],"o":[[0,0],[12.184,7.846],[10.837,5.24],[0.79,-25.902]],"v":[[7.638,18.504],[29.816,21.522],[60.262,65.486],[86.509,58.924]],"c":false}],"e":[{"i":[[0,0],[-18.504,-7.087],[-8.478,-14.462],[-8.268,13.78]],"o":[[0,0],[13.678,5.238],[6.693,11.417],[14.222,-23.704]],"v":[[7.638,18.504],[30.866,20.079],[52.913,53.543],[85.197,62.205]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":13,"s":[{"i":[[0,0],[-18.504,-7.087],[-8.478,-14.462],[-8.268,13.78]],"o":[[0,0],[13.678,5.238],[6.693,11.417],[14.222,-23.704]],"v":[[7.638,18.504],[30.866,20.079],[52.913,53.543],[85.197,62.205]],"c":false}],"e":[{"i":[[0,0],[-19.716,-1.972],[-8.478,-14.462],[-14.567,-9.449]],"o":[[0,0],[11.811,1.181],[6.693,11.417],[19.26,12.493]],"v":[[7.638,18.504],[31.26,15.748],[58.425,36.22],[75.354,80.315]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":14.304,"s":[{"i":[[0,0],[-19.716,-1.972],[-8.478,-14.462],[-14.567,-9.449]],"o":[[0,0],[11.811,1.181],[6.693,11.417],[19.26,12.493]],"v":[[7.638,18.504],[31.26,15.748],[58.425,36.22],[75.354,80.315]],"c":false}],"e":[{"i":[[0,0],[-18.038,8.199],[-8.478,-14.462],[3.162,-17.073]],"o":[[0,0],[12.992,-5.906],[6.693,11.417],[-3.937,21.26]],"v":[[7.638,18.504],[24.961,8.661],[64.724,21.26],[65.906,65.748]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":15.608,"s":[{"i":[[0,0],[-18.038,8.199],[-8.478,-14.462],[3.162,-17.073]],"o":[[0,0],[12.992,-5.906],[6.693,11.417],[-3.937,21.26]],"v":[[7.638,18.504],[24.961,8.661],[64.724,21.26],[65.906,65.748]],"c":false}],"e":[{"i":[[0,0],[-12.023,13.541],[-12.31,-4.971],[9.449,-16.929]],"o":[[0,0],[7.874,-7.283],[19.882,11.024],[-10.537,18.88]],"v":[[7.638,18.504],[25.551,11.417],[57.047,6.299],[68.268,58.268]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":16.913,"s":[{"i":[[0,0],[-12.023,13.541],[-12.31,-4.971],[9.449,-16.929]],"o":[[0,0],[7.874,-7.283],[19.882,11.024],[-10.537,18.88]],"v":[[7.638,18.504],[25.551,11.417],[57.047,6.299],[68.268,58.268]],"c":false}],"e":[{"i":[[0,0],[-6.008,18.882],[-16.143,4.52],[3.162,-17.073]],"o":[[0,0],[2.756,-8.661],[9.843,-2.756],[-3.937,21.26]],"v":[[7.638,18.504],[26.142,7.087],[50.157,-12.598],[86.378,8.268]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":18.217,"s":[{"i":[[0,0],[-6.008,18.882],[-16.143,4.52],[3.162,-17.073]],"o":[[0,0],[2.756,-8.661],[9.843,-2.756],[-3.937,21.26]],"v":[[7.638,18.504],[26.142,7.087],[50.157,-12.598],[86.378,8.268]],"c":false}],"e":[{"i":[[0,0],[-1.968,14.567],[-12.493,11.178],[10.236,-22.441]],"o":[[0,0],[1.213,-8.974],[7.48,-6.693],[-8.973,19.671]],"v":[[7.638,18.504],[26.142,7.087],[27.323,-32.677],[52.52,-9.055]],"c":false}]},{"i":{"x":0.667,"y":1},"o":{"x":0.299,"y":0.252},"n":"0p667_1_0p299_0p252","t":19.521,"s":[{"i":[[0,0],[-1.968,14.567],[-12.493,11.178],[10.236,-22.441]],"o":[[0,0],[1.213,-8.974],[7.48,-6.693],[-8.973,19.671]],"v":[[7.638,18.504],[26.142,7.087],[27.323,-32.677],[52.52,-9.055]],"c":false}],"e":[{"i":[[0,0],[-7.536,17.971],[-11.024,9.843],[10.236,-20.079]],"o":[[0,0],[5.118,-12.205],[9.762,-8.716],[-12.555,24.628]],"v":[[7.638,18.504],[27.323,11.811],[23.78,-35.039],[46.614,-14.961]],"c":false}]},{"t":27.6083984375}],"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"st","c":{"a":0,"k":[0.20000001496,0.227450995352,0.305882352941,1],"ix":3},"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":13,"ix":5},"lc":2,"lj":1,"ml":4,"ml2":{"a":0,"k":4,"ix":8},"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":1,"ind":10,"ty":4,"nm":"Queue Ombre","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"rx":{"a":0,"k":58,"ix":8},"ry":{"a":0,"k":0,"ix":9},"rz":{"a":0,"k":0,"ix":10},"or":{"a":0,"k":[0,0,0],"ix":7},"p":{"a":0,"k":[166.547,152.16,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[68.913,64.966,80],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":1,"k":[{"i":{"x":0.667,"y":0.751},"o":{"x":0.333,"y":0},"n":"0p667_0p751_0p333_0","t":0,"s":[{"i":[[0,0],[-7.536,17.971],[-11.024,9.843],[10.236,-20.079]],"o":[[0,0],[5.118,-12.205],[9.762,-8.716],[-12.555,24.628]],"v":[[7.638,18.504],[27.323,11.811],[23.78,-35.039],[46.614,-14.961]],"c":false}],"e":[{"i":[[0,0],[-7.536,17.971],[-1.181,21.26],[-14.567,-4.331]],"o":[[0,0],[5.118,-12.205],[0.726,-13.067],[26.497,7.878]],"v":[[7.638,18.504],[28.504,14.961],[25.354,-27.165],[44.252,-43.307]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.282,"y":0.238},"n":"0p667_0p751_0p282_0p238","t":2.391,"s":[{"i":[[0,0],[-7.536,17.971],[-1.181,21.26],[-14.567,-4.331]],"o":[[0,0],[5.118,-12.205],[0.726,-13.067],[26.497,7.878]],"v":[[7.638,18.504],[28.504,14.961],[25.354,-27.165],[44.252,-43.307]],"c":false}],"e":[{"i":[[0,0],[-11.102,2.362],[3.386,16.221],[-11.102,3.78]],"o":[[0,0],[9.764,-5.118],[-6.457,-15.669],[8.283,-3.29]],"v":[[7.638,18.504],[27.008,23.622],[38.11,-0.079],[36.85,-43.543]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.23,"y":0.194},"n":"0p667_0p751_0p23_0p194","t":4,"s":[{"i":[[0,0],[-11.102,2.362],[3.386,16.221],[-11.102,3.78]],"o":[[0,0],[9.764,-5.118],[-6.457,-15.669],[8.283,-3.29]],"v":[[7.638,18.504],[27.008,23.622],[38.11,-0.079],[36.85,-43.543]],"c":false}],"e":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.23,"y":0.194},"n":"0p667_0p751_0p23_0p194","t":5.304,"s":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}],"e":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}]},{"i":{"x":0.667,"y":0.751},"o":{"x":0.23,"y":0.194},"n":"0p667_0p751_0p23_0p194","t":6.608,"s":[{"i":[[0,0],[-13.832,0.656],[-7.848,11.207],[17.533,8.031]],"o":[[0,0],[5.853,-0.262],[7.9,-11.234],[-0.825,-8.874]],"v":[[7.638,18.504],[28.556,24.672],[48.556,8.871],[40.105,-29.291]],"c":false}],"e":[{"i":[[0,0],[-19.291,-2.756],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[14.856,2.122],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[31.654,26.772],[61.181,26.772],[69.055,-11.417]],"c":false}]},{"i":{"x":0.667,"y":0.748},"o":{"x":0.282,"y":0.238},"n":"0p667_0p748_0p282_0p238","t":7.913,"s":[{"i":[[0,0],[-19.291,-2.756],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[14.856,2.122],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[31.654,26.772],[61.181,26.772],[69.055,-11.417]],"c":false}],"e":[{"i":[[0,0],[-9.843,-13.386],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[8.676,11.8],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[28.898,35.827],[61.181,46.063],[76.535,15.354]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.299,"y":0.252},"n":"0p667_0p745_0p299_0p252","t":9,"s":[{"i":[[0,0],[-9.843,-13.386],[-6.068,0.735],[14.961,15.748]],"o":[[0,0],[8.676,11.8],[12.992,-1.575],[-19.039,-20.041]],"v":[[7.638,18.504],[28.898,35.827],[61.181,46.063],[76.535,15.354]],"c":false}],"e":[{"i":[[0,0],[-13.78,-11.024],[-16.535,-2.756],[3.543,16.142]],"o":[[0,0],[11.437,9.15],[12.909,2.152],[-5.927,-27]],"v":[[7.638,18.504],[31.654,31.102],[65.118,51.969],[88.346,37.795]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":10.479,"s":[{"i":[[0,0],[-13.78,-11.024],[-16.535,-2.756],[3.543,16.142]],"o":[[0,0],[11.437,9.15],[12.909,2.152],[-5.927,-27]],"v":[[7.638,18.504],[31.654,31.102],[65.118,51.969],[88.346,37.795]],"c":false}],"e":[{"i":[[0,0],[-15.354,-9.711],[-13.85,-6.658],[-0.394,15.354]],"o":[[0,0],[12.184,7.846],[10.837,5.24],[0.79,-25.902]],"v":[[7.638,18.504],[29.816,21.522],[60.262,65.486],[86.509,58.924]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.282,"y":0.238},"n":"0p667_0p745_0p282_0p238","t":11.782,"s":[{"i":[[0,0],[-15.354,-9.711],[-13.85,-6.658],[-0.394,15.354]],"o":[[0,0],[12.184,7.846],[10.837,5.24],[0.79,-25.902]],"v":[[7.638,18.504],[29.816,21.522],[60.262,65.486],[86.509,58.924]],"c":false}],"e":[{"i":[[0,0],[-18.504,-7.087],[-8.478,-14.462],[-8.268,13.78]],"o":[[0,0],[13.678,5.238],[6.693,11.417],[14.222,-23.704]],"v":[[7.638,18.504],[30.866,20.079],[52.913,53.543],[85.197,62.205]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":13,"s":[{"i":[[0,0],[-18.504,-7.087],[-8.478,-14.462],[-8.268,13.78]],"o":[[0,0],[13.678,5.238],[6.693,11.417],[14.222,-23.704]],"v":[[7.638,18.504],[30.866,20.079],[52.913,53.543],[85.197,62.205]],"c":false}],"e":[{"i":[[0,0],[-19.716,-1.972],[-8.478,-14.462],[-14.567,-9.449]],"o":[[0,0],[11.811,1.181],[6.693,11.417],[19.26,12.493]],"v":[[7.638,18.504],[31.26,15.748],[58.425,36.22],[75.354,80.315]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":14.304,"s":[{"i":[[0,0],[-19.716,-1.972],[-8.478,-14.462],[-14.567,-9.449]],"o":[[0,0],[11.811,1.181],[6.693,11.417],[19.26,12.493]],"v":[[7.638,18.504],[31.26,15.748],[58.425,36.22],[75.354,80.315]],"c":false}],"e":[{"i":[[0,0],[-18.038,8.199],[-8.478,-14.462],[3.162,-17.073]],"o":[[0,0],[12.992,-5.906],[6.693,11.417],[-3.937,21.26]],"v":[[7.638,18.504],[24.961,8.661],[64.724,21.26],[65.906,65.748]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":15.608,"s":[{"i":[[0,0],[-18.038,8.199],[-8.478,-14.462],[3.162,-17.073]],"o":[[0,0],[12.992,-5.906],[6.693,11.417],[-3.937,21.26]],"v":[[7.638,18.504],[24.961,8.661],[64.724,21.26],[65.906,65.748]],"c":false}],"e":[{"i":[[0,0],[-12.023,13.541],[-12.31,-4.971],[9.449,-16.929]],"o":[[0,0],[7.874,-7.283],[19.882,11.024],[-10.537,18.88]],"v":[[7.638,18.504],[25.551,11.417],[57.047,6.299],[68.268,58.268]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":16.913,"s":[{"i":[[0,0],[-12.023,13.541],[-12.31,-4.971],[9.449,-16.929]],"o":[[0,0],[7.874,-7.283],[19.882,11.024],[-10.537,18.88]],"v":[[7.638,18.504],[25.551,11.417],[57.047,6.299],[68.268,58.268]],"c":false}],"e":[{"i":[[0,0],[-6.008,18.882],[-16.143,4.52],[3.162,-17.073]],"o":[[0,0],[2.756,-8.661],[9.843,-2.756],[-3.937,21.26]],"v":[[7.638,18.504],[26.142,7.087],[50.157,-12.598],[86.378,8.268]],"c":false}]},{"i":{"x":0.667,"y":0.745},"o":{"x":0.23,"y":0.194},"n":"0p667_0p745_0p23_0p194","t":18.217,"s":[{"i":[[0,0],[-6.008,18.882],[-16.143,4.52],[3.162,-17.073]],"o":[[0,0],[2.756,-8.661],[9.843,-2.756],[-3.937,21.26]],"v":[[7.638,18.504],[26.142,7.087],[50.157,-12.598],[86.378,8.268]],"c":false}],"e":[{"i":[[0,0],[-1.968,14.567],[-12.493,11.178],[10.236,-22.441]],"o":[[0,0],[1.213,-8.974],[7.48,-6.693],[-8.973,19.671]],"v":[[7.638,18.504],[26.142,7.087],[27.323,-32.677],[52.52,-9.055]],"c":false}]},{"i":{"x":0.667,"y":1},"o":{"x":0.299,"y":0.252},"n":"0p667_1_0p299_0p252","t":19.521,"s":[{"i":[[0,0],[-1.968,14.567],[-12.493,11.178],[10.236,-22.441]],"o":[[0,0],[1.213,-8.974],[7.48,-6.693],[-8.973,19.671]],"v":[[7.638,18.504],[26.142,7.087],[27.323,-32.677],[52.52,-9.055]],"c":false}],"e":[{"i":[[0,0],[-7.536,17.971],[-11.024,9.843],[10.236,-20.079]],"o":[[0,0],[5.118,-12.205],[9.762,-8.716],[-12.555,24.628]],"v":[[7.638,18.504],[27.323,11.811],[23.78,-35.039],[46.614,-14.961]],"c":false}]},{"t":27.6083984375}],"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"st","c":{"a":0,"k":[0.6,0.6,0.760784313725,1],"ix":3},"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":15,"ix":5},"lc":2,"lj":1,"ml":4,"ml2":{"a":0,"k":4,"ix":8},"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0},{"ddd":0,"ind":11,"ty":4,"nm":"Ombre","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[142.54,156.967,0],"ix":2},"a":{"a":0,"k":[-52.446,2.907,0],"ix":1},"s":{"a":0,"k":[106.225,128.888,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[75.895,8.177],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[0.599679146561,0.599679146561,0.75925245098,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[-52.446,2.907],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":125,"st":0,"bm":0}],"markers":[]},
+  {"v":"5.5.7","fr":60,"ip":0,"op":180,"w":512,"h":512,"nm":"Comp 1","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"suv Outlines 4","sr":0.3,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"h":1},{"t":90.3,"s":[100],"h":1}],"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[278.7555555555556,113.77777777777779,0],"ix":2},"a":{"a":0,"k":[256,256,0],"ix":1},"s":{"a":0,"k":[-10.370370370370372,10.370370370370372,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[28.559,21.148],[0,0],[23.98,-32.39],[-28.554,-21.14],[-12.594,0],[-15.266,20.602]],"o":[[0,0],[-28.597,-21.125],[-23.957,32.406],[10.414,7.715],[21.949,0],[23.953,-32.406]],"v":[[47.596,-53.895],[47.583,-53.906],[-47.763,-33.484],[-39.421,63.629],[-4.107,75.031],[55.944,43.227]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[440.279,268.332],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-36.137,-12.016],[0,0],[-6.48,0],[-11.246,33.828],[7.25,17.911],[17.945,5.965],[17.301,-10.476],[6.468,-19.473]],"o":[[0,0],[6.379,2.117],[30.242,0],[6.477,-19.473],[-7.586,-18.75],[-17.949,-5.965],[-16.528,10.008],[-13.653,41.078]],"v":[[-21.189,75.922],[-21.185,75.922],[-1.819,79.051],[69.143,23.211],[67.944,-34.762],[28.354,-73.086],[-26.306,-66.086],[-61.966,-20.367]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[350.686,148.516],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 2","np":2,"cix":2,"bm":0,"ix":2,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-41.465,0],[0,47.246],[41.469,0],[0,-47.257]],"o":[[41.469,0],[0,-47.257],[-41.465,0],[0,47.246]],"v":[[-0.004,85.693],[75.203,0.01],[-0.004,-85.693],[-75.203,0.01]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[199.617,117.693],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 3","np":2,"cix":2,"bm":0,"ix":3,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-6.742,2.598],[-6.266,17.825],[6.856,17.812],[15.797,8.59],[16.488,-6.356],[-14.465,-37.652],[-27.246,0]],"o":[[16.516,-6.344],[5.965,-16.961],[-6.859,-17.801],[-16.593,-9.02],[-33.172,12.754],[11.555,29.969],[6.957,0]],"v":[[25.301,69.488],[60.629,32.012],[59.25,-21.91],[24.117,-62.831],[-27.195,-66.964],[-61.125,24.434],[4.625,73.321]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[66.594,201.75],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 4","np":4,"cix":2,"bm":0,"ix":4,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[42.688,0],[23.035,-35.941],[0,0],[-1.168,-17.028],[-11.09,-12.985],[-16.644,-3.805],[-15.633,6.871],[0,0],[-39.234,-17.254],[-10.82,0],[-5.864,1.336],[-11.102,12.977],[-1.172,17.036],[9.211,14.375]],"o":[[-23.039,-35.941],[-42.687,0],[0,0],[-9.211,14.368],[1.168,17.031],[11.098,12.972],[16.645,3.805],[0,0],[39.336,-16.945],[10.121,4.449],[5.883,0],[16.644,-3.801],[11.093,-12.972],[1.172,-17.035],[0,0]],"v":[[104.963,-76.262],[-0.002,-133.664],[-104.963,-76.262],[-160.479,10.343],[-172.771,58.34],[-154.033,104.215],[-111.627,129.859],[-62.288,125.168],[-61.24,124.703],[62.279,125.168],[93.942,131.867],[111.607,129.863],[154.018,104.218],[172.768,58.347],[160.479,10.34]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[237.42,347.614],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 5","np":2,"cix":2,"bm":0,"ix":5,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":900,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"suv Outlines 2","sr":0.3,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"h":1},{"t":54,"s":[100],"h":1}],"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[271.1703703703704,305.3037037037038,0],"ix":2},"a":{"a":0,"k":[256,256,0],"ix":1},"s":{"a":0,"k":[-10.370370370370372,10.370370370370372,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[28.559,21.148],[0,0],[23.98,-32.39],[-28.554,-21.14],[-12.594,0],[-15.266,20.602]],"o":[[0,0],[-28.597,-21.125],[-23.957,32.406],[10.414,7.715],[21.949,0],[23.953,-32.406]],"v":[[47.596,-53.895],[47.583,-53.906],[-47.763,-33.484],[-39.421,63.629],[-4.107,75.031],[55.944,43.227]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[440.279,268.332],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-36.137,-12.016],[0,0],[-6.48,0],[-11.246,33.828],[7.25,17.911],[17.945,5.965],[17.301,-10.476],[6.468,-19.473]],"o":[[0,0],[6.379,2.117],[30.242,0],[6.477,-19.473],[-7.586,-18.75],[-17.949,-5.965],[-16.528,10.008],[-13.653,41.078]],"v":[[-21.189,75.922],[-21.185,75.922],[-1.819,79.051],[69.143,23.211],[67.944,-34.762],[28.354,-73.086],[-26.306,-66.086],[-61.966,-20.367]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[350.686,148.516],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 2","np":2,"cix":2,"bm":0,"ix":2,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-41.465,0],[0,47.246],[41.469,0],[0,-47.257]],"o":[[41.469,0],[0,-47.257],[-41.465,0],[0,47.246]],"v":[[-0.004,85.693],[75.203,0.01],[-0.004,-85.693],[-75.203,0.01]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[199.617,117.693],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 3","np":2,"cix":2,"bm":0,"ix":3,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-6.742,2.598],[-6.266,17.825],[6.856,17.812],[15.797,8.59],[16.488,-6.356],[-14.465,-37.652],[-27.246,0]],"o":[[16.516,-6.344],[5.965,-16.961],[-6.859,-17.801],[-16.593,-9.02],[-33.172,12.754],[11.555,29.969],[6.957,0]],"v":[[25.301,69.488],[60.629,32.012],[59.25,-21.91],[24.117,-62.831],[-27.195,-66.964],[-61.125,24.434],[4.625,73.321]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[66.594,201.75],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 4","np":4,"cix":2,"bm":0,"ix":4,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[42.688,0],[23.035,-35.941],[0,0],[-1.168,-17.028],[-11.09,-12.985],[-16.644,-3.805],[-15.633,6.871],[0,0],[-39.234,-17.254],[-10.82,0],[-5.864,1.336],[-11.102,12.977],[-1.172,17.036],[9.211,14.375]],"o":[[-23.039,-35.941],[-42.687,0],[0,0],[-9.211,14.368],[1.168,17.031],[11.098,12.972],[16.645,3.805],[0,0],[39.336,-16.945],[10.121,4.449],[5.883,0],[16.644,-3.801],[11.093,-12.972],[1.172,-17.035],[0,0]],"v":[[104.963,-76.262],[-0.002,-133.664],[-104.963,-76.262],[-160.479,10.343],[-172.771,58.34],[-154.033,104.215],[-111.627,129.859],[-62.288,125.168],[-61.24,124.703],[62.279,125.168],[93.942,131.867],[111.607,129.863],[154.018,104.218],[172.768,58.347],[160.479,10.34]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[237.42,347.614],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 5","np":2,"cix":2,"bm":0,"ix":5,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":900,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"suv Outlines 3","sr":0.3,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"h":1},{"t":72.3,"s":[100],"h":1}],"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[191.52592592592595,216.17777777777778,0],"ix":2},"a":{"a":0,"k":[256,256,0],"ix":1},"s":{"a":0,"k":[10.370370370370372,10.370370370370372,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[28.559,21.148],[0,0],[23.98,-32.39],[-28.554,-21.14],[-12.594,0],[-15.266,20.602]],"o":[[0,0],[-28.597,-21.125],[-23.957,32.406],[10.414,7.715],[21.949,0],[23.953,-32.406]],"v":[[47.596,-53.895],[47.583,-53.906],[-47.763,-33.484],[-39.421,63.629],[-4.107,75.031],[55.944,43.227]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[440.279,268.332],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-36.137,-12.016],[0,0],[-6.48,0],[-11.246,33.828],[7.25,17.911],[17.945,5.965],[17.301,-10.476],[6.468,-19.473]],"o":[[0,0],[6.379,2.117],[30.242,0],[6.477,-19.473],[-7.586,-18.75],[-17.949,-5.965],[-16.528,10.008],[-13.653,41.078]],"v":[[-21.189,75.922],[-21.185,75.922],[-1.819,79.051],[69.143,23.211],[67.944,-34.762],[28.354,-73.086],[-26.306,-66.086],[-61.966,-20.367]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[350.686,148.516],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 2","np":2,"cix":2,"bm":0,"ix":2,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-41.465,0],[0,47.246],[41.469,0],[0,-47.257]],"o":[[41.469,0],[0,-47.257],[-41.465,0],[0,47.246]],"v":[[-0.004,85.693],[75.203,0.01],[-0.004,-85.693],[-75.203,0.01]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[199.617,117.693],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 3","np":2,"cix":2,"bm":0,"ix":3,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-6.742,2.598],[-6.266,17.825],[6.856,17.812],[15.797,8.59],[16.488,-6.356],[-14.465,-37.652],[-27.246,0]],"o":[[16.516,-6.344],[5.965,-16.961],[-6.859,-17.801],[-16.593,-9.02],[-33.172,12.754],[11.555,29.969],[6.957,0]],"v":[[25.301,69.488],[60.629,32.012],[59.25,-21.91],[24.117,-62.831],[-27.195,-66.964],[-61.125,24.434],[4.625,73.321]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[66.594,201.75],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 4","np":4,"cix":2,"bm":0,"ix":4,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[42.688,0],[23.035,-35.941],[0,0],[-1.168,-17.028],[-11.09,-12.985],[-16.644,-3.805],[-15.633,6.871],[0,0],[-39.234,-17.254],[-10.82,0],[-5.864,1.336],[-11.102,12.977],[-1.172,17.036],[9.211,14.375]],"o":[[-23.039,-35.941],[-42.687,0],[0,0],[-9.211,14.368],[1.168,17.031],[11.098,12.972],[16.645,3.805],[0,0],[39.336,-16.945],[10.121,4.449],[5.883,0],[16.644,-3.801],[11.093,-12.972],[1.172,-17.035],[0,0]],"v":[[104.963,-76.262],[-0.002,-133.664],[-104.963,-76.262],[-160.479,10.343],[-172.771,58.34],[-154.033,104.215],[-111.627,129.859],[-62.288,125.168],[-61.24,124.703],[62.279,125.168],[93.942,131.867],[111.607,129.863],[154.018,104.218],[172.768,58.347],[160.479,10.34]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[237.42,347.614],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 5","np":2,"cix":2,"bm":0,"ix":5,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":900,"st":0,"bm":0},{"ddd":0,"ind":4,"ty":4,"nm":"suv Outlines","sr":0.3,"ks":{"o":{"a":1,"k":[{"t":0,"s":[0],"h":1},{"t":36,"s":[100],"h":1}],"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[189.62962962962965,402.0148148148149,0],"ix":2},"a":{"a":0,"k":[256,256,0],"ix":1},"s":{"a":0,"k":[10.370370370370372,10.370370370370372,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[28.559,21.148],[0,0],[23.98,-32.39],[-28.554,-21.14],[-12.594,0],[-15.266,20.602]],"o":[[0,0],[-28.597,-21.125],[-23.957,32.406],[10.414,7.715],[21.949,0],[23.953,-32.406]],"v":[[47.596,-53.895],[47.583,-53.906],[-47.763,-33.484],[-39.421,63.629],[-4.107,75.031],[55.944,43.227]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[440.279,268.332],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-36.137,-12.016],[0,0],[-6.48,0],[-11.246,33.828],[7.25,17.911],[17.945,5.965],[17.301,-10.476],[6.468,-19.473]],"o":[[0,0],[6.379,2.117],[30.242,0],[6.477,-19.473],[-7.586,-18.75],[-17.949,-5.965],[-16.528,10.008],[-13.653,41.078]],"v":[[-21.189,75.922],[-21.185,75.922],[-1.819,79.051],[69.143,23.211],[67.944,-34.762],[28.354,-73.086],[-26.306,-66.086],[-61.966,-20.367]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[350.686,148.516],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 2","np":2,"cix":2,"bm":0,"ix":2,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-41.465,0],[0,47.246],[41.469,0],[0,-47.257]],"o":[[41.469,0],[0,-47.257],[-41.465,0],[0,47.246]],"v":[[-0.004,85.693],[75.203,0.01],[-0.004,-85.693],[-75.203,0.01]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[199.617,117.693],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 3","np":2,"cix":2,"bm":0,"ix":3,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-6.742,2.598],[-6.266,17.825],[6.856,17.812],[15.797,8.59],[16.488,-6.356],[-14.465,-37.652],[-27.246,0]],"o":[[16.516,-6.344],[5.965,-16.961],[-6.859,-17.801],[-16.593,-9.02],[-33.172,12.754],[11.555,29.969],[6.957,0]],"v":[[25.301,69.488],[60.629,32.012],[59.25,-21.91],[24.117,-62.831],[-27.195,-66.964],[-61.125,24.434],[4.625,73.321]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[66.594,201.75],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 4","np":4,"cix":2,"bm":0,"ix":4,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[42.688,0],[23.035,-35.941],[0,0],[-1.168,-17.028],[-11.09,-12.985],[-16.644,-3.805],[-15.633,6.871],[0,0],[-39.234,-17.254],[-10.82,0],[-5.864,1.336],[-11.102,12.977],[-1.172,17.036],[9.211,14.375]],"o":[[-23.039,-35.941],[-42.687,0],[0,0],[-9.211,14.368],[1.168,17.031],[11.098,12.972],[16.645,3.805],[0,0],[39.336,-16.945],[10.121,4.449],[5.883,0],[16.644,-3.801],[11.093,-12.972],[1.172,-17.035],[0,0]],"v":[[104.963,-76.262],[-0.002,-133.664],[-104.963,-76.262],[-160.479,10.343],[-172.771,58.34],[-154.033,104.215],[-111.627,129.859],[-62.288,125.168],[-61.24,124.703],[62.279,125.168],[93.942,131.867],[111.607,129.863],[154.018,104.218],[172.768,58.347],[160.479,10.34]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0,0,0,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[237.42,347.614],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 5","np":2,"cix":2,"bm":0,"ix":5,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":900,"st":0,"bm":0},{"ddd":0,"ind":5,"ty":4,"nm":"Shape Layer 1","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[256.00000000000006,256.00000000000006,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[47.40740740740741,47.40740740740741,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"rc","d":1,"s":{"a":0,"k":[1936,1096],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"r":{"a":0,"k":0,"ix":4},"nm":"Rectangle Path 1","mn":"ADBE Vector Shape - Rect","hd":false},{"ty":"st","c":{"a":0,"k":[1,1,1,1],"ix":3},"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":0,"ix":5},"lc":1,"lj":1,"ml":4,"bm":0,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[-8,-8],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Rectangle 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":3000,"op":3000,"st":0,"bm":0,"hidden":0}],"markers":[]}
+];
+const chosenData = LOTTIE_DATA[Math.floor(Math.random() * LOTTIE_DATA.length)];
+lottie.loadAnimation({
+  container: document.getElementById('lottie-container'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  animationData: chosenData
+});
+setTimeout(() => document.getElementById('lottie-wrapper').classList.add('visible'), 800);
+initFavBtns();
+</script>
+</body>
+</html>
