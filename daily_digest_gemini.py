@@ -158,6 +158,18 @@ def call_gemini(papers, today, api_key=None):
   "tomorrow": "明日值得關注(繁中,1-2句)"
 }}
 
+選文標準（picks 與 papers 共同適用）：
+優先選擇 AI 與心理學任何子領域的交叉研究，包括但不限於：
+- HCI（人機互動）：介面設計、使用者體驗、互動行為
+- 情感計算（Affective Computing）：情緒辨識、情感生成、情感回饋
+- 認知科學（Cognitive Science）：注意力、記憶、推理、決策
+- 社會心理學（Social Psychology）：群體行為、說服、偏見、社交動態
+- 教育心理學（Educational Psychology）：學習效果、自適應學習、認知負荷
+- 臨床心理學（Clinical Psychology）：心理健康、輔助診斷、治療支援
+- 神經科學（Neuroscience）：腦機介面、神經訊號分析
+- 行為科學（Behavioral Science）：行為預測、習慣形成、激勵設計
+任何涉及「人機互動 × 心理學」、「AI 輔助心理相關應用」均列入優選範疇，不限於心理諮商。
+
 規則：
 1. picks 選 3 篇，主題各異（分別對應不同的 arXiv 分類）
 2. papers 選 5 篇，llm_papers 選 3 篇，prompt_papers 選 3 篇（優先選用涉及提示工程技術與心理學概念的論文）
