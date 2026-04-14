@@ -12,6 +12,7 @@
   --m-clay:#a8856e;--m-clay-light:#d4b8a6;--m-clay-pale:#f0e6de;
   --m-slate:#7a8a96;--m-slate-light:#b8c4cc;--m-slate-pale:#e4e9ed;
   --m-mauve:#9e8fa0;--m-mauve-light:#c8bfca;--m-mauve-pale:#ede9ee;
+  --m-teal:#6a9fa8;--m-teal-light:#a8cdd2;--m-teal-pale:#deeef0;
   --m-ink:#3a3530;--m-ink-soft:#5c544e;--m-ink-muted:#8c847c;
   --m-paper:#f7f4f0;--m-paper-warm:#f0ebe3;
   --m-rule:rgba(58,53,48,0.11);
@@ -124,6 +125,14 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 .fl-body{font-size:.84rem;color:var(--m-ink-soft);line-height:1.7}
 .llm-verdict{background:var(--m-mauve-pale);border-left:2px solid var(--m-mauve);padding:.72rem 1rem;font-size:.84rem;font-style:italic;border-radius:0 2px 2px 0;margin-top:.5rem;color:var(--m-ink)}
 
+/* ── Prompt Engineering 卡片 ── */
+.prompt-card{display:grid;grid-template-columns:3px 1fr;gap:0 1.5rem;margin-bottom:2.2rem;align-items:start}
+.prompt-stripe{background:var(--m-teal);border-radius:2px;align-self:stretch}
+.prompt-rank{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;color:var(--m-teal);text-transform:uppercase;margin-bottom:.28rem}
+.prompt-title{font-size:.98rem;font-style:italic;line-height:1.42;margin-bottom:.8rem}
+.prompt-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.8rem}
+.prompt-verdict{background:var(--m-teal-pale);border-left:2px solid var(--m-teal);padding:.72rem 1rem;font-size:.84rem;font-style:italic;border-radius:0 2px 2px 0;margin-top:.5rem;color:var(--m-ink)}
+
 /* ── Lottie 動畫貓咪 ── */
 .lottie-wrapper{position:fixed;z-index:50;pointer-events:none;opacity:0;transition:opacity 1.2s ease;bottom:1.5rem;right:1.5rem}
 .lottie-wrapper.visible{opacity:1}
@@ -143,7 +152,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 @media(max-width:680px){
   .page-wrap{padding:0 1.1rem 4rem}
   .rec-grid{grid-template-columns:1fr}
-  .llm-row,.thermometer{grid-template-columns:1fr}
+  .llm-row,.prompt-row,.thermometer{grid-template-columns:1fr}
   .nav-btn{padding:.8rem 1rem;font-size:.62rem}
   body{font-size:15px}
   .nav-inner{justify-content:flex-start;overflow-x:auto}
@@ -165,6 +174,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
     <button class="nav-btn active" onclick="switchTab('home',this)">☀ 今日推薦</button>
     <button class="nav-btn" onclick="switchTab('papers',this)">📚 TOP 5 深度解析</button>
     <button class="nav-btn" onclick="switchTab('llm',this)">🤖 LLM × 心理學</button>
+    <button class="nav-btn" onclick="switchTab('prompt',this)">🔬 Prompt × 心理學</button>
     <button class="nav-btn" onclick="switchTab('favs',this)">★ 收藏夾</button>
   </div>
 </nav>
@@ -215,6 +225,16 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-sub">LLM × PSYCHOLOGY</span>
     </div>
     {{LLM_PAPERS}}
+  </div>
+
+  <!-- ═══ Prompt Engineering × 心理學 ═══ -->
+  <div id="tab-prompt" class="tab-panel">
+    <div class="sec-header">
+      <span class="sec-num">04 /</span>
+      <span class="sec-title">Prompt Engineering × 心理學 精選 TOP 3</span>
+      <span class="sec-sub">PROMPT ENG × PSYCHOLOGY</span>
+    </div>
+    {{PROMPT_PAPERS}}
   </div>
 
 </div>

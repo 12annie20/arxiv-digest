@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat .github/workflows/daily.yml)",
+      "Bash(ls .github/workflows/)",
+      "Bash(gh api:*)",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('daily_digest_gemini.py'\\).read\\(\\)\\); print\\('語法 OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('daily_digest_gemini.py', encoding='utf-8'\\).read\\(\\)\\); print\\('syntax OK'\\)\")",
+      "Bash(python daily_digest_gemini.py)"
+    ]
+  }
+}

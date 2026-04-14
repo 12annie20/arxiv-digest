@@ -142,13 +142,25 @@ def call_gemini(papers, today, api_key=None):
       "verdict": "一句話犀利評語(繁中)"
     }}
   ],
+  "prompt_papers": [
+    {{
+      "rank": "01",
+      "arxiv_id": "真實arXiv ID",
+      "title": "論文英文標題（完整複製）",
+      "tags": ["cs.CL"],
+      "technique": "使用的Prompt Engineering技術（如CoT/Few-shot/RAG/RLHF/Persona等）",
+      "psych_concept": "涉及的心理學概念（如認知負荷/情緒調節/說服/偏見等）",
+      "application": "實際應用場景與潛力(繁中,2句)",
+      "verdict": "一句話犀利評語(繁中)"
+    }}
+  ],
   "summary": "今日日報總結(繁中,3-4句)",
   "tomorrow": "明日值得關注(繁中,1-2句)"
 }}
 
 規則：
 1. picks 選 3 篇，主題各異（分別對應不同的 arXiv 分類）
-2. papers 選 5 篇，llm_papers 選 3 篇
+2. papers 選 5 篇，llm_papers 選 3 篇，prompt_papers 選 3 篇（優先選用涉及提示工程技術與心理學概念的論文）
 3. 所有 arxiv_id 必須來自上方論文清單，不可編造
 4. 論文標題完整複製原文
 5. 全部繁體中文
@@ -197,7 +209,7 @@ def call_gemini(papers, today, api_key=None):
             raise ValueError("JSON 無法修復，請重試")
 
     id_map = {p['arxiv_id']: p for p in papers}
-    for section in ['picks', 'papers', 'llm_papers']:
+    for section in ['picks', 'papers', 'llm_papers', 'prompt_papers']:
         for item in data.get(section, []):
             real = id_map.get(item.get('arxiv_id', ''))
             item['arxiv_url'] = real['arxiv_url'] if real else f"https://arxiv.org/abs/{item.get('arxiv_id','')}"
@@ -289,10 +301,29 @@ def render_llm(papers):
 </div></div>'''
     return html
 
+def render_prompt(papers):
+    html = ""
+    for p in papers:
+        tags = "".join(tag_html(t) for t in p.get("tags",[]))
+        html += f'''<div class="prompt-card"><div class="prompt-stripe"></div><div>
+<div class="prompt-rank">Prompt × 心理學 No.{p["rank"]}</div>
+<div class="prompt-title">{p["title"]}</div>
+<div class="paper-meta" style="margin-bottom:.8rem">{tags}</div>
+<div class="prompt-row">
+  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">{p["technique"]}</div></div>
+  <div><div class="fl-label">心理學概念</div><div class="fl-body">{p["psych_concept"]}</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">{p["application"]}</div></div>
+<div class="prompt-verdict">{p["verdict"]}</div>
+{link_html(p)}
+{fav_btn_html(p, card_class='prompt-card', title_class='prompt-title')}
+</div></div>'''
+    return html
+
 def build_error_html(today, error_code):
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
     error_page = template
-    for ph in ['{{THERMOMETER}}','{{PICKS}}','{{PAPERS}}','{{LLM_PAPERS}}','{{SUMMARY}}','{{TOMORROW}}']:
+    for ph in ['{{THERMOMETER}}','{{PICKS}}','{{PAPERS}}','{{LLM_PAPERS}}','{{PROMPT_PAPERS}}','{{SUMMARY}}','{{TOMORROW}}']:
         error_page = error_page.replace(ph, '')
     error_page = error_page.replace('{{DATE}}', today)
     error_page = error_page.replace('{{DATETIME}}', get_datetime())
@@ -311,6 +342,7 @@ def build_html(data, today):
         .replace("{{PICKS}}", render_picks(data.get("picks",[])))
         .replace("{{PAPERS}}", render_papers(data["papers"]))
         .replace("{{LLM_PAPERS}}", render_llm(data["llm_papers"]))
+        .replace("{{PROMPT_PAPERS}}", render_prompt(data.get("prompt_papers",[])))
         .replace("{{SUMMARY}}", data.get("summary",""))
         .replace("{{TOMORROW}}", data.get("tomorrow",""))
     )

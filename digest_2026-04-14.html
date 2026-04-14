@@ -12,6 +12,7 @@
   --m-clay:#a8856e;--m-clay-light:#d4b8a6;--m-clay-pale:#f0e6de;
   --m-slate:#7a8a96;--m-slate-light:#b8c4cc;--m-slate-pale:#e4e9ed;
   --m-mauve:#9e8fa0;--m-mauve-light:#c8bfca;--m-mauve-pale:#ede9ee;
+  --m-teal:#6a9fa8;--m-teal-light:#a8cdd2;--m-teal-pale:#deeef0;
   --m-ink:#3a3530;--m-ink-soft:#5c544e;--m-ink-muted:#8c847c;
   --m-paper:#f7f4f0;--m-paper-warm:#f0ebe3;
   --m-rule:rgba(58,53,48,0.11);
@@ -124,6 +125,14 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 .fl-body{font-size:.84rem;color:var(--m-ink-soft);line-height:1.7}
 .llm-verdict{background:var(--m-mauve-pale);border-left:2px solid var(--m-mauve);padding:.72rem 1rem;font-size:.84rem;font-style:italic;border-radius:0 2px 2px 0;margin-top:.5rem;color:var(--m-ink)}
 
+/* ── Prompt Engineering 卡片 ── */
+.prompt-card{display:grid;grid-template-columns:3px 1fr;gap:0 1.5rem;margin-bottom:2.2rem;align-items:start}
+.prompt-stripe{background:var(--m-teal);border-radius:2px;align-self:stretch}
+.prompt-rank{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;color:var(--m-teal);text-transform:uppercase;margin-bottom:.28rem}
+.prompt-title{font-size:.98rem;font-style:italic;line-height:1.42;margin-bottom:.8rem}
+.prompt-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.8rem}
+.prompt-verdict{background:var(--m-teal-pale);border-left:2px solid var(--m-teal);padding:.72rem 1rem;font-size:.84rem;font-style:italic;border-radius:0 2px 2px 0;margin-top:.5rem;color:var(--m-ink)}
+
 /* ── Lottie 動畫貓咪 ── */
 .lottie-wrapper{position:fixed;z-index:50;pointer-events:none;opacity:0;transition:opacity 1.2s ease;bottom:1.5rem;right:1.5rem}
 .lottie-wrapper.visible{opacity:1}
@@ -143,7 +152,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 @media(max-width:680px){
   .page-wrap{padding:0 1.1rem 4rem}
   .rec-grid{grid-template-columns:1fr}
-  .llm-row,.thermometer{grid-template-columns:1fr}
+  .llm-row,.prompt-row,.thermometer{grid-template-columns:1fr}
   .nav-btn{padding:.8rem 1rem;font-size:.62rem}
   body{font-size:15px}
   .nav-inner{justify-content:flex-start;overflow-x:auto}
@@ -156,7 +165,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 <header class="masthead">
   <div class="masthead-eyebrow">arXiv · AI × Psychology · Daily Digest</div>
   <h1 class="masthead-title">文獻日報 <em>/ 2026-04-14</em></h1>
-  <div class="masthead-date">2026-04-14 06:24 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
+  <div class="masthead-date">2026-04-14 18:06 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
   <div class="masthead-rule"></div>
 </header>
 
@@ -165,6 +174,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
     <button class="nav-btn active" onclick="switchTab('home',this)">☀ 今日推薦</button>
     <button class="nav-btn" onclick="switchTab('papers',this)">📚 TOP 5 深度解析</button>
     <button class="nav-btn" onclick="switchTab('llm',this)">🤖 LLM × 心理學</button>
+    <button class="nav-btn" onclick="switchTab('prompt',this)">🔬 Prompt × 心理學</button>
     <button class="nav-btn" onclick="switchTab('favs',this)">★ 收藏夾</button>
   </div>
 </nav>
@@ -172,27 +182,45 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 <div class="page-wrap">
 
   <!-- ═══ 首頁：溫度計 → 3篇推薦 → Insight ═══ -->
-  <div id="tab-home" class="tab-panel active"><div style="text-align:center;padding:8rem 0;font-family:var(--mono);font-size:4rem;color:var(--m-rule);letter-spacing:.1em">503</div>
+  <div id="tab-home" class="tab-panel active">
 
     <div class="sec-header" style="margin-top:2.5rem">
       <span class="sec-num">今日 /</span>
       <span class="sec-title">領域溫度計</span>
       <span class="sec-sub">FIELD TEMPERATURE</span>
     </div>
-    <div class="thermometer"></div>
+    <div class="thermometer"><div><div class="th-label hot">熱門主題</div><div class="th-body">AI代理系統・LLM心理健康應用・人機信任與解釋性AI</div></div><div><div class="th-label new">新興焦點</div><div class="th-body">LLM敘事張力評估・AI生成幽默的認知協同</div></div><div><div class="th-label cold">冷門值得關注</div><div class="th-body">AI系統日誌分析</div></div></div>
 
     <div class="sec-header">
       <span class="sec-num">01 /</span>
       <span class="sec-title">今日推薦文獻</span>
       <span class="sec-sub">TODAY'S PICKS</span>
     </div>
-    <div class="rec-grid"></div>
+    <div class="rec-grid"><div class="rec-card">
+<span class="rec-theme t-hc">cs.HC</span>
+<div class="rec-title">Talking to a Human as an Attitudinal Barrier: A Mixed Methods Evaluation of Stigma, Access, and the Appeal of AI Mental Health Support</div>
+<div class="rec-why">這篇論文深入探討了AI在緩解心理健康服務障礙（如恥辱感和可近性）方面的潛力，對於理解AI如何影響人類行為和福祉至關重要。它結合了量化與質化研究，為AI心理健康支持的設計提供了寶貴見解。</div>
+<div class="rec-meta">Caitlin A. Stamatis, Emma C. Wolfe, Matteo Malgaroli</div>
+<a class="rec-link" href="https://arxiv.org/abs/2604.09575" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div><div class="rec-card">
+<span class="rec-theme t-ai">cs.AI</span>
+<div class="rec-title">Turing Test on Screen: A Benchmark for Mobile GUI Agent Humanization</div>
+<div class="rec-why">這項研究提出了一個新穎的「螢幕圖靈測試」，旨在評估AI代理在行動GUI環境中模仿人類行為的能力，以規避檢測。它將代理的「人性化」能力提升到與實用性和穩健性同等重要的地位，對於開發更具適應性和生存能力的AI代理具有開創性意義。</div>
+<div class="rec-meta">Jiachen Zhu, Lingyu Yang, Rong Shan</div>
+<a class="rec-link" href="https://arxiv.org/abs/2604.09574" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div><div class="rec-card">
+<span class="rec-theme t-cl">cs.CL</span>
+<div class="rec-title">LETGAMES: An LLM-Powered Gamified Approach to Cognitive Training for Patients with Cognitive Impairment</div>
+<div class="rec-why">本研究開發了一個由大型語言模型驅動的遊戲化認知訓練系統，為認知障礙患者提供自動化和個性化的治療遊戲設計。它將先進的AI技術應用於醫療健康領域，展現了LLM在提升認知功能和改善患者生活品質方面的巨大潛力。</div>
+<div class="rec-meta">Jingwei Shi, Shengyu Tao, Xinxiang Yin</div>
+<a class="rec-link" href="https://arxiv.org/abs/2604.09566" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
+</div></div>
 
     <div class="insight-home">
       <div class="insight-label">Today's Insight</div>
-      <p class="insight-text"></p>
+      <p class="insight-text">今日arXiv日報聚焦於AI代理系統的發展與人機互動的心理學挑戰。從AI代理的人性化與反偵測能力，到LLM在心理健康、認知訓練及幽默生成上的應用，都展現了AI與心理學深度融合的趨勢。同時，對AI解釋性、信任度以及假新聞辨識的研究，也凸顯了AI倫理與社會影響的重要性。</p>
       <div class="tmr-label">明日值得關注</div>
-      <p class="tmr-text"></p>
+      <p class="tmr-text">明日值得關注AI代理在複雜環境中的自主決策能力，以及LLM如何透過更精細的提示工程，在情感智能和創造性任務上取得進一步突破。</p>
     </div>
 
   </div>
@@ -204,7 +232,82 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">精選 TOP 5 研究深度解析</span>
       <span class="sec-sub">DEEP REVIEW</span>
     </div>
-    
+    <div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 01</div>
+<div class="pc-title">Improving understanding and trust in AI: How users benefit from interval-based counterfactual explanations</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">本研究旨在探討不同類型的反事實解釋（單點解釋與區間解釋）如何影響使用者對黑箱模型的理解和信任。透過一項線上使用者研究，作者評估了這些解釋類型與無解釋控制組之間的差異。結果顯示，提供區間解釋能顯著提升使用者對AI模型的理解和信任度。這項工作為設計更有效、更值得信賴的AI解釋系統提供了實證基礎。</div>
+<div class="pc-q">區間反事實解釋如何影響AI信任？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>首次對不同反事實解釋子類型進行實驗性使用者研究，填補了研究空白。</li>
+<li>發現區間解釋比單點解釋更能提升使用者對AI的理解和信任。</li>
+<li>研究結果對可解釋AI（XAI）的實際應用和設計具有重要指導意義。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>透過使用者研究量化了區間反事實解釋在提升AI理解與信任方面的優勢。</li>
+<li>為未來XAI系統的設計提供了具體的實證建議，強調了解釋的粒度與呈現方式。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>研究僅限於特定黑箱模型和任務，結果可能不完全適用於所有AI系統。</li>
+<li>線上使用者研究可能無法完全捕捉真實世界中複雜的人機互動情境。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09573" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09573" onclick="toggleFav(this,'2604.09573','Improving understanding and trust in AI: How users benefit from interval-based counterfactual explanations','https://arxiv.org/abs/2604.09573')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 02</div>
+<div class="pc-title">Automatic Mind Wandering Detection in Educational Settings: A Systematic Review and Multimodal Benchmarking</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">在線上教育中，檢測心智遊移對於學習者的學習成效至關重要，因為它直接影響記憶、理解和學習成功率。本研究系統性回顧了自動檢測心智遊移的演算法，並提出了多模態基準測試框架。透過整合這些檢測演算法，可以為適應性學習環境提供有針對性的干預措施，從而實現更具響應性和個性化的教育系統。這項工作為線上學習環境中識別心智遊移提供了一個連貫的框架。</div>
+<div class="pc-q">如何自動檢測線上學習中的心智遊移？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>系統性地回顧了心智遊移檢測的現有方法，為該領域提供了全面的概覽。</li>
+<li>提出了多模態基準測試框架，有助於標準化和加速該領域的進展。</li>
+<li>強調了心智遊移檢測在個性化和適應性教育系統中的關鍵作用。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>建立了線上教育環境中自動心智遊移檢測的連貫框架和基準。</li>
+<li>為開發和部署針對性學習干預措施奠定了基礎，以提升學習者表現。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>現有研究缺乏統一的數據集和評估標準，限制了跨研究的比較。</li>
+<li>多模態數據的收集和整合在實際應用中仍面臨隱私和技術挑戰。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09569" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09569" onclick="toggleFav(this,'2604.09569','Automatic Mind Wandering Detection in Educational Settings: A Systematic Review and Multimodal Benchmarking','https://arxiv.org/abs/2604.09569')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 03</div>
+<div class="pc-title">Conversational Forecasting Across Large Human Groups Using A Network of Surrogate Agents</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">Hyperchat AI是一種創新的通訊與協作架構，利用AI代理來實現大規模分散式人類團隊的即時對話協商。先前的研究已證明，該系統能讓多達250人的團隊進行富有成效的即時討論。本研究在此基礎上，讓25至30人的團隊使用Hyperchat AI進行對話式預測任務，旨在評估其在匯聚群體智慧和預測複雜結果方面的能力。這項技術有望革新大規模群體決策和預測的模式。</div>
+<div class="pc-q">AI代理如何促進大規模群體對話預測？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>展示了AI代理在促進大規模人類群體即時對話和協作方面的潛力。</li>
+<li>將Hyperchat AI應用於對話式預測任務，探索其匯聚群體智慧的能力。</li>
+<li>為理解和優化大規模人類協作提供了新的技術途徑和研究視角。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>驗證了Hyperchat AI在支持大規模群體進行複雜對話式預測任務的有效性。</li>
+<li>為開發能夠增強人類集體智慧的AI系統提供了實證支持和方法論。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>研究規模相對較小（25-30人），可能無法完全推廣至更大規模的群體。</li>
+<li>對話式預測的準確性可能受多種因素影響，需要進一步的控制和分析。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09570" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09570" onclick="toggleFav(this,'2604.09570','Conversational Forecasting Across Large Human Groups Using A Network of Surrogate Agents','https://arxiv.org/abs/2604.09570')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 04</div>
+<div class="pc-title">Simulating Organized Group Behavior: New Framework, Benchmark, and Analysis</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">模擬有組織群體（如公司）的決策行為對於理解現實世界動態至關重要，並有益於市場預測等應用。本論文將此問題形式化為一個具體的研究平台，用於理解群體行為。作者提供了一個任務定義、基準和評估標準，以及一個結構化的分析框架和相應的演算法。研究還進行了詳細的時間和跨群體分析，為模擬和理解複雜群體行為提供了全面的工具和見解。</div>
+<div class="pc-q">如何有效模擬有組織群體的行為與決策？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>首次將有組織群體行為模擬形式化為一個研究平台，提供了全面的框架。</li>
+<li>設計了新的基準和評估標準，有助於推動該領域的量化研究。</li>
+<li>透過詳細的分析，揭示了群體行為的時間動態和跨群體差異。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出了一個用於模擬和分析有組織群體行為的創新框架和演算法。</li>
+<li>建立了新的基準，為評估和比較不同群體行為模擬模型提供了標準化工具。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>模擬的複雜性可能無法完全捕捉現實世界中所有細微的社會和心理因素。</li>
+<li>模型的泛化能力可能需要更多不同類型群體行為數據的驗證。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09874" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09874" onclick="toggleFav(this,'2604.09874','Simulating Organized Group Behavior: New Framework, Benchmark, and Analysis','https://arxiv.org/abs/2604.09874')" title="收藏">收藏</button>
+</div></div><div class="paper-card">
+<div class="pc-head"><div class="pc-rank">No. 05</div>
+<div class="pc-title">Human vs. Machine Deception: Distinguishing AI-Generated and Human-Written Fake News Using Ensemble Learning</div><div class="paper-meta"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span> <span class="tag tag-date">2026-04-14</span></div></div>
+<div class="pc-body">
+<div class="pc-abs">大型語言模型的快速普及催生了一種新型的AI生成假新聞，與傳統的人工撰寫假新聞並存，引發了關於這兩種欺騙性內容差異及其可區分性的重要問題。本研究探討了人工撰寫和AI生成假新聞在語言、結構和情感上的差異。作者評估了機器學習和集成學習方法在區分這些內容類型方面的能力，並構建了文件級的特徵表示，為打擊假新聞提供了新的視角和工具。</div>
+<div class="pc-q">如何區分AI生成與人工撰寫的假新聞？</div>
+<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>首次系統性地比較了AI生成和人工撰寫假新聞的語言、結構和情感特徵。</li>
+<li>應用集成學習方法有效區分了兩種來源的假新聞，提供了實用的檢測工具。</li>
+<li>對於理解AI在資訊戰中的角色以及開發反制策略具有重要意義。</li></ul></div>
+<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>揭示了AI生成假新聞與人工撰寫假新聞之間在多維度上的顯著差異。</li>
+<li>開發並驗證了基於集成學習的假新聞檢測模型，提高了區分準確性。</li></ul></div>
+<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>AI生成技術不斷演進，檢測模型可能需要持續更新以應對新的生成模式。</li>
+<li>研究可能未涵蓋所有類型的假新聞或所有語言，泛化性有待進一步驗證。</li></ul></div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09960" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09960" onclick="toggleFav(this,'2604.09960','Human vs. Machine Deception: Distinguishing AI-Generated and Human-Written Fake News Using Ensemble Learning','https://arxiv.org/abs/2604.09960')" title="收藏">收藏</button>
+</div></div>
   </div>
 
   <!-- ═══ LLM × 心理學 ═══ -->
@@ -214,7 +317,89 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">LLM × 心理學 精選 TOP 3</span>
       <span class="sec-sub">LLM × PSYCHOLOGY</span>
     </div>
-    
+    <div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.01</div>
+<div class="llm-title">LETGAMES: An LLM-Powered Gamified Approach to Cognitive Training for Patients with Cognitive Impairment</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">LLM如何為認知障礙患者設計個性化遊戲化認知訓練？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">受《龍與地下城》啟發，LETGAMES利用LLM生成開放世界互動敘事遊戲，自動生成針對特定認知領域的遊戲場景和挑戰，並運用對話策略提供個性化支持。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">這項研究展示了LLM在醫療健康領域的巨大潛力，特別是在為認知障礙患者提供可擴展、個性化且引人入勝的認知干預方面。它能有效降低專業資源需求，提升患者的訓練依從性和效果，從而改善其生活品質。</div></div>
+<div class="llm-verdict">LLM遊戲化認知訓練，為醫療健康帶來創新且溫暖的解決方案。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09566" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09566" onclick="toggleFav(this,'2604.09566','LETGAMES: An LLM-Powered Gamified Approach to Cognitive Training for Patients with Cognitive Impairment','https://arxiv.org/abs/2604.09566')" title="收藏">收藏</button>
+</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.02</div>
+<div class="llm-title">HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">LLM如何克服其預測性訓練目標，生成高品質的幽默內容？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">引入「認知協同框架」，基於幽默心理學理論，利用「思維混合」（Mixture-of-Thought）方法，部署六種認知角色（如荒誕主義者、犬儒主義者）來合成高品質幽默數據，並透過角色蒸餾訓練LLM。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">這項工作深入探討了AI在理解和生成人類複雜情感（如幽默）方面的能力，挑戰了LLM的固有局限性。它揭示了透過模擬人類認知過程來提升AI創造力的潛力，對於人機互動中情感交流的真實性和豐富性具有重要意義。</div></div>
+<div class="llm-verdict">以心理學理論賦能LLM幽默生成，展現AI情感智能的突破性進展。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09629" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09629" onclick="toggleFav(this,'2604.09629','HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation','https://arxiv.org/abs/2604.09629')" title="收藏">收藏</button>
+</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
+<div class="llm-rank">LLM × 心理學 No.03</div>
+<div class="llm-title">Spoiler Alert: Narrative Forecasting as a Metric for Tension in LLM Storytelling</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span></div>
+<div class="llm-row">
+  <div><div class="fl-label">核心問題</div><div class="fl-body">如何客觀評估LLM生成故事的敘事張力，以提升其文學品質？</div></div>
+  <div><div class="fl-label">方法亮點</div><div class="fl-body">引入「100結局指標」，讓模型在故事的每個句子後預測100種可能的結局，以此量化故事的敘事張力，並發現LLM評審在評估AI故事時常高估其品質。</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">這項研究揭示了LLM在理解和生成人類故事核心要素（如張力）方面的局限性，並提出了一種客觀的心理學驅動評估方法。它對於提升AI敘事能力、使其更貼近人類閱讀體驗具有深遠影響，也挑戰了現有LLM評估標準的有效性。</div></div>
+<div class="llm-verdict">以「結局預測」量化敘事張力，為LLM故事創作注入心理學深度。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09854" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09854" onclick="toggleFav(this,'2604.09854','Spoiler Alert: Narrative Forecasting as a Metric for Tension in LLM Storytelling','https://arxiv.org/abs/2604.09854')" title="收藏">收藏</button>
+</div></div>
+  </div>
+
+  <!-- ═══ Prompt Engineering × 心理學 ═══ -->
+  <div id="tab-prompt" class="tab-panel">
+    <div class="sec-header">
+      <span class="sec-num">04 /</span>
+      <span class="sec-title">Prompt Engineering × 心理學 精選 TOP 3</span>
+      <span class="sec-sub">PROMPT ENG × PSYCHOLOGY</span>
+    </div>
+    <div class="prompt-card"><div class="prompt-stripe"></div><div>
+<div class="prompt-rank">Prompt × 心理學 No.01</div>
+<div class="prompt-title">HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span></div>
+<div class="prompt-row">
+  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">Mixture-of-Thought (MoT)・Persona-Based Distillation</div></div>
+  <div><div class="fl-label">心理學概念</div><div class="fl-body">幽默心理學理論（驚訝、不協調）</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">可應用於內容創作、娛樂產業，為使用者提供更具創意和情感共鳴的幽默內容。潛力在於提升AI在社交互動中的情商和吸引力。</div></div>
+<div class="prompt-verdict">結合多重思維與角色扮演，讓AI幽默感不再是冷冰冰的演算法。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09629" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09629" onclick="toggleFav(this,'2604.09629','HumorGen: Cognitive Synergy for Humor Generation in Large Language Models via Persona-Based Distillation','https://arxiv.org/abs/2604.09629')" title="收藏">收藏</button>
+</div></div><div class="prompt-card"><div class="prompt-stripe"></div><div>
+<div class="prompt-rank">Prompt × 心理學 No.02</div>
+<div class="prompt-title">OOWM: Structuring Embodied Reasoning and Planning via Object-Oriented Programmatic World Modeling</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span></div>
+<div class="prompt-row">
+  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">Chain-of-Thought (CoT)・Object-Oriented Programmatic World Modeling</div></div>
+  <div><div class="fl-label">心理學概念</div><div class="fl-body">具身認知・空間推理・因果關係</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">適用於機器人規劃、自動駕駛等具身AI任務，使AI能更有效地理解和操作複雜環境。潛力在於提升AI在現實世界中的自主決策和問題解決能力。</div></div>
+<div class="prompt-verdict">將CoT提升至物件導向層次，讓具身AI推理更具結構與效率。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09580" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09580" onclick="toggleFav(this,'2604.09580','OOWM: Structuring Embodied Reasoning and Planning via Object-Oriented Programmatic World Modeling','https://arxiv.org/abs/2604.09580')" title="收藏">收藏</button>
+</div></div><div class="prompt-card"><div class="prompt-stripe"></div><div>
+<div class="prompt-rank">Prompt × 心理學 No.03</div>
+<div class="prompt-title">Generative UI: LLMs are Effective UI Generators</div>
+<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span></div>
+<div class="prompt-row">
+  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">Properly Prompted (精確提示)</div></div>
+  <div><div class="fl-label">心理學概念</div><div class="fl-body">使用者體驗（UX）設計・認知負荷・美學感知</div></div>
+</div>
+<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">可大幅加速軟體開發中的UI/UX設計流程，讓非專業人士也能快速生成客製化介面。潛力在於實現高度個人化和情境感知的介面，提升使用者滿意度。</div></div>
+<div class="prompt-verdict">精準提示讓LLM化身UI設計師，開啟人機互動新篇章。</div>
+<a class="doi-link" href="https://arxiv.org/abs/2604.09577" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
+<button class="fav-btn" data-fav-id="2604.09577" onclick="toggleFav(this,'2604.09577','Generative UI: LLMs are Effective UI Generators','https://arxiv.org/abs/2604.09577')" title="收藏">收藏</button>
+</div></div>
   </div>
 
 </div>
