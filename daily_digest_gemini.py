@@ -378,6 +378,10 @@ def save_html(html, today):
     # 同時存成 index.html（固定網址）
     index_path = os.path.join(OUTPUT_FOLDER, "index.html")
     with open(index_path, "w", encoding="utf-8") as f: f.write(html)
+    # 刪除舊的日期檔案，只保留今天的
+    for old in pathlib.Path(OUTPUT_FOLDER).glob("digest_????-??-??.html"):
+        if old.name != f"digest_{today}.html":
+            old.unlink()
     return path
 
 def notify(title, msg):
