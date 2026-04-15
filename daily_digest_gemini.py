@@ -27,7 +27,18 @@ API_KEYS = [k for k in [
 IS_GITHUB = os.environ.get("GITHUB_ACTIONS") == "true"
 OUTPUT_FOLDER = "." if IS_GITHUB else r"C:\Users\anlic\ArxivDigest"
 TEMPLATE_PATH = pathlib.Path(__file__).parent / "digest_template.html"
+SHOWN_PATH = pathlib.Path(__file__).parent / "shown_papers.json"
 # ────────────────────────────────────────────────────────────────────
+
+def load_shown() -> set:
+    if SHOWN_PATH.exists():
+        return set(json.loads(SHOWN_PATH.read_text(encoding="utf-8")))
+    return set()
+
+def save_shown(shown: set, new_ids: list):
+    updated = list(shown | set(new_ids))
+    # 只保留最近 500 筆，避免無限增長
+    SHOWN_PATH.write_text(json.dumps(updated[-500:]), encoding="utf-8")
 
 def get_today():    return datetime.date.today().strftime("%Y-%m-%d")
 def get_datetime(): return datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -123,10 +134,10 @@ def call_gemini(papers, today, api_key=None):
       "title": "論文英文標題（完整複製）",
       "tags": ["cs.AI"],
       "date": "提交日期",
-      "abstract": "中文摘要(繁中,3-5句完整改寫)",
+      "abstract": "中文摘要(繁中,6-8句完整改寫，依序涵蓋：研究動機與背景、核心問題、研究方法、主要實驗或資料、結果發現、實際意義)",
       "question": "核心研究問題(繁中,30字內)",
-      "review": ["深度點評1","深度點評2","深度點評3"],
-      "contributions": ["研究貢獻1","研究貢獻2"],
+      "review": ["深度點評1(具體說明方法創新或侷限)","深度點評2(與既有研究的比較或進展)","深度點評3(對領域的潛在影響)"],
+      "contributions": ["研究貢獻1","研究貢獻2","研究貢獻3"],
       "limitations": ["研究限制1","研究限制2"]
     }}
   ],
@@ -137,8 +148,8 @@ def call_gemini(papers, today, api_key=None):
       "title": "論文英文標題（完整複製）",
       "tags": ["cs.AI","cs.CL"],
       "question": "LLM應用問題(繁中,1句)",
-      "method": "方法亮點(繁中)",
-      "implication": "心理學意涵(繁中,2-3句)",
+      "method": "方法亮點(繁中,具體說明模型架構、訓練策略或評估方式)",
+      "implication": "心理學意涵(繁中,4-5句，說明此研究對心理學理論或實務的貢獻、潛在應用場景、以及可能引發的倫理或社會議題)",
       "verdict": "一句話犀利評語(繁中)"
     }}
   ],
@@ -148,9 +159,9 @@ def call_gemini(papers, today, api_key=None):
       "arxiv_id": "真實arXiv ID",
       "title": "論文英文標題（完整複製）",
       "tags": ["cs.CL"],
-      "technique": "使用的Prompt Engineering技術（如CoT/Few-shot/RAG/RLHF/Persona等）",
-      "psych_concept": "涉及的心理學概念（如認知負荷/情緒調節/說服/偏見等）",
-      "application": "實際應用場景與潛力(繁中,2句)",
+      "technique": "使用的Prompt Engineering技術（如CoT/Few-shot/RAG/RLHF/Persona等，並簡述其運作方式）",
+      "psych_concept": "涉及的心理學概念（如認知負荷/情緒調節/說服/偏見等，並說明與該技術的關聯）",
+      "application": "實際應用場景與潛力(繁中,4-5句，涵蓋當前應用、未來潛力與對心理學實務的啟發)",
       "verdict": "一句話犀利評語(繁中)"
     }}
   ],
@@ -389,6 +400,15 @@ def main():
         print("❌ 無法取得論文，請確認網路連線")
         return
 
+    # 過濾已出現過的論文
+    shown = load_shown()
+    fresh = [p for p in papers if p['arxiv_id'] not in shown]
+    if len(fresh) < 10:
+        print(f"  ℹ 新論文不足（{len(fresh)} 篇），納入部分舊論文補足")
+        fresh = fresh + [p for p in papers if p['arxiv_id'] in shown]
+    papers = fresh[:30]
+    print(f"  📋 去重後剩 {len(papers)} 篇（已排除 {len(shown)} 篇歷史論文）")
+
     # 嘗試每一把 API Key，額度用完自動切換
     data = None
     for i, key in enumerate(API_KEYS):
@@ -419,6 +439,12 @@ def main():
         return
 
     print("✅ 分析完成")
+    # 記錄已展示的 arxiv_id
+    used_ids = [p['arxiv_id'] for p in data.get('papers',[])] + \
+               [p['arxiv_id'] for p in data.get('llm_papers',[])] + \
+               [p['arxiv_id'] for p in data.get('prompt_papers',[])] + \
+               [p['arxiv_id'] for p in data.get('picks',[])]
+    save_shown(shown, used_ids)
     print("🎨 渲染頁面...")
     html = build_html(data, today)
     path = save_html(html, today)
