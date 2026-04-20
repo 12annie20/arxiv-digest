@@ -5,6 +5,9 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,20 +20,27 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install google-genai
+        run: pip install "google-genai==1.72.0"
 
       - name: Run digest script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
         run: |
+          success=false
           for i in 1 2 3 4 5; do
-            python daily_digest_gemini.py && break
-            echo "第 $i 次失敗，等待 60 秒後重試..."
+            python daily_digest_gemini.py
+            if ls digest_$(date +'%Y-%m-%d').html 2>/dev/null; then
+              echo "✅ 第 $i 次成功"
+              success=true
+              break
+            fi
+            echo "❌ 第 $i 次失敗（未產生今日 digest），等待 60 秒後重試..."
             sleep 60
           done
           echo "=== 目前目錄檔案列表 ==="
           ls -la
+          $success || { echo "所有重試均失敗"; exit 1; }
 
       - name: Commit and push
         run: |
