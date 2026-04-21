@@ -10,7 +10,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='repla
 
 from google import genai
 from google.genai import types
-import datetime, json, os, pathlib, re, subprocess, webbrowser, time
+import datetime, json, os, pathlib, re, subprocess, webbrowser, time, html as _html
 import urllib.request, urllib.parse
 import xml.etree.ElementTree as ET
 
@@ -244,12 +244,13 @@ def call_gemini(papers, today, api_key=None):
 # ══════════════════════════════════════════════════════════════════
 THEME_CLASS = {'cs.AI':'t-ai','cs.HC':'t-hc','cs.CL':'t-cl','cs.CY':'t-cy'}
 
-def fav_btn_html(p, card_class='paper-card', title_class='pc-title'):
+def fav_btn_html(p, card_class='paper-card', title_class='pc-title', snippet=''):
     aid = p.get('arxiv_id', '')
     url = p.get('arxiv_url', '#')
     title = p.get('title', '').replace("'", ' ').replace('"', ' ')
     onclick = f"toggleFav(this,'{aid}','{title}','{url}')"
-    return f'<button class="fav-btn" data-fav-id="{aid}" onclick="{onclick}" title="收藏">收藏</button>'
+    snippet_attr = f' data-fav-snippet="{_html.escape(snippet, quote=True)}"' if snippet else ''
+    return f'<button class="fav-btn" data-fav-id="{aid}"{snippet_attr} onclick="{onclick}" title="收藏">收藏</button>'
 
 def tag_html(t):
     m = {"cs.AI":("cs.AI","tag-ai"),"cs.HC":("cs.HC","tag-hc"),
@@ -301,7 +302,7 @@ def render_papers(papers):
 <div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list">{ci}</ul></div>
 <div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list">{li}</ul></div>
 {link_html(p)}
-{fav_btn_html(p)}
+{fav_btn_html(p, snippet=p.get('abstract',''))}
 </div></div>'''
     return html
 
@@ -320,7 +321,7 @@ def render_llm(papers):
 <div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">{p["implication"]}</div></div>
 <div class="llm-verdict">{p["verdict"]}</div>
 {link_html(p)}
-{fav_btn_html(p, card_class='llm-card', title_class='llm-title')}
+{fav_btn_html(p, card_class='llm-card', title_class='llm-title', snippet=p.get('implication',''))}
 </div></div>'''
     return html
 
@@ -339,7 +340,7 @@ def render_prompt(papers):
 <div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">{p["application"]}</div></div>
 <div class="prompt-verdict">{p["verdict"]}</div>
 {link_html(p)}
-{fav_btn_html(p, card_class='prompt-card', title_class='prompt-title')}
+{fav_btn_html(p, card_class='prompt-card', title_class='prompt-title', snippet=p.get('application',''))}
 </div></div>'''
     return html
 

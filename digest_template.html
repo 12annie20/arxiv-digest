@@ -148,6 +148,10 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 .fav-btn.saved::before{content:'★ '}
 .fav-btn:not(.saved)::before{content:'☆ '}
 #tab-favs .paper-card{border-left:2px solid var(--m-clay)}
+.fav-snippet{font-size:.82rem;line-height:1.65;color:var(--m-ink-muted);margin:.6rem 0 .4rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.fav-io-bar{display:flex;gap:.8rem;margin-bottom:1.6rem;justify-content:flex-end}
+.fav-io-btn{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;background:none;border:1px solid var(--m-rule);border-radius:1px;padding:.35em 1em;cursor:pointer;color:var(--m-ink-muted);transition:all .2s}
+.fav-io-btn:hover{border-color:var(--m-slate);color:var(--m-slate)}
 
 @media(max-width:680px){
   .page-wrap{padding:0 1.1rem 4rem}
@@ -247,6 +251,11 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">我的收藏</span>
       <span class="sec-sub">SAVED PAPERS</span>
     </div>
+    <div class="fav-io-bar">
+      <button class="fav-io-btn" onclick="exportFavs()" title="匯出收藏為 JSON 檔">↓ 匯出</button>
+      <button class="fav-io-btn" onclick="document.getElementById('fav-import-input').click()" title="從 JSON 檔匯入收藏">↑ 匯入</button>
+      <input id="fav-import-input" type="file" accept=".json" style="display:none" onchange="importFavs(this)">
+    </div>
     <div id="favs-list"></div>
     <div id="favs-empty" style="text-align:center;padding:4rem 0;color:var(--m-ink-muted);font-style:italic;font-size:.9rem">
       還沒有收藏的論文，在深度解析或 LLM 頁面點「收藏」加入
@@ -289,10 +298,11 @@ function saveFavs(favs) {
 }
 
 function toggleFav(btn, id, title, url) {
+  var snippet = btn.getAttribute('data-fav-snippet') || '';
   let favs = getFavs();
   const idx = favs.findIndex(function(f){ return f.id === id; });
   if (idx === -1) {
-    favs.push({ id: id, title: title, url: url, savedAt: new Date().toLocaleDateString('zh-TW') });
+    favs.push({ id: id, title: title, url: url, snippet: snippet, savedAt: new Date().toLocaleDateString('zh-TW') });
     btn.classList.add('saved');
     btn.textContent = '已收藏';
     btn.setAttribute('title', '點擊取消收藏');
@@ -325,9 +335,14 @@ function renderFavs() {
     out += '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>';
     out += '<div class="pc-title">' + f.title + '</div>';
     out += '</div>';
-    out += '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">';
+    out += '<div class="pc-body" style="padding:1rem 1.8rem">';
+    if (f.snippet) {
+      out += '<div class="fav-snippet">' + f.snippet + '</div>';
+    }
+    out += '<div style="display:flex;gap:1rem;align-items:center;margin-top:.6rem">';
     out += '<a class="doi-link" href="' + f.url + '" target="_blank">\u2192 \u95b1\u8b80\u539f\u6587</a>';
     out += '<button class="fav-btn saved" onclick="removeFav(this)" data-remove-id="' + f.id + '" title="\u53d6\u6d88\u6536\u85cf">\u53d6\u6d88\u6536\u85cf</button>';
+    out += '</div>';
     out += '</div>';
     out += '</div>';
   }
@@ -343,6 +358,38 @@ function removeFav(btn) {
     b.classList.remove('saved');
     b.textContent = '收藏';
   });
+}
+
+function exportFavs() {
+  var data = JSON.stringify(getFavs(), null, 2);
+  var blob = new Blob([data], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'arxiv_favs_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+
+function importFavs(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) throw new Error();
+      var existing = getFavs();
+      var existingIds = existing.map(function(f){ return f.id; });
+      var merged = existing.concat(imported.filter(function(f){ return f.id && existingIds.indexOf(f.id) === -1; }));
+      saveFavs(merged);
+      renderFavs();
+      initFavBtns();
+      alert('匯入完成，共 ' + merged.length + ' 篇收藏');
+    } catch(err) {
+      alert('匯入失敗：請確認為有效的收藏 JSON 檔');
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
 }
 
 function initFavBtns() {
