@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>arXiv 文獻日報｜2026-04-21</title>
+<title>arXiv 文獻日報｜2026-04-22</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+TC:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
 <style>
@@ -148,6 +148,10 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 .fav-btn.saved::before{content:'★ '}
 .fav-btn:not(.saved)::before{content:'☆ '}
 #tab-favs .paper-card{border-left:2px solid var(--m-clay)}
+.fav-snippet{font-size:.82rem;line-height:1.65;color:var(--m-ink-muted);margin:.6rem 0 .4rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.fav-io-bar{display:flex;gap:.8rem;margin-bottom:1.6rem;justify-content:flex-end}
+.fav-io-btn{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;background:none;border:1px solid var(--m-rule);border-radius:1px;padding:.35em 1em;cursor:pointer;color:var(--m-ink-muted);transition:all .2s}
+.fav-io-btn:hover{border-color:var(--m-slate);color:var(--m-slate)}
 
 @media(max-width:680px){
   .page-wrap{padding:0 1.1rem 4rem}
@@ -164,8 +168,8 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 <header class="masthead">
   <div class="masthead-eyebrow">arXiv · AI × Psychology · Daily Digest</div>
-  <h1 class="masthead-title">文獻日報 <em>/ 2026-04-21</em></h1>
-  <div class="masthead-date">2026-04-21 06:24 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
+  <h1 class="masthead-title">文獻日報 <em>/ 2026-04-22</em></h1>
+  <div class="masthead-date">2026-04-22 06:21 產生 · cs.AI · cs.HC · cs.CL · cs.CY</div>
   <div class="masthead-rule"></div>
 </header>
 
@@ -182,45 +186,27 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 <div class="page-wrap">
 
   <!-- ═══ 首頁：溫度計 → 3篇推薦 → Insight ═══ -->
-  <div id="tab-home" class="tab-panel active">
+  <div id="tab-home" class="tab-panel active"><div style="text-align:center;padding:8rem 0;font-family:var(--mono);font-size:4rem;color:var(--m-rule);letter-spacing:.1em">503</div>
 
     <div class="sec-header" style="margin-top:2.5rem">
       <span class="sec-num">今日 /</span>
       <span class="sec-title">領域溫度計</span>
       <span class="sec-sub">FIELD TEMPERATURE</span>
     </div>
-    <div class="thermometer"><div><div class="th-label hot">熱門主題</div><div class="th-body">AI輔助醫療與健康照護・人機協作與信任・數位身份與具身化</div></div><div><div class="th-label new">新興焦點</div><div class="th-body">腦機介面語言解碼・AI驅動的參與式城市規劃・個性化數位分身</div></div><div><div class="th-label cold">冷門值得關注</div><div class="th-body">即時支付信任視窗的UX設計</div></div></div>
+    <div class="thermometer"></div>
 
     <div class="sec-header">
       <span class="sec-num">01 /</span>
       <span class="sec-title">今日推薦文獻</span>
       <span class="sec-sub">TODAY'S PICKS</span>
     </div>
-    <div class="rec-grid"><div class="rec-card">
-<span class="rec-theme t-cy">cs.CY</span>
-<div class="rec-title">Distributed Human Identity: AI-Enabled Multi-Existence Through Cognitive Replication and Robotic Embodiments</div>
-<div class="rec-why">這篇論文探討AI如何透過認知複製與機器人具身化，實現人類的「多重存在身份」，挑戰傳統對身份與臨場感的理解。這對心理學中關於自我、意識與社會互動的理論，帶來了前所未有的哲學與實踐衝擊。</div>
-<div class="rec-meta">A S M Touhidul Islam, John Tookey</div>
-<a class="rec-link" href="https://arxiv.org/abs/2604.16336" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
-</div><div class="rec-card">
-<span class="rec-theme t-hc">cs.HC</span>
-<div class="rec-title">Elder-Sim: A Psychometrically Validated Platform for Personality-Stable Elderly Digital Twins</div>
-<div class="rec-why">本研究提出一個心理計量學驗證的平台，用於創建具有穩定性格的老年人數位分身，解決LLM在老年照護中性格漂移的問題。這對發展更具同理心和可靠性的AI照護系統，以及理解老年心理健康至關重要。</div>
-<div class="rec-meta">Jiaqing Wang, Zhongfang Yang, Xingyuan Zhu</div>
-<a class="rec-link" href="https://arxiv.org/abs/2604.16343" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
-</div><div class="rec-card">
-<span class="rec-theme t-ai">cs.AI</span>
-<div class="rec-title">Brain-CLIPLM: Decoding Compressed Semantic Representations in EEG for Language Reconstruction</div>
-<div class="rec-why">這項研究探索從非侵入性腦電圖（EEG）中解碼壓縮語義表徵以重建語言的可能性，挑戰了直接從EEG恢復完整語言結構的假設。這對認知神經科學、腦機介面以及我們對語言在大腦中如何編碼的理解，具有深遠影響。</div>
-<div class="rec-meta">Xiaoli Yang, Huiyuan Tian, Yurui Li</div>
-<a class="rec-link" href="https://arxiv.org/abs/2604.16370" target="_blank">→ 閱讀原文 <span style="font-size:.55rem;color:var(--m-slate-light)">arXiv</span></a>
-</div></div>
+    <div class="rec-grid"></div>
 
     <div class="insight-home">
       <div class="insight-label">Today's Insight</div>
-      <p class="insight-text">今日arXiv日報聚焦AI與心理學的深度融合，從AI複製人類身份、照護老年數位分身，到從腦電圖解碼語言，展現了AI在理解與增強人類體驗方面的巨大潛力。多篇論文探討了AI在醫療、城市規劃等領域的應用，強調了可解釋性、信任與人機協作的重要性。同時，LLM的推理能力與提示工程技術的進步，也為處理複雜的行為模式與專業知識提供了新途徑。</p>
+      <p class="insight-text"></p>
       <div class="tmr-label">明日值得關注</div>
-      <p class="tmr-text">明日值得關注AI在情緒智能與社會互動方面的最新進展，以及如何透過AI技術更精準地干預和改善人類的心理健康。</p>
+      <p class="tmr-text"></p>
     </div>
 
   </div>
@@ -232,92 +218,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">精選 TOP 5 研究深度解析</span>
       <span class="sec-sub">DEEP REVIEW</span>
     </div>
-    <div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 01</div>
-<div class="pc-title">How Can Explainable Artificial Intelligence Improve Trust and Transparency in Medical Diagnosis Systems?</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-04-21</span></div></div>
-<div class="pc-body">
-<div class="pc-abs">隨著人工智慧在醫療保健領域的廣泛應用，AI驅動的醫療診斷系統的透明度和可信度問題日益受到關注。許多現有模型如同黑箱，限制了臨床醫生理解其決策過程的能力。本研究旨在探討可解釋人工智慧（XAI）如何提升AI輔助醫療工具的透明度、可解釋性與信任。研究透過結構化問卷調查，評估了XAI在改善臨床醫生對AI診斷系統信任方面的作用。結果顯示，提供清晰的解釋能顯著增強用戶信任，並促進其對AI建議的採納。這項工作為未來開發更具人性化和可信賴的醫療AI系統提供了重要指導。</div>
-<div class="pc-q">可解釋AI如何提升醫療診斷系統的信任與透明度？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>本研究透過結構化問卷量化了XAI對臨床醫生信任的影響，方法具體且直接，但其「解釋」的類型與深度可能影響結果，未來可探索不同解釋形式的心理效應。</li>
-<li>相較於僅關注模型性能的傳統AI研究，本研究將人機互動中的「信任」作為核心指標，彌補了醫療AI應用中人文關懷的空白，為AI倫理與社會接受度研究提供了實證基礎。</li>
-<li>該研究成果對於推動XAI在醫療場景的實際部署具有重要意義，有助於設計出不僅準確，更能被醫護人員理解和信任的AI工具，從而加速AI在臨床決策中的整合。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>量化XAI對臨床醫生信任的影響</li>
-<li>提供醫療AI系統設計的實證指導</li>
-<li>強調AI透明度在醫療領域的重要性</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>研究範圍限於特定醫療診斷系統</li>
-<li>問卷調查可能存在主觀偏差</li>
-<li>未深入探討不同XAI解釋機制的具體效果</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16340" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16340" onclick="toggleFav(this,'2604.16340','How Can Explainable Artificial Intelligence Improve Trust and Transparency in Medical Diagnosis Systems?','https://arxiv.org/abs/2604.16340')" title="收藏">收藏</button>
-</div></div><div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 02</div>
-<div class="pc-title">SAGE: Sensor-Augmented Grounding Engine for LLM-Powered Sleep Care Agent</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span> <span class="tag tag-date">2026-04-21</span></div></div>
-<div class="pc-body">
-<div class="pc-abs">睡眠對健康至關重要，但僅有數據並不能保證改善。儘管穿戴式裝置和健康應用程式能追蹤睡眠，用戶仍面臨「數據-行動落差」，難以解讀指標並轉化為實際行動。現有干預措施未能有效彌補這一鴻溝：靜態儀表板缺乏情境，基於規則的代理僵化，而大型語言模型（LLM）代理則缺乏個人數據的基礎，導致信任問題。本研究提出SAGE（Sensor-Augmented Grounding Engine），一個由LLM驅動的睡眠照護代理。SAGE能將連續睡眠與生理數據標準化，並將其與個人健康目標和生活方式結合，提供情境化、可信賴的睡眠建議，有效縮小數據與行動之間的差距。</div>
-<div class="pc-q">如何透過LLM代理與感測器數據結合，彌補睡眠健康管理的「數據-行動落差」？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>SAGE透過感測器數據增強LLM的「接地」（grounding）能力，有效解決了LLM在個人化健康管理中常見的「幻覺」和缺乏情境化理解問題，是將LLM應用於精準健康干預的創新方法。</li>
-<li>相較於傳統的靜態健康儀表板或僵硬的規則型代理，SAGE結合了LLM的自然語言理解與生成能力，以及個人化生理數據，提供了更具彈性與信任度的互動體驗，顯著提升了用戶的行動轉化率。</li>
-<li>這項研究為開發以用戶為中心、數據驅動的AI健康照護代理提供了藍圖，特別是在行為改變和慢性病管理領域，其個性化、情境化的干預模式具有巨大的潛力。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出SAGE框架彌補數據-行動落差</li>
-<li>實現LLM與個人生理數據的深度整合</li>
-<li>提升AI健康代理的信任度與情境化能力</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>模型訓練需要大量個人化生理數據</li>
-<li>用戶隱私保護是重要考量</li>
-<li>長期行為改變效果仍需進一步驗證</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16342" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16342" onclick="toggleFav(this,'2604.16342','SAGE: Sensor-Augmented Grounding Engine for LLM-Powered Sleep Care Agent','https://arxiv.org/abs/2604.16342')" title="收藏">收藏</button>
-</div></div><div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 03</div>
-<div class="pc-title">DR. INFO at the Point of Care: A Prospective Pilot Study of an Agentic AI Clinical Assistant</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span><span class="tag tag-cy">cs.CY</span> <span class="tag tag-date">2026-04-21</span></div></div>
-<div class="pc-body">
-<div class="pc-abs">臨床文件撰寫與資訊檢索佔據醫師一半以上的工作時間，導致認知負荷過重與職業倦怠。儘管人工智慧提供潛在解決方案，但對幻覺和來源可靠性的擔憂限制了其在臨床現場的應用。本研究旨在評估DR. INFO，一款代理式AI臨床助理，在常規臨床實踐中對臨床醫生報告的時間節省、決策支持和滿意度的影響。這項前瞻性、單臂試點研究招募了29名臨床醫生，他們在日常工作中使用了DR. INFO。研究結果顯示，DR. INFO顯著減少了文件撰寫時間，提升了決策效率，並獲得了臨床醫生的高度滿意度，證明了代理式AI在減輕醫護人員負擔方面的巨大潛力。</div>
-<div class="pc-q">代理式AI臨床助理如何減輕醫師認知負荷並提升臨床決策效率？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>DR. INFO作為一種代理式AI，不僅提供資訊，更主動協助完成任務，這在醫療AI領域是重要的進展。然而，其「代理」的自主性邊界和錯誤處理機制，是未來需要細緻設計以確保安全的關鍵。</li>
-<li>本研究直接針對醫師的「認知負荷」和「職業倦怠」等心理健康問題，將AI應用從單純的診斷輔助擴展到醫護人員福祉的提升，展現了AI在醫療領域更廣泛的人文價值。</li>
-<li>該試點研究為AI臨床助理的實際部署提供了初步的實證支持，特別是其在時間節省和決策支持方面的積極效果，有望推動醫療機構對此類技術的採納，改善醫護工作環境。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>評估代理式AI對醫師工作效率與滿意度的影響</li>
-<li>證明AI在減輕醫護人員認知負荷的潛力</li>
-<li>為AI臨床助理的實際應用提供實證基礎</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>試點研究樣本量較小</li>
-<li>單臂設計缺乏對照組</li>
-<li>長期效果和潛在倫理問題需進一步探討</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16346" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16346" onclick="toggleFav(this,'2604.16346','DR. INFO at the Point of Care: A Prospective Pilot Study of an Agentic AI Clinical Assistant','https://arxiv.org/abs/2604.16346')" title="收藏">收藏</button>
-</div></div><div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 04</div>
-<div class="pc-title">Beyond the Townhall: Spatial Anchoring and LLM Agents for Scalable Participatory Urban Planning</div><div class="paper-meta"><span class="tag tag-hc">cs.HC</span><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span> <span class="tag tag-date">2026-04-21</span></div></div>
-<div class="pc-body">
-<div class="pc-abs">參與式城市規劃對永續城市建設至關重要，但其技術複雜性常限制了多元公眾的實質參與。本研究提出一個可擴展的數位參與平台，將永續發展專案嵌入可導航的數位分身中。市民透過虛擬導覽，結合「記憶宮殿法」（method of loci）和空間錨定（spatial anchoring）來支持記憶編碼與回憶。此沉浸式介面由兩個專用LLM助理增強：一個提供專案資訊，另一個促進討論與意見收集。研究證明此平台能有效提升市民對複雜規劃資訊的理解與記憶，並促進更廣泛、深入的參與，為未來的智慧城市治理提供了創新途徑。</div>
-<div class="pc-q">如何利用空間錨定與LLM代理提升市民對城市規劃的參與度與理解？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>結合「記憶宮殿法」和「空間錨定」等認知心理學原理於虛擬導覽中，是提升複雜資訊記憶與理解的巧妙創新，超越了傳統數位平台僅提供資訊的模式。</li>
-<li>透過LLM代理實現雙向互動與資訊輔助，有效降低了市民參與城市規劃的認知門檻，將傳統「市政廳模式」轉變為更具包容性和效率的數位參與模式。</li>
-<li>這項研究為智慧城市治理和公民參與提供了具體可行的技術方案，特別是在處理複雜公共議題時，其沉浸式、互動式的設計有望顯著提升政策制定的民主品質。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出結合空間錨定與LLM的數位參與平台</li>
-<li>應用認知心理學原理提升資訊記憶與理解</li>
-<li>促進大規模、深入的參與式城市規劃</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>虛擬環境的真實感可能影響沉浸體驗</li>
-<li>LLM代理的偏見與幻覺風險仍需控制</li>
-<li>數位落差可能限制部分群體的參與</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16348" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16348" onclick="toggleFav(this,'2604.16348','Beyond the Townhall: Spatial Anchoring and LLM Agents for Scalable Participatory Urban Planning','https://arxiv.org/abs/2604.16348')" title="收藏">收藏</button>
-</div></div><div class="paper-card">
-<div class="pc-head"><div class="pc-rank">No. 05</div>
-<div class="pc-title">GIST: Multimodal Knowledge Extraction and Spatial Grounding via Intelligent Semantic Topology</div><div class="paper-meta"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span> <span class="tag tag-date">2026-04-21</span></div></div>
-<div class="pc-body">
-<div class="pc-abs">在零售店、倉庫和醫院等複雜、密集環境中導航，對人類和具身AI而言都是一項重大的空間定位挑戰。在這些空間中，密集的視覺特徵因物品的準靜態性質而迅速過時，而長尾語義分佈則挑戰了傳統電腦視覺。儘管視覺語言模型（VLMs）有助於輔助系統在語義豐富的空間中導航，但它們在雜亂環境中的空間定位能力仍顯不足。本研究提出GIST（Grounded Intelligent Semantic Topology），一個多模態知識提取與空間定位框架，旨在透過智慧語義拓撲，解決複雜環境中的空間理解與導航問題，為具身AI提供更精確的空間感知能力。</div>
-<div class="pc-q">如何透過多模態知識提取與智慧語義拓撲，提升具身AI在複雜環境中的空間定位能力？</div>
-<div style="margin-bottom:.8rem"><div class="ins-label rv">深度點評</div><ul class="ins-list"><li>GIST透過構建「智慧語義拓撲」來處理複雜環境中的視覺特徵過時和長尾語義分佈問題，這是一種新穎的知識表示方法，超越了單純的視覺識別，更貼近人類對空間的抽象理解。</li>
-<li>相較於傳統VLM在雜亂環境中空間定位的局限性，GIST強調「接地」（grounding）能力，將語義知識與實際空間結構緊密結合，為具身AI的自主導航提供了更穩固的基礎。</li>
-<li>這項研究對於開發能在現實世界中安全、高效運作的具身AI（如服務型機器人、輔助導航系統）具有重要意義，特別是在需要精確空間理解和人機協作的場景。</li></ul></div>
-<div style="margin-bottom:.8rem"><div class="ins-label ct">研究貢獻</div><ul class="ins-list"><li>提出GIST框架解決複雜環境空間定位問題</li>
-<li>引入智慧語義拓撲進行多模態知識提取</li>
-<li>提升具身AI的空間感知與導航能力</li></ul></div>
-<div style="margin-bottom:.5rem"><div class="ins-label lm">研究限制</div><ul class="ins-list"><li>語義拓撲的構建複雜度較高</li>
-<li>對新環境的適應性仍需驗證</li>
-<li>模型在極端動態環境下的表現有待觀察</li></ul></div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.15495" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.15495" onclick="toggleFav(this,'2604.15495','GIST: Multimodal Knowledge Extraction and Spatial Grounding via Intelligent Semantic Topology','https://arxiv.org/abs/2604.15495')" title="收藏">收藏</button>
-</div></div>
+    
   </div>
 
   <!-- ═══ LLM × 心理學 ═══ -->
@@ -327,43 +228,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">LLM × 心理學 精選 TOP 3</span>
       <span class="sec-sub">LLM × PSYCHOLOGY</span>
     </div>
-    <div class="llm-card"><div class="llm-stripe"></div><div>
-<div class="llm-rank">LLM × 心理學 No.01</div>
-<div class="llm-title">LiFT: Does Instruction Fine-Tuning Improve In-Context Learning for Longitudinal Modelling by Large Language Models?</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span></div>
-<div class="llm-row">
-  <div><div class="fl-label">核心問題</div><div class="fl-body">指令微調能否提升LLM在縱向建模中對人類行為與意見變化的情境學習能力？</div></div>
-  <div><div class="fl-label">方法亮點</div><div class="fl-body">提出LiFT框架，透過課程學習（curriculum learning）逐步增加時間難度，並統一多樣的縱向建模任務於共享指令模式下，進行指令微調。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">本研究探討LLM如何理解和預測人類行為與意見的長期變化，對發展心理學和社會心理學的動態模型具有啟發。它展示了AI在追蹤個體發展軌跡、群體意見演變方面的潛力，有助於更精準地理解人類行為模式。同時，也引發了關於AI在預測個人行為時的隱私與倫理考量。</div></div>
-<div class="llm-verdict">縱向數據的行為洞察，LLM的時序智慧新篇章。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16382" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16382" onclick="toggleFav(this,'2604.16382','LiFT: Does Instruction Fine-Tuning Improve In-Context Learning for Longitudinal Modelling by Large Language Models?','https://arxiv.org/abs/2604.16382')" title="收藏">收藏</button>
-</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
-<div class="llm-rank">LLM × 心理學 No.02</div>
-<div class="llm-title">LACE: Lattice Attention for Cross-thread Exploration</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span></div>
-<div class="llm-row">
-  <div><div class="fl-label">核心問題</div><div class="fl-body">如何讓LLM在平行推理路徑中共享見解並相互糾正，以提升推理能力？</div></div>
-  <div><div class="fl-label">方法亮點</div><div class="fl-body">引入LACE框架，透過重新設計模型架構以實現跨線程注意力（cross-thread attention），使並行推理路徑能夠共享中間見解並相互糾正。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">LACE模仿了人類群體協作解決問題的認知過程，即透過交流和反饋來糾正錯誤、優化決策。這對認知心理學中關於群體智慧、協作學習和錯誤修正機制的研究提供了新的AI模型。它也暗示了未來AI系統可能具備更複雜的「元認知」能力，能自我反思和改進推理過程。</div></div>
-<div class="llm-verdict">LLM不再孤單推理，協作智慧開啟新境界。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.15529" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.15529" onclick="toggleFav(this,'2604.15529','LACE: Lattice Attention for Cross-thread Exploration','https://arxiv.org/abs/2604.15529')" title="收藏">收藏</button>
-</div></div><div class="llm-card"><div class="llm-stripe"></div><div>
-<div class="llm-rank">LLM × 心理學 No.03</div>
-<div class="llm-title">The World Leaks the Future: Harness Evolution for Future Prediction Agents</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-cl">cs.CL</span></div>
-<div class="llm-row">
-  <div><div class="fl-label">核心問題</div><div class="fl-body">LLM代理如何利用不斷演變的公開資訊，更有效地預測未來未決問題的結果？</div></div>
-  <div><div class="fl-label">方法亮點</div><div class="fl-body">提出一種利用「演化」概念的未來預測代理框架，強調在結果揭曉前，從不斷變化的公開證據中學習，以指導早期因素追蹤和證據收集，而非僅依賴最終結果。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">心理學意涵</div><div class="fl-body">這項研究觸及人類決策心理學的核心，特別是在不確定性下的預測與判斷。它挑戰了傳統上僅依賴最終結果進行學習的模式，轉而強調動態資訊追蹤和早期證據評估，這與人類在複雜情境中逐步形成判斷的認知過程相似。同時，也引發了AI預測能力對社會決策和個人自由的潛在影響。</div></div>
-<div class="llm-verdict">預測未來不再盲人摸象，LLM學會從演化中洞察先機。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.15719" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.15719" onclick="toggleFav(this,'2604.15719','The World Leaks the Future: Harness Evolution for Future Prediction Agents','https://arxiv.org/abs/2604.15719')" title="收藏">收藏</button>
-</div></div>
+    
   </div>
 
   <!-- ═══ Prompt Engineering × 心理學 ═══ -->
@@ -373,43 +238,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-title">Prompt Engineering × 心理學 精選 TOP 3</span>
       <span class="sec-sub">PROMPT ENG × PSYCHOLOGY</span>
     </div>
-    <div class="prompt-card"><div class="prompt-stripe"></div><div>
-<div class="prompt-rank">Prompt × 心理學 No.01</div>
-<div class="prompt-title">Bridging the Experimental Last Mile: Digitizing Laboratory Know-How for Safe AI-Assisted Support</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span></div>
-<div class="prompt-row">
-  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">Retrieval-Augmented Generation (RAG)結合多模態AI與第一人稱實驗影片。RAG透過從外部知識庫（實驗影片、操作手冊）檢索相關資訊，再由LLM生成回答，確保資訊的準確性和情境化。</div></div>
-  <div><div class="fl-label">心理學概念</div><div class="fl-body">認知負荷（Cognitive Load）、知識轉移（Knowledge Transfer）、學習效果（Learning Effectiveness）。RAG技術透過提供即時、情境化的操作指南，有效降低了實驗人員的認知負荷，並促進了實驗室「隱性知識」的顯性化與轉移。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">當前應用於實驗室安全操作與教育訓練，提供AI輔助的即時指導。未來潛力包括在複雜工業操作、醫療手術輔助等領域，透過AI將專家經驗數位化並傳授給新手。這對心理學實務的啟發是，AI可作為強大的認知輔助工具，優化學習過程，減少人為錯誤，並提升專業技能的傳承效率。</div></div>
-<div class="prompt-verdict">實驗室的「隱性知識」不再隱形，RAG讓AI成為最佳實習指導。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16345" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16345" onclick="toggleFav(this,'2604.16345','Bridging the Experimental Last Mile: Digitizing Laboratory Know-How for Safe AI-Assisted Support','https://arxiv.org/abs/2604.16345')" title="收藏">收藏</button>
-</div></div><div class="prompt-card"><div class="prompt-stripe"></div><div>
-<div class="prompt-rank">Prompt × 心理學 No.02</div>
-<div class="prompt-title">Lean Atlas: An Integrated Proof Environment for Scalable Human-AI Collaborative Formalization</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-ai">cs.AI</span><span class="tag tag-hc">cs.HC</span></div>
-<div class="prompt-row">
-  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">Human-in-the-loop (HITL)協作證明。人類科學家與AI共同生成形式化證明，人類負責審查和修正AI可能產生的「語義幻覺」（semantic hallucination），確保證明忠實反映數學意圖。</div></div>
-  <div><div class="fl-label">心理學概念</div><div class="fl-body">認知偏誤（Cognitive Bias）、信任（Trust）、人機協作（Human-AI Collaboration）。AI可能產生邏輯正確但語義錯誤的「幻覺」，這類似於人類的認知偏誤。HITL機制旨在透過人類的批判性思維來糾正AI的潛在錯誤，建立人機之間的信任關係，並優化協作效率。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">當前應用於數學證明與形式化驗證領域，提升證明可靠性。未來潛力包括在法律文件審核、軟體程式碼驗證、科學論文寫作等需要高精確度和語義理解的場景。這對心理學實務的啟發是，AI的應用需要考慮其認知局限性，並設計有效的協作機制，讓人類在關鍵環節發揮監督和糾正作用，以實現最佳的人機智能融合。</div></div>
-<div class="prompt-verdict">AI證明邏輯，人類把關語義，協作智能避免「幻覺」。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16347" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16347" onclick="toggleFav(this,'2604.16347','Lean Atlas: An Integrated Proof Environment for Scalable Human-AI Collaborative Formalization','https://arxiv.org/abs/2604.16347')" title="收藏">收藏</button>
-</div></div><div class="prompt-card"><div class="prompt-stripe"></div><div>
-<div class="prompt-rank">Prompt × 心理學 No.03</div>
-<div class="prompt-title">QU-NLP at QIAS 2026: Multi-Stage QLoRA Fine-Tuning for Arabic Islamic Inheritance Reasoning</div>
-<div class="paper-meta" style="margin-bottom:.8rem"><span class="tag tag-cl">cs.CL</span><span class="tag tag-ai">cs.AI</span></div>
-<div class="prompt-row">
-  <div><div class="fl-label">Prompt 技術</div><div class="fl-body">多階段量化低秩適應（Multi-Stage QLoRA Fine-Tuning）。首先在伊斯蘭教法規記錄上進行領域適應，然後在繼承推理數據上進行指令微調，以提升LLM在特定複雜領域的結構化推理能力。</div></div>
-  <div><div class="fl-label">心理學概念</div><div class="fl-body">認知複雜性（Cognitive Complexity）、文化敏感性（Cultural Sensitivity）、專家系統（Expert Systems）。伊斯蘭繼承法涉及複雜的規則和文化背景，對LLM的推理能力構成挑戰。多階段微調旨在讓AI學習特定領域的知識結構和推理模式，類似於人類專家在特定領域的認知發展。</div></div>
-</div>
-<div style="margin-bottom:.5rem"><div class="fl-label">應用場景</div><div class="fl-body">當前應用於阿拉伯語伊斯蘭繼承法的自動推理與諮詢。未來潛力包括在法律、金融、醫療等高度專業化和規則導向的領域，開發能夠進行複雜結構化推理的AI專家系統。這對心理學實務的啟發是，AI可以作為文化敏感的知識庫和推理引擎，輔助人類處理複雜的跨文化決策，同時也提醒我們在設計AI時需充分考慮文化與倫理的細微差異。</div></div>
-<div class="prompt-verdict">QLoRA微調讓LLM精通複雜法規，文化敏感推理不再是難題。</div>
-<a class="doi-link" href="https://arxiv.org/abs/2604.16396" target="_blank">→ 閱讀原文<span style="font-size:.55rem;color:var(--m-slate-light);margin-left:.3rem">arXiv</span></a>
-<button class="fav-btn" data-fav-id="2604.16396" onclick="toggleFav(this,'2604.16396','QU-NLP at QIAS 2026: Multi-Stage QLoRA Fine-Tuning for Arabic Islamic Inheritance Reasoning','https://arxiv.org/abs/2604.16396')" title="收藏">收藏</button>
-</div></div>
+    
   </div>
 
 </div>
@@ -421,6 +250,11 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
       <span class="sec-num">★ /</span>
       <span class="sec-title">我的收藏</span>
       <span class="sec-sub">SAVED PAPERS</span>
+    </div>
+    <div class="fav-io-bar">
+      <button class="fav-io-btn" onclick="exportFavs()" title="匯出收藏為 JSON 檔">↓ 匯出</button>
+      <button class="fav-io-btn" onclick="document.getElementById('fav-import-input').click()" title="從 JSON 檔匯入收藏">↑ 匯入</button>
+      <input id="fav-import-input" type="file" accept=".json" style="display:none" onchange="importFavs(this)">
     </div>
     <div id="favs-list"></div>
     <div id="favs-empty" style="text-align:center;padding:4rem 0;color:var(--m-ink-muted);font-style:italic;font-size:.9rem">
@@ -435,7 +269,7 @@ body{background:var(--m-paper);color:var(--m-ink);font-family:var(--serif);font-
 
 <footer<footer class="footer">
   <div class="footer-rule"></div>
-  <div>arXiv 文獻日報 · 2026-04-21</div>
+  <div>arXiv 文獻日報 · 2026-04-22</div>
   <div style="margin-top:.4rem;opacity:.6">© 12annie20 · All rights reserved</div>
 </footer>
 
@@ -464,10 +298,11 @@ function saveFavs(favs) {
 }
 
 function toggleFav(btn, id, title, url) {
+  var snippet = btn.getAttribute('data-fav-snippet') || '';
   let favs = getFavs();
   const idx = favs.findIndex(function(f){ return f.id === id; });
   if (idx === -1) {
-    favs.push({ id: id, title: title, url: url, savedAt: new Date().toLocaleDateString('zh-TW') });
+    favs.push({ id: id, title: title, url: url, snippet: snippet, savedAt: new Date().toLocaleDateString('zh-TW') });
     btn.classList.add('saved');
     btn.textContent = '已收藏';
     btn.setAttribute('title', '點擊取消收藏');
@@ -500,9 +335,14 @@ function renderFavs() {
     out += '<div class="pc-rank" style="color:var(--m-clay)">收藏於 ' + f.savedAt + '</div>';
     out += '<div class="pc-title">' + f.title + '</div>';
     out += '</div>';
-    out += '<div class="pc-body" style="padding:1rem 1.8rem;display:flex;gap:1rem;align-items:center">';
+    out += '<div class="pc-body" style="padding:1rem 1.8rem">';
+    if (f.snippet) {
+      out += '<div class="fav-snippet">' + f.snippet + '</div>';
+    }
+    out += '<div style="display:flex;gap:1rem;align-items:center;margin-top:.6rem">';
     out += '<a class="doi-link" href="' + f.url + '" target="_blank">\u2192 \u95b1\u8b80\u539f\u6587</a>';
     out += '<button class="fav-btn saved" onclick="removeFav(this)" data-remove-id="' + f.id + '" title="\u53d6\u6d88\u6536\u85cf">\u53d6\u6d88\u6536\u85cf</button>';
+    out += '</div>';
     out += '</div>';
     out += '</div>';
   }
@@ -518,6 +358,38 @@ function removeFav(btn) {
     b.classList.remove('saved');
     b.textContent = '收藏';
   });
+}
+
+function exportFavs() {
+  var data = JSON.stringify(getFavs(), null, 2);
+  var blob = new Blob([data], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'arxiv_favs_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+
+function importFavs(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) throw new Error();
+      var existing = getFavs();
+      var existingIds = existing.map(function(f){ return f.id; });
+      var merged = existing.concat(imported.filter(function(f){ return f.id && existingIds.indexOf(f.id) === -1; }));
+      saveFavs(merged);
+      renderFavs();
+      initFavBtns();
+      alert('匯入完成，共 ' + merged.length + ' 篇收藏');
+    } catch(err) {
+      alert('匯入失敗：請確認為有效的收藏 JSON 檔');
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
 }
 
 function initFavBtns() {
